@@ -72,8 +72,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
         with:
-          tag_name: Automated Release for Commit ${{ github.sha }}-${{ github.run_id }}
-          release_name: Release ${{ github.sha }}-${{ github.run_id }}
+          tag_name: ${{ github.sha }}-${{ github.run_id }}
+          release_name: Automated Release for Commit ${{ github.sha }}-${{ github.run_id }}
           draft: false
           prerelease: false
 
