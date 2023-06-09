@@ -71,7 +71,7 @@ jobs:
         id: committag
         with:
           value: ${{ github.sha }}
-          length_from_end: 7
+          length_from_start: 7
 
       - name: Create Release
         id: create_release
