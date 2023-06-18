@@ -93,7 +93,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-Linux/linux-better-chatgpt-1.0.3-x86_64.AppImage
+          asset_path: ./release-Linux/linux-better-chatgpt-1.0.4-x86_64.AppImage
           asset_name: koaladev-${{ steps.committag.outputs.substring }}-linux-x86_64.AppImage
           asset_content_type: application
 
@@ -113,7 +113,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-macOS/mac-better-chatgpt-1.0.3-x64.dmg
+          asset_path: ./release-macOS/mac-better-chatgpt-1.0.4-x64.dmg
           asset_name: koaladev-${{ steps.committag.outputs.substring }}-mac-x64.dmg
           asset_content_type: application
 
@@ -133,7 +133,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-Windows/win-better-chatgpt-1.0.3-x64.exe
+          asset_path: ./release-Windows/win-better-chatgpt-1.0.4-x64.exe
           asset_name: koaladev-${{ steps.committag.outputs.substring }}-win-x64.exe
           asset_content_type: application
           
