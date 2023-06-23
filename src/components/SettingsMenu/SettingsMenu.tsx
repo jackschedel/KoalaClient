@@ -19,6 +19,7 @@ import TotalTokenCost, { TotalTokenCostToggle } from './TotalTokenCost';
 import ClearConversation from '@components/Menu/MenuOptions/ClearConversation';
 import ImportExportChat from '@components/ImportExportChat/ImportExportChat';
 import Api from '@components/Menu/MenuOptions/Api';
+import ConfirmEditSubmissionToggle from './ConfirmEditSubmission';
 
 
 const SettingsMenu = () => {
@@ -58,6 +59,8 @@ const SettingsMenu = () => {
               {isElectron() && <CloseToTrayToggle />}
               <AutoTitleToggle />
               <EnterToSubmitToggle />
+              <p>asdf</p>
+              <ConfirmEditSubmissionToggle />
               <InlineLatexToggle />
               <AdvancedModeToggle />
               <TotalTokenCostToggle />
