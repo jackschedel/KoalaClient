@@ -144,10 +144,6 @@ const EditView = ({
         _setContent={_setContent}
       />
 
-//POINT 1
-
-
-
       {isModalOpen && (
         <PopupModal
           setIsModalOpen={setIsModalOpen}

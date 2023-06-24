@@ -59,7 +59,6 @@ const SettingsMenu = () => {
               {isElectron() && <CloseToTrayToggle />}
               <AutoTitleToggle />
               <EnterToSubmitToggle />
-              <p>asdf</p>
               <ConfirmEditSubmissionToggle />
               <InlineLatexToggle />
               <AdvancedModeToggle />
