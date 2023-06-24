@@ -45,6 +45,6 @@
   "cloneChat": "Clone Chat",
   "cloned": "Cloned",
   "enterToSubmit": "Enter to submit",
-  "confirmEditSubmission": "Confirm before sending edited chat",
-  "submitPlaceholder": "Type a message or click [/] for prompts..."
+  "submitPlaceholder": "Type a message or click [/] for prompts...",
+  "confirmEditSubmission": "Confirm before sending edited chat"
 }

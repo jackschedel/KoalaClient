@@ -27,8 +27,6 @@ const EditView = ({
 
   const [_content, _setContent] = useState<string>(content);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-
   const textareaRef = React.createRef<HTMLTextAreaElement>();
 
   const { t } = useTranslation();
@@ -76,8 +74,6 @@ const EditView = ({
 
   const { handleSubmit } = useSubmit();
   const handleSaveAndSubmit = () => {
-    console.log("ass")
-
     if (useStore.getState().generating) return;
     const updatedChats: ChatInterface[] = JSON.parse(
       JSON.stringify(useStore.getState().chats)
@@ -143,7 +139,6 @@ const EditView = ({
         setIsEdit={setIsEdit}
         _setContent={_setContent}
       />
-
       {isModalOpen && (
         <PopupModal
           setIsModalOpen={setIsModalOpen}
