@@ -1,7 +1,9 @@
+//App.tsx
+
 import React, { useEffect } from 'react';
 import useStore from '@store/store';
 import i18n from './i18n';
-
+import { keyboardShortcuts, KeyboardShortcut, KeyboardModifiers } from '@constants/KeyboardShortcuts';
 import Chat from '@components/Chat';
 import Menu from '@components/Menu';
 
@@ -19,7 +21,7 @@ function App() {
   const setApiKey = useStore((state) => state.setApiKey);
   const setCurrentChatIndex = useStore((state) => state.setCurrentChatIndex);
 
-  if(isElectron())
+  if (isElectron())
     window.electronAPI.setCloseToTray(useStore((state) => state.closeToTray))
 
   useEffect(() => {
@@ -30,7 +32,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // legacy local storage
+    // legacy local storage 
     const oldChats = localStorage.getItem('chats');
     const apiKey = localStorage.getItem('apiKey');
     const theme = localStorage.getItem('theme');
@@ -76,7 +78,36 @@ function App() {
         setCurrentChatIndex(0);
       }
     }
+
+    // Add event listener for keyboard shortcuts
+    window.addEventListener('keydown', handleKeyDown);
+
+    // Clean up event listener
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
+
+  // Shortcut handling
+  const handleKeyDown = (event: KeyboardEvent) => {
+    const shortcuts = Object.values(keyboardShortcuts);
+    const shortcut = shortcuts.find((s) => {
+      const modifiers = s.modifiers;
+      const key = s.key.toUpperCase();
+      const isModifierPressed =
+        (modifiers & KeyboardModifiers.CTRL && event.ctrlKey) ||
+        (modifiers & KeyboardModifiers.SHIFT && event.shiftKey) ||
+        (modifiers & KeyboardModifiers.NONE && !event.ctrlKey && !event.shiftKey);
+      const isKeyMatch = key === event.key.toUpperCase();
+      return isModifierPressed && isKeyMatch;
+    });
+    if (shortcut) {
+      event.preventDefault();
+      //call shortcut action block:
+      shortcut.actionBlock();
+    }
+  };
+
 
   return (
     <div className='overflow-hidden w-full h-full relative'>
