@@ -27,6 +27,8 @@ const EditView = ({
 
   const [_content, _setContent] = useState<string>(content);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+
   const textareaRef = React.createRef<HTMLTextAreaElement>();
 
   const { t } = useTranslation();
@@ -74,6 +76,8 @@ const EditView = ({
 
   const { handleSubmit } = useSubmit();
   const handleSaveAndSubmit = () => {
+    console.log("ass")
+
     if (useStore.getState().generating) return;
     const updatedChats: ChatInterface[] = JSON.parse(
       JSON.stringify(useStore.getState().chats)
@@ -115,8 +119,8 @@ const EditView = ({
     <>
       <div
         className={`w-full ${sticky
-            ? 'py-2 md:py-3 px-2 md:px-4 border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]'
-            : ''
+          ? 'py-2 md:py-3 px-2 md:px-4 border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]'
+          : ''
           }`}
       >
         <textarea
@@ -139,6 +143,11 @@ const EditView = ({
         setIsEdit={setIsEdit}
         _setContent={_setContent}
       />
+
+//POINT 1
+
+
+
       {isModalOpen && (
         <PopupModal
           setIsModalOpen={setIsModalOpen}
@@ -146,7 +155,8 @@ const EditView = ({
           message={t('clearMessageWarning') as string}
           handleConfirm={handleSaveAndSubmit}
         />
-      )}
+      )
+      }
     </>
   );
 };
@@ -188,9 +198,9 @@ const EditViewButtons = memo(
 
           <button
             className={`btn relative mr-2 ${sticky
-                ? `btn-neutral ${generating ? 'cursor-not-allowed opacity-40' : ''
-                }`
-                : 'btn-primary'
+              ? `btn-neutral ${generating ? 'cursor-not-allowed opacity-40' : ''
+              }`
+              : 'btn-primary'
               }`}
             onClick={handleSave}
           >
@@ -203,7 +213,12 @@ const EditViewButtons = memo(
             <button
               className='btn relative mr-2 btn-neutral'
               onClick={() => {
-                !generating && setIsModalOpen(true);
+                const confirmEditSubmit = useStore.getState().confirmEditSubmit
+                if (confirmEditSubmit)
+                  !generating && setIsModalOpen(true);
+                else
+                  handleSaveAndSubmit();
+
               }}
             >
               <div className='flex items-center justify-center gap-2'>
