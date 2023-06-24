@@ -14,6 +14,7 @@ export interface ConfigSlice {
   defaultSystemMessage: string;
   hideSideMenu: boolean;
   enterToSubmit: boolean;
+  confirmEditSubmit: boolean;
   inlineLatex: boolean;
   markdownMode: boolean;
   countTotalTokens: boolean;
@@ -43,6 +44,7 @@ export const createConfigSlice: StoreSlice<ConfigSlice> = (set, get) => ({
   autoTitle: false,
   closeToTray: false,
   enterToSubmit: true,
+  confirmEditSubmit: true,
   advancedMode: true,
   defaultChatConfig: _defaultChatConfig,
   defaultSystemMessage: _defaultSystemMessage,
