@@ -15,9 +15,6 @@ const ConfirmEditSubmissionToggle = () => {
     useEffect(() => {
         setConfirmEditSubmission(isChecked);
 
-        console.log("set to (readback): " + useStore.getState().confirmEditSubmit)
-
-
     }, [isChecked]);
 
     return (
