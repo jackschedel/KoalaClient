@@ -14,6 +14,7 @@ export interface ChatSlice {
   setGenerating: (generating: boolean) => void;
   setError: (error: string) => void;
   setFolders: (folders: FolderCollection) => void;
+  setConfirmEditSubmission: (confirmEditSubmission: boolean) => void;
 }
 
 export const createChatSlice: StoreSlice<ChatSlice> = (set, get) => ({
@@ -58,4 +59,10 @@ export const createChatSlice: StoreSlice<ChatSlice> = (set, get) => ({
       folders: folders,
     }));
   },
+  setConfirmEditSubmission: (confirmEditSubmission: Boolean) => {
+    set((prev: ChatSlice) => ({
+      ...prev,
+      confirmEditSubmission: confirmEditSubmission,
+    }));
+  }
 });

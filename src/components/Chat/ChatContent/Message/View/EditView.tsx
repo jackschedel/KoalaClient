@@ -114,11 +114,10 @@ const EditView = ({
   return (
     <>
       <div
-        className={`w-full ${
-          sticky
-            ? 'py-2 md:py-3 px-2 md:px-4 border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]'
-            : ''
-        }`}
+        className={`w-full ${sticky
+          ? 'py-2 md:py-3 px-2 md:px-4 border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]'
+          : ''
+          }`}
       >
         <textarea
           ref={textareaRef}
@@ -147,7 +146,8 @@ const EditView = ({
           message={t('clearMessageWarning') as string}
           handleConfirm={handleSaveAndSubmit}
         />
-      )}
+      )
+      }
     </>
   );
 };
@@ -177,9 +177,8 @@ const EditViewButtons = memo(
         <div className='flex-1 text-center mt-2 flex justify-center'>
           {sticky && (
             <button
-              className={`btn relative mr-2 btn-primary ${
-                generating ? 'cursor-not-allowed opacity-40' : ''
-              }`}
+              className={`btn relative mr-2 btn-primary ${generating ? 'cursor-not-allowed opacity-40' : ''
+                }`}
               onClick={handleSaveAndSubmit}
             >
               <div className='flex items-center justify-center gap-2'>
@@ -189,13 +188,11 @@ const EditViewButtons = memo(
           )}
 
           <button
-            className={`btn relative mr-2 ${
-              sticky
-                ? `btn-neutral ${
-                    generating ? 'cursor-not-allowed opacity-40' : ''
-                  }`
-                : 'btn-primary'
-            }`}
+            className={`btn relative mr-2 ${sticky
+              ? `btn-neutral ${generating ? 'cursor-not-allowed opacity-40' : ''
+              }`
+              : 'btn-primary'
+              }`}
             onClick={handleSave}
           >
             <div className='flex items-center justify-center gap-2'>
@@ -207,7 +204,12 @@ const EditViewButtons = memo(
             <button
               className='btn relative mr-2 btn-neutral'
               onClick={() => {
-                !generating && setIsModalOpen(true);
+                const confirmEditSubmit = useStore.getState().confirmEditSubmit
+                if (confirmEditSubmit)
+                  !generating && setIsModalOpen(true);
+                else
+                  handleSaveAndSubmit();
+
               }}
             >
               <div className='flex items-center justify-center gap-2'>

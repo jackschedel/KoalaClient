@@ -55,6 +55,7 @@ export const createPartializedState = (state: StoreState) => ({
   firstVisit: state.firstVisit,
   hideSideMenu: state.hideSideMenu,
   folders: state.folders,
+  confirmOnEditSubmission: state.setConfirmEditSubmission,
   enterToSubmit: state.enterToSubmit,
   inlineLatex: state.inlineLatex,
   markdownMode: state.markdownMode,
