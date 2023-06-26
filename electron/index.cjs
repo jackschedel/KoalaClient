@@ -16,10 +16,13 @@ let closeToTray = false;
 let winTray = null;
 let trayExists = false;
 const instanceLock = app.requestSingleInstanceLock();
+const isMacOS = process.platform === 'darwin';
 
 if (require('electron-squirrel-startup')) app.quit();
 
 const PORT = isDev ? '5173' : '51735';
+const ICON = 'icon-rounded.png';
+const ICON_TEMPLATE = 'iconTemplate.png';
 
 function handleSetCloseToTray (event, setting) {
   closeToTray = setting;
@@ -36,12 +39,6 @@ function handleSetCloseToTray (event, setting) {
 }
 
 function createWindow() {
-  let iconPath = '';
-  if (isDev) {
-    iconPath = path.join(__dirname, '../public/icon-rounded.png');
-  } else {
-    iconPath = path.join(__dirname, '../dist/icon-rounded.png');
-  }
   autoUpdater.checkForUpdatesAndNotify();
 
   win = new BrowserWindow({
@@ -51,6 +48,7 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
       nativeWindowOpen: true,
     }
+    icon: assetPath(ICON),
   });
 
   win.maximize();
@@ -79,8 +77,16 @@ function createWindow() {
   return win;
 }
 
+const assetPath = (asset) => {
+  return path.join(
+    __dirname,
+    isDev ? `../public/${asset}` : `../dist/${asset}`
+  )
+}
+
 const createTray = (window) => {
   winTray = Tray(
+    assetPath(!isMacOS ? ICON : ICON_TEMPLATE)
     path.join(
       __dirname,
       isDev ? '../public/icon-rounded.png' : '../dist/icon-rounded.png'
@@ -124,7 +130,7 @@ const createTray = (window) => {
 };
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+  if (!isMacOS) {
     app.quit();
   }
 });
