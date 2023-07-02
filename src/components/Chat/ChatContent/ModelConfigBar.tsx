@@ -23,7 +23,8 @@ const ModelConfigBar = React.memo(() => {
    const advancedMode = useStore((state) => state.advancedMode);
    const currentChatIndex = useStore((state) => state.currentChatIndex);
    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-   const [_model, _setModel] = useState<ModelOptions>(config.model);
+   const [_model, _setModel] = useState<ModelOptions>(config?.model || 'gpt-3.5-turbo');
+
 
 
 
