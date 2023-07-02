@@ -73,13 +73,6 @@ function createWindow() {
    return win;
 }
 
-function assetPath(asset) {
-   return path.join(
-      __dirname,
-      isDev ? `../public/${asset}` : `../dist/${asset}`
-   );
-}
-
 const assetPath = (asset) => {
    return path.join(
       __dirname,
