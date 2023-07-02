@@ -129,9 +129,6 @@ const ChatHistory = React.memo(
                <div className='absolute flex right-1 z-10 text-gray-300 visible'>
                   {isDelete || isEdit ? (
                      <>
-                        <button className='p-1 hover:text-white' onClick={handleTick}>
-                           <TickIcon />
-                        </button>
                         <button className='p-1 hover:text-white' onClick={handleCross}>
                            <CrossIcon />
                         </button>
