@@ -48,7 +48,7 @@ const ChatContent = () => {
    const { error } = useSubmit();
 
    return (
-      <div className='flex-1 scroll-smooth overflow-hidden'>
+      <div className='flex-1 overflow-hidden'>
          <ScrollToBottom
             className='h-full dark:bg-gray-800'
             followButtonClassName='hidden'
