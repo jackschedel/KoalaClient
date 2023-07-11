@@ -26,6 +26,7 @@ dist-ssr
 release/
 
 .env
+.gitignore
 package-lock.json
 package.json
 yarn.lock

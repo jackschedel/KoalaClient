@@ -37,7 +37,8 @@ const MobileBar = () => {
          </h1>
          <button
             type='button'
-            className={`px-3 text-gray-400 transition-opacity ${generating
+        className={`px-3 text-gray-400 transition-opacity ${
+          generating
                   ? 'cursor-not-allowed opacity-40'
                   : 'cursor-pointer opacity-100'
                }`}

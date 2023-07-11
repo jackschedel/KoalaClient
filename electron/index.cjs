@@ -1,4 +1,4 @@
-const { dialog, app, ipcMain, BrowserWindow, Tray, Menu } = require('electron');
+const {dialog,  app, ipcMain, BrowserWindow, Tray, Menu } = require('electron');
 
 process.on('uncaughtException', (error) => {
    // Perform any necessary cleanup tasks here
@@ -24,15 +24,15 @@ const PORT = isDev ? '5173' : '51735';
 const ICON = 'icon-rounded.png';
 const ICON_TEMPLATE = 'iconTemplate.png';
 
-function handleSetCloseToTray(event, setting) {
+function handleSetCloseToTray (event, setting) {
    closeToTray = setting;
 
-   if (closeToTray && trayExists) {
+  if(closeToTray && trayExists){
       winTray.destroy();
       trayExists = false;
    }
 
-   if (closeToTray && !trayExists) {
+  if(closeToTray && !trayExists){
       createTray(win);
       trayExists = true;
    }
@@ -44,6 +44,10 @@ function createWindow() {
    win = new BrowserWindow({
       autoHideMenuBar: true,
       show: false,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      nativeWindowOpen: true,
+    }
       icon: assetPath(ICON),
    });
 
@@ -59,7 +63,7 @@ function createWindow() {
    }
 
    win.on('close', function (event) {
-      if (closeToTray && !app.isQuiting) {
+    if(closeToTray && !app.isQuiting){
          event.preventDefault();
          win.hide();
       }
@@ -81,8 +85,12 @@ const assetPath = (asset) => {
 }
 
 const createTray = (window) => {
-   const tray = new Tray(
+  winTray = Tray(
       assetPath(!isMacOS ? ICON : ICON_TEMPLATE)
+    path.join(
+      __dirname,
+      isDev ? '../public/icon-rounded.png' : '../dist/icon-rounded.png'
+    )
    );
    const contextMenu = Menu.buildFromTemplate([
       {

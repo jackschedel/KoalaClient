@@ -135,7 +135,7 @@ const ContentView = memo(
                   <span className='whitespace-pre-wrap'>{content}</span>
                )}
             </div>
-            <div className='flex justify-end gap-2 w-full mt-1'>
+        <div className='flex justify-end gap-2 w-full mt-2'>
                {isDelete || (
                   <>
                      {!useStore.getState().generating &&

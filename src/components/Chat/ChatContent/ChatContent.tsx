@@ -97,7 +97,8 @@ const ChatContent = () => {
                   </div>
                )}
                <div
-                  className={`mt-4 w-full m-auto  ${hideSideMenu
+            className={`mt-4 w-full m-auto  ${
+              hideSideMenu
                      ? 'md:max-w-5xl lg:max-w-5xl xl:max-w-6xl'
                      : 'md:max-w-3xl lg:max-w-3xl xl:max-w-4xl'
                      }`}

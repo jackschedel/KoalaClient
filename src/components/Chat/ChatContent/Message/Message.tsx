@@ -31,13 +31,15 @@ const Message = React.memo(
 
       return (
          <div
-            className={`w-full border-b border-black/10 dark:border-gray-900/50 text-gray-800 dark:text-gray-100 group ${backgroundStyle[messageIndex % 2]
+        className={`w-full border-b border-black/10 dark:border-gray-900/50 text-gray-800 dark:text-gray-100 group ${
+          backgroundStyle[messageIndex % 2]
                }`}
          >
             <div
-               className={`-translate-x-20 text-base gap-3 md:gap-4 m-auto p-4 md:py-6 flex transition-all ease-in-out ${hideSideMenu
-                  ? 'md:max-w-5xl lg:max-w-5xl xl:max-w-6xl'
-                  : 'md:max-w-3xl lg:max-w-3xl xl:max-w-4xl'
+               className={`text-base gap-3 md:gap-5 m-auto p-3 md:py-6 flex transition-all ease-in-out 
+                 ${hideSideMenu
+                     ? 'md:max-w-5xl lg:max-w-5xl xl:max-w-6xl'
+                     : 'md:max-w-3xl lg:max-w-3xl xl:max-w-4xl'
                   }`}
             >
                <Avatar role={role} />
