@@ -16,6 +16,7 @@ const LanguageSelector = () => {
         className='btn btn-neutral btn-small flex justify-between p-2 gap-3' 
         type='button'
         onClick={() => setDropDown((prev) => !prev)}
+        aria-label='language selector'
       >
         <LanguageIcon className='w-4 h-4' />
         {languageCodeToName[i18n.language as keyof typeof languageCodeToName] ??

@@ -148,29 +148,34 @@ const ContentView = memo(
                         <DownButton onClick={handleMoveDown} />
                      )}
 
-                     <MarkdownModeButton />
-                     <CopyButton onClick={handleCopy} />
-                     <EditButton setIsEdit={setIsEdit} />
-                     <DeleteButton setIsDelete={setIsDelete} />
-                  </>
-               )}
-               {isDelete && (
-                  <>
-                     <button
-                        className='p-1 hover:text-white'
-                        onClick={() => setIsDelete(false)}
-                     >
-                        <CrossIcon />
-                     </button>
-                     <button className='p-1 hover:text-white' onClick={handleDelete}>
-                        <TickIcon />
-                     </button>
-                  </>
-               )}
-            </div>
-         </>
-      );
-   }
+              <MarkdownModeButton />
+              <CopyButton onClick={handleCopy} />
+              <EditButton setIsEdit={setIsEdit} />
+              <DeleteButton setIsDelete={setIsDelete} />
+            </>
+          )}
+          {isDelete && (
+            <>
+              <button
+                className='p-1 hover:text-white'
+                aria-label='cancel'
+                onClick={() => setIsDelete(false)}
+              >
+                <CrossIcon />
+              </button>
+              <button
+                className='p-1 hover:text-white'
+                aria-label='confirm'
+                onClick={handleDelete}
+              >
+                <TickIcon />
+              </button>
+            </>
+          )}
+        </div>
+      </>
+    );
+  }
 );
 
 const code = memo((props: CodeProps) => {

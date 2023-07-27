@@ -16,8 +16,11 @@ const PromptLibraryMenu = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   return (
     <div>
-      <button className='btn btn-neutral gap-3' onClick={() => setIsModalOpen(true)}>
-      <EditIcon />
+      <button
+        className='btn btn-neutral'
+        onClick={() => setIsModalOpen(true)}
+        aria-label={t('promptLibrary') as string}
+      >
         {t('promptLibrary')}
       </button>
       {isModalOpen && (

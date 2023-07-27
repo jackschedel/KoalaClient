@@ -47,33 +47,35 @@ const ChatContent = () => {
 
    const { error } = useSubmit();
 
-   return (
-      <div className='flex-1 overflow-hidden'>
-         <ScrollToBottom
-            className='h-full dark:bg-gray-800'
-            followButtonClassName='hidden'
-         >
-            <ScrollToBottomButton />
-            <div className='flex flex-col items-center text-sm dark:bg-gray-800'>
-               <div
-                  className='flex flex-col items-center text-sm dark:bg-gray-800 w-full'
-                  ref={saveRef}
-               >
-                  <ModelConfigBar />
-                  {!generating && advancedMode && messages?.length === 0 && (
-                     <NewMessageButton messageIndex={-1} />
-                  )}
-                  {messages?.map((message, index) => (
-                     <React.Fragment key={index}>
-                        <Message
-                           role={message.role}
-                           content={message.content}
-                           messageIndex={index}
-                        />
-                        {!generating && advancedMode && <NewMessageButton messageIndex={index} />}
-                     </React.Fragment>
-                  ))}
-               </div>
+  return (
+    <div className='flex-1 overflow-hidden'>
+      <ScrollToBottom
+        className='h-full dark:bg-gray-800'
+        followButtonClassName='hidden'
+      >
+        <ScrollToBottomButton />
+        <div className='flex flex-col items-center text-sm dark:bg-gray-800'>
+          <div
+            className='flex flex-col items-center text-sm dark:bg-gray-800 w-full'
+            ref={saveRef}
+          >
+            <ModelConfigBar />
+            {!generating && advancedMode && messages?.length === 0 && (
+              <NewMessageButton messageIndex={-1} />
+            )}
+            {messages?.map((message, index) => (
+              (advancedMode || index !== 0 || message.role !== 'system') && (
+                <React.Fragment key={index}>
+                  <Message
+                    role={message.role}
+                    content={message.content}
+                    messageIndex={index}
+                  />
+                  {!generating && advancedMode && <NewMessageButton messageIndex={index} />}
+                </React.Fragment>
+              )
+            ))}
+          </div>
 
                <Message
                   role={inputRole}

@@ -180,68 +180,70 @@ const EditViewButtons = memo(
       const generating = useStore.getState().generating;
       const advancedMode = useStore((state) => state.advancedMode);
 
-      return (
-         <div className='flex'>
-            <div className='flex-1 text-center mt-2 flex justify-center'>
-               {sticky && (
-                  <button
-                     className={`btn relative mr-2 btn-primary ${generating ? 'cursor-not-allowed opacity-40' : ''
-                        }`}
-                     onClick={handleSaveAndSubmit}
-                  >
-                     <div className='flex items-center justify-center gap-2'>
-                        {t('saveAndSubmit')}
-                     </div>
-                  </button>
-               )}
+    return (
+      <div className='flex'>
+        <div className='flex-1 text-center mt-2 flex justify-center'>
+          {sticky && (
+            <button
+              className={`btn relative mr-2 btn-primary ${
+                generating ? 'cursor-not-allowed opacity-40' : ''
+              }`}
+              onClick={handleSaveAndSubmit}
+              aria-label={t('saveAndSubmit') as string}
+            >
+              <div className='flex items-center justify-center gap-2'>
+                {t('saveAndSubmit')}
+              </div>
+            </button>
+          )}
 
-               <button
-                  className={`btn relative mr-2 ${sticky
-                     ? `btn-neutral ${generating ? 'cursor-not-allowed opacity-40' : ''
-                     }`
-                     : 'btn-primary'
-                     }`}
-                  onClick={handleSave}
-               >
-                  <div className='flex items-center justify-center gap-2'>
-                     {t('save')}
-                  </div>
-               </button>
-
-               {sticky || (
-                  <button
-                     className='btn relative mr-2 btn-neutral'
-                     onClick={() => {
-                        const confirmEditSubmit = useStore.getState().confirmEditSubmit
-                        if (confirmEditSubmit)
-                           !generating && setIsModalOpen(true);
-                        else
-                           handleSaveAndSubmit();
-
-                     }}
-                  >
-                     <div className='flex items-center justify-center gap-2'>
-                        {t('saveAndSubmit')}
-                     </div>
-                  </button>
-               )}
-
-               {sticky || (
-                  <button
-                     className='btn relative btn-neutral'
-                     onClick={() => setIsEdit(false)}
-                  >
-                     <div className='flex items-center justify-center gap-2'>
-                        {t('cancel')}
-                     </div>
-                  </button>
-               )}
+          <button
+            className={`btn relative mr-2 ${
+              sticky
+                ? `btn-neutral ${
+                    generating ? 'cursor-not-allowed opacity-40' : ''
+                  }`
+                : 'btn-primary'
+            }`}
+            onClick={handleSave}
+            aria-label={t('save') as string}
+          >
+            <div className='flex items-center justify-center gap-2'>
+              {t('save')}
             </div>
-            {sticky && advancedMode && <TokenCount />}
-            <CommandPrompt _setContent={_setContent} />
-         </div>
-      );
-   }
+          </button>
+
+          {sticky || (
+            <button
+              className='btn relative mr-2 btn-neutral'
+              onClick={() => {
+                !generating && setIsModalOpen(true);
+              }}
+              aria-label={t('saveAndSubmit') as string}
+            >
+              <div className='flex items-center justify-center gap-2'>
+                {t('saveAndSubmit')}
+              </div>
+            </button>
+          )}
+
+          {sticky || (
+            <button
+              className='btn relative btn-neutral'
+              onClick={() => setIsEdit(false)}
+              aria-label={t('cancel') as string}
+            >
+              <div className='flex items-center justify-center gap-2'>
+                {t('cancel')}
+              </div>
+            </button>
+          )}
+        </div>
+        {sticky && advancedMode && <TokenCount />}
+        <CommandPrompt _setContent={_setContent} />
+      </div>
+    );
+  }
 );
 
 export default EditView;

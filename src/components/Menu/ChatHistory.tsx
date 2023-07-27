@@ -91,70 +91,80 @@ const ChatHistory = React.memo(
           active ? ChatHistoryClass.active : ChatHistoryClass.normal
         } ${
           generating
-                  ? 'cursor-not-allowed opacity-40'
-                  : 'cursor-pointer opacity-100'
-               }`}
-            onClick={() => {
-               if (!generating) setCurrentChatIndex(chatIndex);
-            }}
-            draggable
-            onDragStart={handleDragStart}
-         >
-            <ChatIcon />
-            <div className='flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative'>
-               {isEdit ? (
-                  <input
-                     type='text'
-                     className='focus:outline-blue-600 text-sm border-none bg-transparent p-0 m-0 w-full'
-                     value={_title}
-                     onChange={(e) => {
-                        _setTitle(e.target.value);
-                     }}
-                     onKeyDown={handleKeyDown}
-                     ref={inputRef}
-                  />
-               ) : (
-                  _title
-               )}
+            ? 'cursor-not-allowed opacity-40'
+            : 'cursor-pointer opacity-100'
+        }`}
+        onClick={() => {
+          if (!generating) setCurrentChatIndex(chatIndex);
+        }}
+        draggable
+        onDragStart={handleDragStart}
+      >
+        <ChatIcon />
+        <div className='flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative' title={title}>
+          {isEdit ? (
+            <input
+              type='text'
+              className='focus:outline-blue-600 text-sm border-none bg-transparent p-0 m-0 w-full'
+              value={_title}
+              onChange={(e) => {
+                _setTitle(e.target.value);
+              }}
+              onKeyDown={handleKeyDown}
+              ref={inputRef}
+            />
+          ) : (
+            _title
+          )}
 
-               {isEdit || (
-                  <div
-                     className={
-                        active
-                           ? ChatHistoryClass.activeGradient
-                           : ChatHistoryClass.normalGradient
-                     }
-                  />
-               )}
+          {isEdit || (
+            <div
+              className={
+                active
+                  ? ChatHistoryClass.activeGradient
+                  : ChatHistoryClass.normalGradient
+              }
+            />
+          )}
+        </div>
+        {active && (
+          <div className='absolute flex right-1 z-10 text-gray-300 visible'>
+            {isDelete || isEdit ? (
+              <>
+                <button
+                  className='p-1 hover:text-white'
+                  onClick={handleTick}
+                  aria-label='confirm'
+                >
+                  <TickIcon />
+                </button>
+                <button
+                  className='p-1 hover:text-white'
+                  onClick={handleCross}
+                  aria-label='cancel'
+                >
+                  <CrossIcon />
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  className='p-1 hover:text-white'
+                  onClick={() => setIsEdit(true)}
+                  aria-label='edit chat title'
+                >
+                  <EditIcon />
+                </button>
+                <button
+                  className='p-1 hover:text-white'
+                  onClick={() => setIsDelete(true)}
+                  aria-label='delete chat'
+                >
+                  <DeleteIcon />
+                </button>
+              </>
+            )}
             </div>
-            {active && (
-               <div className='absolute flex right-1 z-10 text-gray-300 visible'>
-                  {isDelete || isEdit ? (
-                     <>
-                        <button className='p-1 hover:text-white' onClick={handleCross}>
-                           <CrossIcon />
-                        </button>
-                        <button className='p-1 hover:text-white' onClick={handleTick}>
-                           <TickIcon />
-                        </button>
-                     </>
-                  ) : (
-                     <>
-                        <button
-                           className='p-1 hover:text-white'
-                           onClick={() => setIsEdit(true)}
-                        >
-                           <EditIcon />
-                        </button>
-                        <button
-                           className='p-1 hover:text-white'
-                           onClick={() => setIsDelete(true)}
-                        >
-                           <DeleteIcon />
-                        </button>
-                     </>
-                  )}
-               </div>
             )}
          </a>
       );
