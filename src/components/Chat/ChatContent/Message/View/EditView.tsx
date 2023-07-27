@@ -10,6 +10,8 @@ import PopupModal from '@components/PopupModal';
 import TokenCount from '@components/TokenCount';
 import CommandPrompt from '../CommandPrompt';
 
+import WhisperRecord from '../WhisperRecord';
+
 const EditView = ({
    content,
    setIsEdit,
@@ -240,6 +242,7 @@ const EditViewButtons = memo(
           )}
         </div>
         {sticky && advancedMode && <TokenCount />}
+        <WhisperRecord _setContent={_setContent} />
         <CommandPrompt _setContent={_setContent} />
       </div>
     );
