@@ -19,10 +19,14 @@ const WhisperRecord = ({
     stopRecording,
   } = useWhisper({ apiKey });
 
-
   useEffect(() => {
     if (transcript.text) {
-      _setContent((prev) => prev + transcript.text);
+      _setContent((prev) => {
+        if (prev && !prev.endsWith(' ')) {
+          return prev + ' ' + transcript.text;
+        }
+        return prev + transcript.text;
+      });
     }
   }, [transcript.text]);
 
