@@ -1,4 +1,5 @@
-const { dialog, app, ipcMain, BrowserWindow, Tray, Menu } = require("electron");
+const { dialog, app, ipcMain, BrowserWindow, Tray, Menu, shell } = require("electron");
+const contextMenu = require("electron-context-menu");
 
 process.on("uncaughtException", (error) => {
   // Perform any necessary cleanup tasks here
@@ -20,6 +21,11 @@ const instanceLock = app.requestSingleInstanceLock();
 if (require("electron-squirrel-startup")) app.quit();
 
 const PORT = isDev ? "5173" : "51735";
+
+contextMenu({
+  prepend: (defaultActions, parameters, browserWindow) => [
+  ],
+});
 
 function handleSetCloseToTray(event, setting) {
   closeToTray = setting;
@@ -49,6 +55,7 @@ function createWindow() {
     show: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
+      spellcheck: true,
     },
   });
 
