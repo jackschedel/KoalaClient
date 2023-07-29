@@ -14,6 +14,7 @@
     "electron": "concurrently -k \"BROWSER=none yarn dev\" \"wait-on tcp:5173 && electron .\"",
     "pack": "yarn build && electron-builder --dir",
     "wslbuild": "yarn build && electron-builder --dir --win && cp -r release/win-unpacked/* /mnt/c/Programs/BetterChatGPT",
+    "wslcopy": "cp -r release/win-unpacked/* /mnt/c/Programs/BetterChatGPT",
     "make": "yarn build && electron-builder"
   },
   "build": {

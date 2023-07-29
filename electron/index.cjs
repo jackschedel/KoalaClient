@@ -1,4 +1,6 @@
-const { dialog, app, ipcMain, BrowserWindow, Tray, Menu, shell } = require("electron");
+const { dialog, app, ipcMain, BrowserWindow, Tray, Menu, shell } = require(
+  "electron",
+);
 const contextMenu = require("electron-context-menu");
 
 process.on("uncaughtException", (error) => {
@@ -23,8 +25,7 @@ if (require("electron-squirrel-startup")) app.quit();
 const PORT = isDev ? "5173" : "51735";
 
 contextMenu({
-  prepend: (defaultActions, parameters, browserWindow) => [
-  ],
+  prepend: (defaultActions, parameters, browserWindow) => [],
 });
 
 function handleSetCloseToTray(event, setting) {
@@ -75,6 +76,14 @@ function createWindow() {
       event.preventDefault();
       win.hide();
     }
+  });
+
+  win.webContents.setWindowOpenHandler(({ url }) => {
+    // Open the url in an external browser.
+    shell.openExternal(url);
+
+    // Return an object indicating that the window opening request has been handled.
+    return { action: "deny" };
   });
 
   win.on("show", function (event) {
