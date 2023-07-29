@@ -46,21 +46,13 @@ const EditView = ({
 
     if (e.key === "Enter" && !isMobile && !e.nativeEvent.isComposing) {
       const enterToSubmit = useStore.getState().enterToSubmit;
-
-      if (e.ctrlKey && e.shiftKey) {
-        e.preventDefault();
-        handleSaveAndSubmit();
-        resetTextAreaHeight();
-      } else if (
-        (enterToSubmit && !e.shiftKey) ||
-        (!enterToSubmit && (e.ctrlKey || e.shiftKey))
-      ) {
-        if (sticky) {
+      if (sticky) {
+        if (
+          (enterToSubmit && !e.shiftKey)
+        ) {
           e.preventDefault();
           handleSaveAndSubmit();
           resetTextAreaHeight();
-        } else {
-          handleSave();
         }
       }
     }
