@@ -18,6 +18,16 @@ function App() {
   const setTheme = useStore((state) => state.setTheme);
   const setApiKey = useStore((state) => state.setApiKey);
   const setCurrentChatIndex = useStore((state) => state.setCurrentChatIndex);
+  const setHideSideMenu = useStore((state) => state.setHideSideMenu);
+  const hideSideMenu = useStore((state) => state.hideSideMenu);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    // put any general app-wide keybinds here
+    if (e.ctrlKey && e.key === "e") {
+      e.preventDefault();
+      setHideSideMenu(!hideSideMenu);
+    }
+  };
 
   if (isElectron()) {
     window.electronAPI.setCloseToTray(useStore((state) => state.closeToTray));
@@ -80,7 +90,11 @@ function App() {
   }, []);
 
   return (
-    <div className="overflow-hidden w-full h-full relative">
+    <div
+      tabIndex={0}
+      className="overflow-hidden w-full h-full relative"
+      onKeyDown={handleKeyDown}
+    >
       <Menu />
       <Chat />
       <ApiPopup />
