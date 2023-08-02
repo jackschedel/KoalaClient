@@ -17,6 +17,7 @@
 <img src="https://img.shields.io/github/issues-pr/jackschedel/BetterChatGPT?style=flat-square" alt="pull-requests"/>
 </a>
 
+<h2 align="center">NEW: Whisper API speech-to-text transcription! I haven't had time to add a demo yet.</h1>
 
 ## 🛠️ UI Tweaks
 
