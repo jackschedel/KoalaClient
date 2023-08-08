@@ -250,7 +250,10 @@ const EditViewButtons = memo(
             cursorPosition={cursorPosition}
             _setContent={_setContent}
           />
-          <CommandPrompt _setContent={_setContent} />
+          <CommandPrompt
+            cursorPosition={cursorPosition}
+            _setContent={_setContent}
+          />
         </div>
       </div>
     );
