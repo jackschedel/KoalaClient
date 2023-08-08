@@ -26,7 +26,7 @@ const EditView = ({
   const inputRole = useStore((state) => state.inputRole);
   const setChats = useStore((state) => state.setChats);
   const currentChatIndex = useStore((state) => state.currentChatIndex);
-
+  const [cursorPosition, setCursorPosition] = useState<number>(0);
   const [_content, _setContent] = useState<string>(content);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const textareaRef = React.createRef<HTMLTextAreaElement>();
@@ -131,6 +131,10 @@ const EditView = ({
           onChange={(e) => {
             _setContent(e.target.value);
           }}
+          onSelect={(e) => {
+            const target = e.target as HTMLTextAreaElement;
+            setCursorPosition(target.selectionStart || 0);
+          }}
           value={_content}
           placeholder={t("submitPlaceholder") as string}
           onKeyDown={handleKeyDown}
@@ -144,6 +148,7 @@ const EditView = ({
         handleSave={handleSave}
         setIsModalOpen={setIsModalOpen}
         setIsEdit={setIsEdit}
+        cursorPosition={cursorPosition}
         _setContent={_setContent}
       />
       {isModalOpen && (
@@ -165,6 +170,7 @@ const EditViewButtons = memo(
     handleSave,
     setIsModalOpen,
     setIsEdit,
+    cursorPosition,
     _setContent,
   }: {
     sticky?: boolean;
@@ -172,6 +178,7 @@ const EditViewButtons = memo(
     handleSave: () => void;
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
+    cursorPosition: number;
     _setContent: React.Dispatch<React.SetStateAction<string>>;
   }) => {
     const { t } = useTranslation();
@@ -239,7 +246,10 @@ const EditViewButtons = memo(
         </div>
         <div className="flex-1 flex items-center justify-end">
           {sticky && advancedMode && <TokenCount />}
-          <WhisperRecord _setContent={_setContent} />
+          <WhisperRecord
+            cursorPosition={cursorPosition}
+            _setContent={_setContent}
+          />
           <CommandPrompt _setContent={_setContent} />
         </div>
       </div>
