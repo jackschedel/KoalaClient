@@ -46,10 +46,14 @@ const countTokens = (messages: MessageInterface[], model: ModelOptions) => {
 export const limitMessageTokens = (
   messages: MessageInterface[],
   limit: number = 4096,
-  model: ModelOptions
+  model: ModelOptions,
+  max_model_token: number = 4096,
 ): MessageInterface[] => {
   const limitedMessages: MessageInterface[] = [];
   let tokenCount = 0;
+
+  if (max_model_token < limit)
+    limit = max_model_token;
 
   const isSystemFirstMessage = messages[0]?.role === 'system';
   let retainSystemMessage = false;
