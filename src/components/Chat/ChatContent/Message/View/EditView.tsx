@@ -149,8 +149,8 @@ const EditView = ({
       {isModalOpen && (
         <PopupModal
           setIsModalOpen={setIsModalOpen}
-          title={t('warning') as string}
-          message={t('clearMessageWarning') as string}
+          title={t("warning") as string}
+          message={t("clearMessageWarning") as string}
           handleConfirm={handleGenerate}
         />
       )}
@@ -180,30 +180,31 @@ const EditViewButtons = memo(
 
     return (
       <div className="flex">
-        <div className="flex-1 text-center mt-2 flex justify-center">
+        <div className="flex-1" />
+        <div className="flex-3 text-center mt-2">
           {sticky && (
             <button
               className={`btn relative mr-2 btn-primary ${
                 generating ? "cursor-not-allowed opacity-40" : ""
               }`}
               onClick={handleGenerate}
-              aria-label={t('generate') as string}
+              aria-label={t("generate") as string}
             >
-              <div className='flex items-center justify-center gap-2'>
-                {t('generate')}
+              <div className="flex items-center justify-center gap-2">
+                {t("generate")}
               </div>
             </button>
           )}
 
           {sticky || (
             <button
-              className='btn relative mr-2 btn-primary'
+              className="btn relative mr-2 btn-primary"
               onClick={() => {
                 !generating && setIsModalOpen(true);
               }}
             >
-              <div className='flex items-center justify-center gap-2'>
-                {t('generate')}
+              <div className="flex items-center justify-center gap-2">
+                {t("generate")}
               </div>
             </button>
           )}
@@ -212,9 +213,9 @@ const EditViewButtons = memo(
             className={`btn relative mr-2 ${
               sticky
                 ? `btn-neutral ${
-                    generating ? 'cursor-not-allowed opacity-40' : ''
-                  }`
-                : 'btn-neutral'
+                  generating ? "cursor-not-allowed opacity-40" : ""
+                }`
+                : "btn-neutral"
             }`}
             onClick={handleSave}
             aria-label={t("save") as string}
@@ -226,7 +227,7 @@ const EditViewButtons = memo(
 
           {sticky || (
             <button
-              className='btn relative btn-neutral'
+              className="btn relative btn-neutral"
               onClick={() => setIsEdit(false)}
               aria-label={t("cancel") as string}
             >
@@ -236,9 +237,11 @@ const EditViewButtons = memo(
             </button>
           )}
         </div>
-        {sticky && advancedMode && <TokenCount />}
-        <WhisperRecord _setContent={_setContent} />
-        <CommandPrompt _setContent={_setContent} />
+        <div className="flex-1 flex items-center justify-end">
+          {sticky && advancedMode && <TokenCount />}
+          <WhisperRecord _setContent={_setContent} />
+          <CommandPrompt _setContent={_setContent} />
+        </div>
       </div>
     );
   },
