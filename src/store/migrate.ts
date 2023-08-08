@@ -16,6 +16,7 @@ import {
   _defaultChatConfig,
   defaultModel,
   defaultUserMaxToken,
+  defaultUserMaxContext,
 } from '@constants/chat';
 import { officialAPIEndpoint } from '@constants/auth';
 import defaultPrompts from '@constants/prompt';
