@@ -51,7 +51,7 @@ const EditView = ({
           (enterToSubmit && !e.shiftKey)
         ) {
           e.preventDefault();
-          handleSaveAndSubmit();
+          handleGenerate();
           resetTextAreaHeight();
         }
       }
@@ -76,7 +76,7 @@ const EditView = ({
   };
 
   const { handleSubmit } = useSubmit();
-  const handleSaveAndSubmit = () => {
+  const handleGenerate = () => {
     if (useStore.getState().generating) return;
     const updatedChats: ChatInterface[] = JSON.parse(
       JSON.stringify(useStore.getState().chats),
@@ -140,7 +140,7 @@ const EditView = ({
       </div>
       <EditViewButtons
         sticky={sticky}
-        handleSaveAndSubmit={handleSaveAndSubmit}
+        handleGenerate={handleGenerate}
         handleSave={handleSave}
         setIsModalOpen={setIsModalOpen}
         setIsEdit={setIsEdit}
@@ -149,9 +149,9 @@ const EditView = ({
       {isModalOpen && (
         <PopupModal
           setIsModalOpen={setIsModalOpen}
-          title={t("warning") as string}
-          message={t("clearMessageWarning") as string}
-          handleConfirm={handleSaveAndSubmit}
+          title={t('warning') as string}
+          message={t('clearMessageWarning') as string}
+          handleConfirm={handleGenerate}
         />
       )}
     </>
@@ -161,14 +161,14 @@ const EditView = ({
 const EditViewButtons = memo(
   ({
     sticky = false,
-    handleSaveAndSubmit,
+    handleGenerate,
     handleSave,
     setIsModalOpen,
     setIsEdit,
     _setContent,
   }: {
     sticky?: boolean;
-    handleSaveAndSubmit: () => void;
+    handleGenerate: () => void;
     handleSave: () => void;
     setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
@@ -186,11 +186,24 @@ const EditViewButtons = memo(
               className={`btn relative mr-2 btn-primary ${
                 generating ? "cursor-not-allowed opacity-40" : ""
               }`}
-              onClick={handleSaveAndSubmit}
-              aria-label={t("saveAndSubmit") as string}
+              onClick={handleGenerate}
+              aria-label={t('generate') as string}
             >
-              <div className="flex items-center justify-center gap-2">
-                {t("saveAndSubmit")}
+              <div className='flex items-center justify-center gap-2'>
+                {t('generate')}
+              </div>
+            </button>
+          )}
+
+          {sticky || (
+            <button
+              className='btn relative mr-2 btn-primary'
+              onClick={() => {
+                !generating && setIsModalOpen(true);
+              }}
+            >
+              <div className='flex items-center justify-center gap-2'>
+                {t('generate')}
               </div>
             </button>
           )}
@@ -199,9 +212,9 @@ const EditViewButtons = memo(
             className={`btn relative mr-2 ${
               sticky
                 ? `btn-neutral ${
-                  generating ? "cursor-not-allowed opacity-40" : ""
-                }`
-                : "btn-primary"
+                    generating ? 'cursor-not-allowed opacity-40' : ''
+                  }`
+                : 'btn-neutral'
             }`}
             onClick={handleSave}
             aria-label={t("save") as string}
@@ -213,21 +226,7 @@ const EditViewButtons = memo(
 
           {sticky || (
             <button
-              className="btn relative mr-2 btn-neutral"
-              onClick={() => {
-                !generating && setIsModalOpen(true);
-              }}
-              aria-label={t("saveAndSubmit") as string}
-            >
-              <div className="flex items-center justify-center gap-2">
-                {t("saveAndSubmit")}
-              </div>
-            </button>
-          )}
-
-          {sticky || (
-            <button
-              className="btn relative btn-neutral"
+              className='btn relative btn-neutral'
               onClick={() => setIsEdit(false)}
               aria-label={t("cancel") as string}
             >
