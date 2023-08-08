@@ -1,32 +1,42 @@
-import { ShareGPTSubmitBodyInterface } from '@type/api';
-import { ConfigInterface, MessageInterface } from '@type/chat';
-import { isAzureEndpoint } from '@utils/api';
+import { modelMaxToken } from "@constants/chat";
+import countTokens from "@utils/messageUtils";
+import { ShareGPTSubmitBodyInterface } from "@type/api";
+import { ConfigInterface, MessageInterface } from "@type/chat";
+import { isAzureEndpoint } from "@utils/api";
 
 export const getChatCompletion = async (
   endpoint: string,
   messages: MessageInterface[],
   config: ConfigInterface,
   apiKey?: string,
-  customHeaders?: Record<string, string>
+  customHeaders?: Record<string, string>,
+  isTitleGen: boolean = false,
 ) => {
   const headers: HeadersInit = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     ...customHeaders,
   };
   if (apiKey) headers.Authorization = `Bearer ${apiKey}`;
 
   if (isAzureEndpoint(endpoint) && apiKey) {
-    headers['api-key'] = apiKey;
+    headers["api-key"] = apiKey;
 
-    const model = config.model === 'gpt-3.5-turbo' ? 'gpt-35-turbo' : config.model === 'gpt-3.5-turbo-16k' ? 'gpt-35-turbo-16k' : config.model;
+    const model = isTitleGen
+      ? "gpt-35-turbo"
+      : config.model === "gpt-3.5-turbo"
+      ? "gpt-35-turbo"
+      : config.model === "gpt-3.5-turbo-16k"
+      ? "gpt-35-turbo-16k"
+      : config.model;
 
-    const apiVersion = '2023-03-15-preview';
+    const apiVersion = "2023-03-15-preview";
 
-    const path = `openai/deployments/${model}/chat/completions?api-version=${apiVersion}`;
+    const path =
+      `openai/deployments/${model}/chat/completions?api-version=${apiVersion}`;
 
     if (!endpoint.endsWith(path)) {
-      if (!endpoint.endsWith('/')) {
-        endpoint += '/';
+      if (!endpoint.endsWith("/")) {
+        endpoint += "/";
       }
       endpoint += path;
     }
@@ -34,8 +44,21 @@ export const getChatCompletion = async (
 
   const { max_context, ...restConfig } = config;
 
+  if (isTitleGen) {
+    restConfig.model = "gpt-3.5-turbo";
+  }
+
+  let tokenCount = 0;
+  for (let i = 0; i < messages.length; i++) {
+    tokenCount += countTokens([messages[i]], restConfig.model);
+  }
+
+  if (modelMaxToken[restConfig.model] < restConfig.max_tokens + tokenCount) {
+    restConfig.max_tokens = modelMaxToken[restConfig.model] - tokenCount;
+  }
+
   const response = await fetch(endpoint, {
-    method: 'POST',
+    method: "POST",
     headers,
     body: JSON.stringify({
       messages,
@@ -53,26 +76,31 @@ export const getChatCompletionStream = async (
   messages: MessageInterface[],
   config: ConfigInterface,
   apiKey?: string,
-  customHeaders?: Record<string, string>
+  customHeaders?: Record<string, string>,
 ) => {
   const headers: HeadersInit = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     ...customHeaders,
   };
   if (apiKey) headers.Authorization = `Bearer ${apiKey}`;
 
   if (isAzureEndpoint(endpoint) && apiKey) {
-    headers['api-key'] = apiKey;
+    headers["api-key"] = apiKey;
 
-    const model = config.model === 'gpt-3.5-turbo' ? 'gpt-35-turbo' : config.model === 'gpt-3.5-turbo-16k' ? 'gpt-35-turbo-16k' : config.model;
+    const model = config.model === "gpt-3.5-turbo"
+      ? "gpt-35-turbo"
+      : config.model === "gpt-3.5-turbo-16k"
+      ? "gpt-35-turbo-16k"
+      : config.model;
 
-    const apiVersion = '2023-03-15-preview';
+    const apiVersion = "2023-03-15-preview";
 
-    const path = `openai/deployments/${model}/chat/completions?api-version=${apiVersion}`;
+    const path =
+      `openai/deployments/${model}/chat/completions?api-version=${apiVersion}`;
 
     if (!endpoint.endsWith(path)) {
-      if (!endpoint.endsWith('/')) {
-        endpoint += '/';
+      if (!endpoint.endsWith("/")) {
+        endpoint += "/";
       }
       endpoint += path;
     }
@@ -80,8 +108,17 @@ export const getChatCompletionStream = async (
 
   const { max_context, ...restConfig } = config;
 
+  let tokenCount = 0;
+  for (let i = 0; i < messages.length; i++) {
+    tokenCount += countTokens([messages[i]], restConfig.model);
+  }
+
+  if (modelMaxToken[restConfig.model] < restConfig.max_tokens + tokenCount) {
+    restConfig.max_tokens = modelMaxToken[restConfig.model] - tokenCount;
+  }
+
   const response = await fetch(endpoint, {
-    method: 'POST',
+    method: "POST",
     headers,
     body: JSON.stringify({
       messages,
@@ -91,14 +128,14 @@ export const getChatCompletionStream = async (
   });
   if (response.status === 404 || response.status === 405) {
     const text = await response.text();
-    if (text.includes('model_not_found')) {
+    if (text.includes("model_not_found")) {
       throw new Error(
         text +
-          '\nMessage from Better ChatGPT:\nPlease ensure that you have access to the GPT-4 API!'
+          "\nMessage from Better ChatGPT:\nPlease ensure that you have access to the GPT-4 API!",
       );
     } else {
       throw new Error(
-        'Message from Better ChatGPT:\nInvalid API endpoint! We recommend you to check your free API endpoint.'
+        "Message from Better ChatGPT:\nInvalid API endpoint! We recommend you to check your free API endpoint.",
       );
     }
   }
@@ -106,11 +143,11 @@ export const getChatCompletionStream = async (
   if (response.status === 429 || !response.ok) {
     const text = await response.text();
     let error = text;
-    if (text.includes('insufficient_quota')) {
+    if (text.includes("insufficient_quota")) {
       error +=
-        '\nMessage from Better ChatGPT:\nWe recommend changing your API endpoint or API key';
+        "\nMessage from Better ChatGPT:\nWe recommend changing your API endpoint or API key";
     } else if (response.status === 429) {
-      error += '\nRate limited!';
+      error += "\nRate limited!";
     }
     throw new Error(error);
   }
@@ -120,16 +157,16 @@ export const getChatCompletionStream = async (
 };
 
 export const submitShareGPT = async (body: ShareGPTSubmitBodyInterface) => {
-  const request = await fetch('https://sharegpt.com/api/conversations', {
+  const request = await fetch("https://sharegpt.com/api/conversations", {
     body: JSON.stringify(body),
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
-    method: 'POST',
+    method: "POST",
   });
 
   const response = await request.json();
   const { id } = response;
   const url = `https://shareg.pt/${id}`;
-  window.open(url, '_blank');
+  window.open(url, "_blank");
 };

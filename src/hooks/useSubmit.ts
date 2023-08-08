@@ -43,6 +43,8 @@ const useSubmit = () => {
           message,
           _defaultChatConfig,
           apiKey,
+          undefined,
+          true,
         );
       }
     } catch (error: unknown) {
