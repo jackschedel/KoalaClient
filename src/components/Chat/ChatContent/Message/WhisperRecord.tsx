@@ -48,8 +48,7 @@ const WhisperRecord = ({
             ? " "
             : "";
         let paddedEnd =
-          (!endContent.startsWith(" ") && !endContent.startsWith("\n") &&
-              endContent.length > 0)
+          (!endContent.startsWith(" ") && !endContent.startsWith("\n"))
             ? " "
             : "";
 
