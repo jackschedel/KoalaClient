@@ -142,9 +142,13 @@ export interface LocalStorageInterfaceV6ToV7 {
   hideSideMenu: boolean;
 }
 
-export interface LocalStorageInterfaceV7oV8
-  extends LocalStorageInterfaceV6ToV7 {
+export interface LocalStorageInterfaceV7ToV8 {
+  chats: ChatInterface[];
   foldersName: string[];
   foldersExpanded: boolean[];
   folders: FolderCollection;
+}
+
+export interface LocalStorageInterfaceV8ToV9 {
+  chats: ChatInterface[];
 }
