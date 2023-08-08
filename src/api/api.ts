@@ -32,13 +32,14 @@ export const getChatCompletion = async (
     }
   }
 
+  const { max_context, ...restConfig } = config;
+
   const response = await fetch(endpoint, {
     method: 'POST',
     headers,
     body: JSON.stringify({
       messages,
-      ...config,
-      max_tokens: undefined,
+      ...restConfig,
     }),
   });
   if (!response.ok) throw new Error(await response.text());
@@ -77,13 +78,14 @@ export const getChatCompletionStream = async (
     }
   }
 
+  const { max_context, ...restConfig } = config;
+
   const response = await fetch(endpoint, {
     method: 'POST',
     headers,
     body: JSON.stringify({
       messages,
-      ...config,
-      max_tokens: undefined,
+      ...restConfig,
       stream: true,
     }),
   });
