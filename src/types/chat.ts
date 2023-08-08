@@ -21,6 +21,7 @@ export interface ChatInterface {
 export interface ConfigInterface {
   model: ModelOptions;
   max_tokens: number;
+  max_context: number;
   temperature: number;
   presence_penalty: number;
   top_p: number;
@@ -141,9 +142,13 @@ export interface LocalStorageInterfaceV6ToV7 {
   hideSideMenu: boolean;
 }
 
-export interface LocalStorageInterfaceV7oV8
-  extends LocalStorageInterfaceV6ToV7 {
+export interface LocalStorageInterfaceV7ToV8 {
+  chats: ChatInterface[];
   foldersName: string[];
   foldersExpanded: boolean[];
   folders: FolderCollection;
+}
+
+export interface LocalStorageInterfaceV8ToV9 {
+  chats: ChatInterface[];
 }

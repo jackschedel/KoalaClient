@@ -72,7 +72,7 @@ const useSubmit = () => {
 
       const messages = limitMessageTokens(
         chats[currentChatIndex].messages,
-        chats[currentChatIndex].config.max_tokens,
+        chats[currentChatIndex].config.max_context - chats[currentChatIndex].config.max_tokens,
         chats[currentChatIndex].config.model
       );
       if (messages.length === 0) throw new Error('Message exceed max token!');
