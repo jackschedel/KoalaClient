@@ -9,7 +9,7 @@ const ConfirmEditSubmissionToggle = () => {
     const setConfirmEditSubmission = useStore((state) => state.setConfirmEditSubmission);
 
     const [isChecked, setIsChecked] = useState<boolean>(
-        useStore.getState().confirmEditSubmit
+        useStore.getState().confirmEditSubmission
     );
 
     useEffect(() => {

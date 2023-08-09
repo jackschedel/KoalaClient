@@ -14,7 +14,7 @@ export interface ConfigSlice {
   defaultSystemMessage: string;
   hideSideMenu: boolean;
   enterToSubmit: boolean;
-  confirmEditSubmit: boolean;
+  confirmEditSubmission: boolean;
   inlineLatex: boolean;
   markdownMode: boolean;
   countTotalTokens: boolean;
@@ -29,7 +29,7 @@ export interface ConfigSlice {
   setHideMenuOptions: (hideMenuOptions: boolean) => void;
   setHideSideMenu: (hideSideMenu: boolean) => void;
   setEnterToSubmit: (enterToSubmit: boolean) => void;
-  setConfirmEditSubmission: (confirmEditSubmit: boolean) => void;
+  setConfirmEditSubmission: (confirmEditSubmission: boolean) => void;
   setInlineLatex: (inlineLatex: boolean) => void;
   setMarkdownMode: (markdownMode: boolean) => void;
   setCountTotalTokens: (countTotalTokens: boolean) => void;
@@ -44,7 +44,7 @@ export const createConfigSlice: StoreSlice<ConfigSlice> = (set, get) => ({
   autoTitle: false,
   closeToTray: false,
   enterToSubmit: true,
-  confirmEditSubmit: true,
+  confirmEditSubmission: true,
   advancedMode: true,
   defaultChatConfig: _defaultChatConfig,
   defaultSystemMessage: _defaultSystemMessage,
@@ -112,10 +112,10 @@ export const createConfigSlice: StoreSlice<ConfigSlice> = (set, get) => ({
       enterToSubmit: enterToSubmit,
     }));
   },
-  setConfirmEditSubmission: (confirmEditSubmit: boolean) => {
+  setConfirmEditSubmission: (confirmEditSubmission: boolean) => {
     set((prev: ConfigSlice) => ({
       ...prev,
-      confirmEditSubmit: confirmEditSubmit,
+      confirmEditSubmission: confirmEditSubmission,
     }))
   },
   setInlineLatex: (inlineLatex: boolean) => {
