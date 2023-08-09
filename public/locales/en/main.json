@@ -25,9 +25,9 @@
   "setting": "Settings",
   "image": "Image",
   "autoTitle": "Auto generate title",
-  "closeToTray": "Minimize to Tray on Close",
+  "closeToTray": "Minimize to tray on close",
   "advancedMode": "Advanced mode",
-  "inlineLatex": "Inline Latex",
+  "inlineLatex": "Inline latex",
   "prompt": "Prompt",
   "promptLibrary": "Prompt Library",
   "name": "Name",
@@ -46,5 +46,5 @@
   "cloned": "Cloned",
   "enterToSubmit": "Enter to submit",
   "submitPlaceholder": "Type a message or click [/] for prompts...",
-  "confirmEditSubmission": "Require confirmation on edit submit"
+  "confirmEditSubmission": "Require confirmation on edit"
 }
