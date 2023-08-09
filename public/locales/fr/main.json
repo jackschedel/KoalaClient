@@ -10,7 +10,7 @@
   "import": "Importer",
   "export": "Exporter",
   "host": "Hosted by Jack Schedel",
-  "author": "Créé par Jing Hua",
+  "originalRepo": "Original Parent Repo by Jing Hua",
   "api": "API",
   "personal": "Personnel",
   "free": "Gratuit",

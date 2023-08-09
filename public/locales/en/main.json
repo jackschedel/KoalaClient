@@ -11,7 +11,7 @@
   "export": "Export",
   "data": "Data",
   "host": "Hosted by Jack Schedel",
-  "author": "Original Repo by Jing Hua",
+  "originalRepo": "Original Parent Repo by Jing Hua",
   "api": "Configure API",
   "personal": "Personal",
   "free": "Free",

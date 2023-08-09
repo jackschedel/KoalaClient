@@ -47,7 +47,7 @@ const createGoogleCloudStorage = <S>(): PersistStorage<S> | undefined => {
       const blob = new Blob([JSON.stringify(newValue)], {
         type: 'application/json',
       });
-      const file = new File([blob], 'better-chatgpt.json', {
+      const file = new File([blob], 'koala-client.json', {
         type: 'application/json',
       });
 

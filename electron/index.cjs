@@ -22,7 +22,7 @@ const instanceLock = app.requestSingleInstanceLock();
 
 if (require("electron-squirrel-startup")) app.quit();
 
-const PORT = isDev ? "5173" : "51735";
+const PORT = isDev ? "5174" : "51736";
 
 contextMenu({
   prepend: (defaultActions, parameters, browserWindow) => [],
@@ -132,7 +132,7 @@ const createTray = (window) => {
       win.focus();
     }
   });
-  winTray.setToolTip("Better ChatGPT");
+  winTray.setToolTip("KoalaClient");
   winTray.setContextMenu(contextMenu);
 
   return winTray;

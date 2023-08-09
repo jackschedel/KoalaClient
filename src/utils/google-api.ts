@@ -30,7 +30,7 @@ export const stateToFile = () => {
   const blob = new Blob([JSON.stringify(partializedState)], {
     type: 'application/json',
   });
-  const file = new File([blob], 'better-chatgpt.json', {
+  const file = new File([blob], 'koala-client.json', {
     type: 'application/json',
   });
 
