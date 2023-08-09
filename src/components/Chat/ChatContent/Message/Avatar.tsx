@@ -28,7 +28,7 @@ const AssistantAvatar = () => {
   return (
     <div
       className='relative h-[30px] w-[30px] p-1 rounded-sm text-white flex items-center justify-center'
-      style={{ backgroundColor: 'rgb(16, 163, 127)' }}
+      style={{ backgroundColor: 'rgb(136, 122, 213)' }}
     >
       <svg
         width='41'

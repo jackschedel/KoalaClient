@@ -24,7 +24,7 @@ const MobileBar = () => {
       <div className='sticky top-0 left-0 w-full z-50 flex items-center border-b border-white/20 bg-gray-800 pl-1 pt-1 text-gray-200 sm:pl-3'>
          <button
             type='button'
-            className='-ml-0.5 -mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white dark:hover:text-white'
+            className='-ml-0.5 -mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-md hover:text-gray-900 dark:hover:text-white'
             onClick={() => {
                setHideSideMenu(!hideSideMenu);
             }}
@@ -32,7 +32,7 @@ const MobileBar = () => {
             <span className='sr-only'>Open sidebar</span>
             <MenuIcon />
          </button>
-         <h1 className='flex-1 text-center text-base font-normal px-2 py-0 max-h-20 overflow-y-auto'>
+         <h1 className='flex-1 text-center text-base font-normal px-2 py-0 max-h-20 overflow-y-auto dark:text-white'>
             {chatTitle}
          </h1>
          <button
@@ -46,7 +46,7 @@ const MobileBar = () => {
                if (!generating) addChat();
             }}
          >
-            <PlusIcon className='h-6 w-6' />
+            <PlusIcon className='h-6 w-6 dark:hover:text-white' />
          </button>
       </div>
    );

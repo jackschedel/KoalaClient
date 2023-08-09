@@ -31,7 +31,7 @@ const Message = React.memo(
 
       return (
          <div
-        className={`w-full border-b border-black/10 dark:border-gray-900/50 text-gray-800 dark:text-gray-100 group ${
+        className={`w-full border-b border-black/10 dark:border-gray-900/50 text-gray-800 dark:text-white group ${
           backgroundStyle[messageIndex % 2]
                }`}
          >

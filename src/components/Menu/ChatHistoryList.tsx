@@ -164,7 +164,7 @@ const ChatHistoryList = () => {
       onDragEnd={handleDragEnd}
     >
       <ChatSearch filter={filter} setFilter={setFilter} />
-      <div className='flex flex-col gap-2 text-gray-100 text-sm'>
+      <div className='flex flex-col gap-2 text-white text-sm'>
         {Object.keys(chatFolders).map((folderId) => (
           <ChatFolder
             folderChats={chatFolders[folderId]}

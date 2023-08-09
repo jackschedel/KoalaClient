@@ -74,7 +74,7 @@
     @apply w-4;
     @apply h-4;
     @apply rounded-full;
-    background: rgba(16, 163, 127);
+    background: rgb(136, 122, 213);
   }
 
   ::-webkit-scrollbar {
@@ -192,7 +192,7 @@
   .btn-primary {
     --tw-bg-opacity: 1;
     --tw-text-opacity: 1;
-    background-color: rgba(16, 163, 127, var(--tw-bg-opacity));
+    background-color: rgba(136, 122, 213, var(--tw-bg-opacity));
     color: rgba(255, 255, 255, var(--tw-text-opacity));
   }
 
