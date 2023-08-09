@@ -6,6 +6,8 @@
 
 :root {
   height: 100%;
+  /* NOTE: ALSO NEEDS TO BE CHANGED ON TAILWIND CONFIG FILE */
+  
   /* 10% darker/lighter using https://www.colors.tools/lighten-and-darken/ */
   --accent-color-light: 82, 124, 202;
   --accent-color: 55, 98, 178;

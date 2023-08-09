@@ -53,19 +53,17 @@ module.exports = {
         },
       },
       colors: {
-        gray: {
-          50: '#b0b0c0',
-          100: '#a0a0b0',
-          200: '#9090a0',
-          300: '#808090',
-          400: '#707080',
-          500: '#303038',
-          600: '#282830',
-          650: '#202028',
-          700: '#181820',
-          800: '#101018',
-          850: '#080810',
-          900: '#000008',
+        // 10% darker/lighter using https://www.colors.tools/lighten-and-darken/
+        // NOTE: ALSO NEEDS TO BE CHANGED ON CSS FILE
+        accent: {
+          light: '#527cca',
+          base: '#3762b2',
+          dark: '#2b4d8b',
+        },
+        bg: {
+          light: '#424242',
+          base: '#282828',
+          dark: '#0e0e0e',
         },
       },
     },
