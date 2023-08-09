@@ -11,9 +11,9 @@ import useStore from '@store/store';
 
 const ChatHistoryClass = {
    normal:
-      'flex py-2 px-2 items-center gap-3 relative rounded-md bg-neutral-light bg-opacity-40 hover:bg-opacity-20 hover:bg-custom-white break-all hover:pr-4 group transition-opacity',
+      'flex py-2 px-2 items-center gap-3 relative rounded-md bg-opacity-0 hover:bg-opacity-20 hover:bg-custom-white break-all hover:pr-4 group transition-opacity',
    active:
-      'flex py-2 px-2 items-center gap-3 relative rounded-md break-all pr-14 bg-accent-dark group hover:bg-accent-base hover:bg-opacity-80 transition-opacity',
+      'flex py-2 px-2 items-center gap-3 relative rounded-md break-all pr-14 bg-accent-dark bg-opacity-40 group hover:bg-opacity-100 transition-opacity',
 };
 
 const ChatHistory = React.memo(
@@ -128,14 +128,14 @@ const ChatHistory = React.memo(
             {isDelete || isEdit ? (
               <>
                 <button
-                  className='p-1 hover:text-white'
+                  className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded'
                   onClick={handleTick}
                   aria-label='confirm'
                 >
                   <TickIcon />
                 </button>
                 <button
-                  className='p-1 hover:text-white'
+                  className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded'
                   onClick={handleCross}
                   aria-label='cancel'
                 >
@@ -145,14 +145,14 @@ const ChatHistory = React.memo(
             ) : (
               <>
                 <button
-                  className='p-1 hover:text-white'
+                  className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded'
                   onClick={() => setIsEdit(true)}
                   aria-label='edit chat title'
                 >
                   <EditIcon />
                 </button>
                 <button
-                  className='p-1 hover:text-white'
+                  className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded'
                   onClick={() => setIsDelete(true)}
                   aria-label='delete chat'
                 >

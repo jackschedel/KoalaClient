@@ -159,8 +159,8 @@ const ChatFolder = ({
       <div
         style={{ background: color || '' }}
         className={`${
-          color ? '' : 'hover:bg-neutral-dark'
-        } transition-colors flex py-2 pl-2 pr-1 items-center gap-3 relative rounded-md break-all cursor-pointer parent-sibling`}
+          color ? '' : 'hover:bg-custom-white'
+        } hover:bg-opacity-20 transition-colors flex py-2 pl-2 pr-1 items-center gap-3 relative rounded-md break-all cursor-pointer parent-sibling`}
         onClick={toggleExpanded}
         ref={folderRef}
         onMouseEnter={() => {
@@ -233,7 +233,7 @@ const ChatFolder = ({
                 ref={paletteRef}
               >
                 <button
-                  className='p-1 hover:text-white'
+                  className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded'
                   onClick={() => {
                     setShowPalette((prev) => !prev);
                   }}
@@ -269,14 +269,14 @@ const ChatFolder = ({
               </div>
 
               <button
-                className='p-1 hover:text-white md:hidden group-hover/folder:md:inline'
+                className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded md:hidden group-hover/folder:md:inline'
                 onClick={() => setIsEdit(true)}
                 aria-label='edit folder title'
               >
                 <EditIcon />
               </button>
               <button
-                className='p-1 hover:text-white md:hidden group-hover/folder:md:inline'
+                className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded md:hidden group-hover/folder:md:inline'
                 onClick={() => setIsDelete(true)}
                 aria-label='delete folder'
               >

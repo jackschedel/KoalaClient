@@ -11,7 +11,7 @@ const Config = () => {
   return (
     <>
       <button
-        className='btn btn-neutral gap-3'
+        className='btn btn-neutral gap-3 bg-neutral-light'
         id='api-menu'
         onClick={() => setIsModalOpen(true)}
       >

@@ -34,7 +34,7 @@ const SettingsMenu = () => {
   return (
     <>
       <a
-        className='flex py-2 px-2 items-center gap-3 rounded-md hover:bg-neutral-base/10 transition-colors duration-200 text-white cursor-pointer text-sm'
+        className='flex py-2 px-2 items-center gap-3 rounded-md hover:bg-custom-white/20 transition-colors duration-200 text-white cursor-pointer text-sm'
         onClick={() => {
           setIsModalOpen(true);
         }}
@@ -49,7 +49,6 @@ const SettingsMenu = () => {
         >
           <div className='px-10 py-3 mx-5 border-b border-custom-white flex flex-col items-center gap-2'>
             <LanguageSelector />
-            <ThemeSwitcher />
             <ImportExportChat />
             <Api />
             <ClearConversation />

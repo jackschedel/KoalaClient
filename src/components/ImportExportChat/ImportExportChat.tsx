@@ -14,7 +14,7 @@ const ImportExportChat = () => {
 
   return (
     <>
-      <button className='btn btn-neutral gap-3'
+      <button className='btn btn-neutral gap-3 bg-neutral-light'
         onClick={() => {
           setIsModalOpen(true);
         }}

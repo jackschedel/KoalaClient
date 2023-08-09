@@ -11,9 +11,9 @@ const LanguageSelector = () => {
 
   const [dropDown, setDropDown] = useState<boolean>(false);
   return (
-    <div className='prose relative pb-4'>
+    <div className='prose relative'>
       <button
-        className='btn btn-neutral btn-small flex justify-between p-2 gap-3' 
+        className='btn btn-neutral btn-small flex justify-between p-2 gap-3 bg-neutral-light' 
         type='button'
         onClick={() => setDropDown((prev) => !prev)}
         aria-label='language selector'
@@ -27,7 +27,7 @@ const LanguageSelector = () => {
         id='dropdown'
         className={`${
           dropDown ? '' : 'hidden'
-        } absolute top-100 bottom-100 z-10 bg-white rounded-lg shadow-xl border-b border-black/10/50 text-neutral-dark group opacity-95 w-36`}
+        } absolute top-100 bottom-100 z-10 bg-neutral-light shadow-xl rounded-lg border border-neutral-light text-neutral-dark group w-36`}
       >
         <ul
           className='text-sm text-neutral-base p-0 m-0 max-h-72 overflow-auto'
@@ -35,7 +35,7 @@ const LanguageSelector = () => {
         >
           {selectableLanguages.map((lang) => (
             <li
-              className='px-4 py-2 hover:bg-custom-white cursor-pointer'
+              className='px-4 py-2 hover:bg-neutral-dark cursor-pointer text-custom-white'
               onClick={() => {
                 i18n.changeLanguage(lang);
                 setDropDown(false);
