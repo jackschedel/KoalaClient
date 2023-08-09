@@ -181,12 +181,4 @@ const ChatHistoryList = () => {
   );
 };
 
-const ShowMoreButton = () => {
-  return (
-    <button className='btn relative btn-dark btn-small m-auto mb-2'>
-      <div className='flex items-center justify-center gap-2'>Show more</div>
-    </button>
-  );
-};
-
 export default ChatHistoryList;

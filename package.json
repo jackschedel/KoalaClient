@@ -6,7 +6,7 @@
   "homepage": "./",
   "main": "electron/index.cjs",
   "author": "Jack Schedel <client@koaladev.io>",
-  "description": "Play and chat smarter with KoalaClient - an amazing open-source web app with a better UI for exploring OpenAI's ChatGPT API!",
+  "description": "Cutting edge GPT API client with all the features you could want to use in your workflow",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

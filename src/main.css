@@ -4,6 +4,19 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  height: 100%;
+  /* 10% darker/lighter using https://www.colors.tools/lighten-and-darken/ */
+  --accent-color-light: 82, 124, 202;
+  --accent-color: 55, 98, 178;
+  --accent-color-dark: 43, 77, 139;
+
+  /* 10% darker/lighter using https://www.colors.tools/lighten-and-darken/ */
+  --custom-bg-light: 66, 66, 66;
+  --custom-bg: 40, 40, 40;
+  --custom-bg-dark: 14, 14, 14;
+}
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -12,17 +25,13 @@
   body,
   html {
     height: 100%;
+    --tw-bg-opacity: 1;
+    background-color: rgba(var(--custom-bg), var(--tw-bg-opacity));
   }
 
   body {
     line-height: inherit;
     margin: 0;
-  }
-
-  .dark body,
-  .dark html {
-    --tw-bg-opacity: 1;
-    background-color: rgba(52, 53, 65, var(--tw-bg-opacity));
   }
 
   #root {
@@ -37,7 +46,8 @@
     width: 100%;
   }
   .markdown th {
-    background-color: rgba(236, 236, 241, 0.2);
+    background-color: rgba(var(--custom-bg-dark), 1.0);
+    color: rgba(255, 255, 255, 0.9);
     border-bottom-width: 1px;
     border-left-width: 1px;
     border-top-width: 1px;
@@ -54,6 +64,8 @@
     border-bottom-width: 1px;
     border-left-width: 1px;
     padding: 0.25rem 0.75rem;
+    background-color: rgba(var(--custom-bg-light), 1.0);
+    color: rgba(255, 255, 255, 0.7);
   }
   .markdown td:last-child {
     border-right-width: 1px;
@@ -74,7 +86,7 @@
     @apply w-4;
     @apply h-4;
     @apply rounded-full;
-    background: rgb(136, 122, 213);
+    background: rgb(var(--accent-color));
   }
 
   ::-webkit-scrollbar {
@@ -104,15 +116,6 @@
 
   ::-webkit-scrollbar-thumb:hover {
     background-color: rgba(217, 217, 227, 0.6);
-  }
-
-  .dark ::-webkit-scrollbar-thumb {
-    --tw-bg-opacity: 1;
-    background-color: rgba(86, 88, 105, var(--tw-bg-opacity));
-  }
-
-  .dark ::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(217, 217, 227, 0.8);
   }
 
   ::-webkit-scrollbar-track {
@@ -152,53 +155,29 @@
   .btn-neutral {
     --tw-bg-opacity: 1;
     --tw-text-opacity: 1;
-    background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
+    background-color: rgba(var(--custom-bg-light), var(--tw-bg-opacity));
     border-color: rgba(0, 0, 0, 0.1);
     border-width: 1px;
-    color: rgba(64, 65, 79, var(--tw-text-opacity));
+    color: rgba(255, 255, 255, var(--tw-text-opacity));
     font-size: 0.875rem;
     line-height: 1.25rem;
   }
 
   .btn-neutral:hover {
     --tw-bg-opacity: 1;
-    background-color: rgba(236, 236, 241, var(--tw-bg-opacity));
-  }
-
-  .dark .btn-neutral {
-    --tw-border-opacity: 1;
-    --tw-bg-opacity: 1;
-    --tw-text-opacity: 1;
-    background-color: rgba(52, 53, 65, var(--tw-bg-opacity));
-    border-color: rgba(86, 88, 105, var(--tw-border-opacity));
-    color: rgba(217, 217, 227, var(--tw-text-opacity));
-  }
-
-  .dark .btn-neutral:hover {
-    --tw-bg-opacity: 1;
-    background-color: rgba(64, 65, 79, var(--tw-bg-opacity));
-  }
-
-  .btn-dark {
-    --tw-border-opacity: 1;
-    --tw-bg-opacity: 1;
-    --tw-text-opacity: 1;
-    background-color: rgba(52, 53, 65, var(--tw-bg-opacity));
-    border-color: rgba(86, 88, 105, var(--tw-border-opacity));
-    border-width: 1px;
-    color: rgba(255, 255, 255, var(--tw-text-opacity));
+    background-color: rgba(var(--custom-bg-dark), var(--tw-bg-opacity));
   }
 
   .btn-primary {
     --tw-bg-opacity: 1;
     --tw-text-opacity: 1;
-    background-color: rgba(136, 122, 213, var(--tw-bg-opacity));
+    background-color: rgba(var(--accent-color), var(--tw-bg-opacity));
     color: rgba(255, 255, 255, var(--tw-text-opacity));
   }
 
   .btn-primary:hover {
     --tw-bg-opacity: 1;
-    background-color: rgba(26, 127, 100, var(--tw-bg-opacity));
+    background-color: rgba(var(--accent-color-dark), var(--tw-bg-opacity));
   }
 
   .btn-small {
