@@ -9,14 +9,17 @@
   /* NOTE: ALSO NEEDS TO BE CHANGED ON TAILWIND CONFIG FILE */
   
   /* 10% darker/lighter using https://www.colors.tools/lighten-and-darken/ */
-  --accent-color-light: 82, 124, 202;
-  --accent-color: 55, 98, 178;
-  --accent-color-dark: 43, 77, 139;
+  --accent-light: 121, 154, 214;
+  --accent-base: 55, 98, 178;
+  --accent-dark: 31, 55, 100;
 
   /* 10% darker/lighter using https://www.colors.tools/lighten-and-darken/ */
-  --custom-bg-light: 66, 66, 66;
-  --custom-bg: 40, 40, 40;
-  --custom-bg-dark: 14, 14, 14;
+  --neutral-light: 66, 66, 66;
+  --neutral-base: 40, 40, 40;
+  --neutral-dark: 31, 31, 31;
+
+  --custom-white: 255, 255, 255;
+  --custom-black: 0, 0, 0;
 }
 
 @layer base {
@@ -28,7 +31,7 @@
   html {
     height: 100%;
     --tw-bg-opacity: 1;
-    background-color: rgba(var(--custom-bg), var(--tw-bg-opacity));
+    background-color: rgba(var(--neutral-base), var(--tw-bg-opacity));
   }
 
   body {
@@ -40,6 +43,22 @@
     height: 100%;
   }
 
+  .markdown * {
+    color: rgba(var(--custom-white), 1.0);
+  }
+
+  .markdown h1 {
+    color: rgba(var(--custom-white), 1.0);
+  }
+
+  .markdown h2 {
+    color: rgba(var(--custom-white), 1.0);
+  }
+
+  .markdown code {
+    color: rgba(var(--custom-white), 1.0);
+  }
+
   .markdown table {
     --tw-border-spacing-x: 0px;
     --tw-border-spacing-y: 0px;
@@ -48,13 +67,14 @@
     width: 100%;
   }
   .markdown th {
-    background-color: rgba(var(--custom-bg-dark), 1.0);
-    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(var(--neutral-dark), 1.0);
+    color: rgba(var(--custom-white), 0.9);
     border-bottom-width: 1px;
     border-left-width: 1px;
     border-top-width: 1px;
     padding: 0.25rem 0.75rem;
   }
+
   .markdown th:first-child {
     border-top-left-radius: 0.375rem;
   }
@@ -66,8 +86,8 @@
     border-bottom-width: 1px;
     border-left-width: 1px;
     padding: 0.25rem 0.75rem;
-    background-color: rgba(var(--custom-bg-light), 1.0);
-    color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(var(--neutral-light), 1.0);
+    color: rgba(var(--custom-white), 0.7);
   }
   .markdown td:last-child {
     border-right-width: 1px;
@@ -88,7 +108,7 @@
     @apply w-4;
     @apply h-4;
     @apply rounded-full;
-    background: rgb(var(--accent-color));
+    background: rgb(var(--accent-base));
   }
 
   ::-webkit-scrollbar {
@@ -137,7 +157,7 @@
   }
 
   a.link {
-    @apply underline dark:hover:text-white hover:text-black;
+    @apply underline hover:text-black;
   }
 }
 
@@ -157,29 +177,28 @@
   .btn-neutral {
     --tw-bg-opacity: 1;
     --tw-text-opacity: 1;
-    background-color: rgba(var(--custom-bg-light), var(--tw-bg-opacity));
-    border-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(var(--neutral-light), var(--tw-bg-opacity));
     border-width: 1px;
-    color: rgba(255, 255, 255, var(--tw-text-opacity));
+    color: rgba(var(--custom-white), var(--tw-text-opacity));
     font-size: 0.875rem;
     line-height: 1.25rem;
   }
 
   .btn-neutral:hover {
-    --tw-bg-opacity: 1;
-    background-color: rgba(var(--custom-bg-dark), var(--tw-bg-opacity));
+    --tw-bg-opacity: 1.0;
+    background-color: rgba(var(--neutral-dark), var(--tw-bg-opacity));
   }
 
   .btn-primary {
     --tw-bg-opacity: 1;
     --tw-text-opacity: 1;
-    background-color: rgba(var(--accent-color), var(--tw-bg-opacity));
+    background-color: rgba(var(--accent-base), var(--tw-bg-opacity));
     color: rgba(255, 255, 255, var(--tw-text-opacity));
   }
 
   .btn-primary:hover {
     --tw-bg-opacity: 1;
-    background-color: rgba(var(--accent-color-dark), var(--tw-bg-opacity));
+    background-color: rgba(var(--accent-dark), var(--tw-bg-opacity));
   }
 
   .btn-small {

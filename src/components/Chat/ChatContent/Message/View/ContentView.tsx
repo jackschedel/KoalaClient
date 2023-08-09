@@ -105,7 +105,7 @@ const ContentView = memo(
 
       return (
          <>
-            <div className='markdown prose w-full md:max-w-full break-words dark:prose-invert dark share-gpt-message'>
+            <div className='markdown prose w-full md:max-w-full break-words dark share-gpt-message'>
                {markdownMode ? (
                   <ReactMarkdown
                      remarkPlugins={[
@@ -132,7 +132,7 @@ const ContentView = memo(
                      {content}
                   </ReactMarkdown>
                ) : (
-                  <span className='whitespace-pre-wrap'>{content}</span>
+                  <span className='whitespace-pre-wrap text-white'>{content}</span>
                )}
             </div>
         <div className='flex justify-end gap-2 w-full mt-2'>

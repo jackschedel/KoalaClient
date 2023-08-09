@@ -97,8 +97,8 @@ const PromptLibraryMenuPopUp = ({
       setIsModalOpen={setIsModalOpen}
       handleConfirm={handleSave}
     >
-      <div className='p-6 border-b border-gray-200 dark:border-gray-600 w-[90vw] max-w-full text-sm text-gray-900 dark:text-gray-300'>
-        <div className='border px-4 py-2 rounded border-gray-200 dark:border-gray-600'>
+      <div className='p-6 border-b border-gray-200 w-[90vw] max-w-full text-sm text-gray-900'>
+        <div className='border px-4 py-2 rounded border-gray-200'>
           <ImportPrompt />
           <ExportPrompt />
         </div>

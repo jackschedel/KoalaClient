@@ -8,11 +8,11 @@ import { Role } from '@type/chat';
 import RoleSelector from './RoleSelector';
 
 // const backgroundStyle: { [role in Role]: string } = {
-//   user: 'dark:bg-gray-800',
-//   assistant: 'bg-gray-50 dark:bg-gray-650',
-//   system: 'bg-gray-50 dark:bg-gray-650',
+//   user: 'bg-gray-800',
+//   assistant: 'bg-gray-50',
+//   system: 'bg-gray-50',
 // };
-const backgroundStyle = ['dark:bg-gray-800', 'bg-gray-50 dark:bg-gray-650'];
+const backgroundStyle = ['bg-neutral-light', 'bg-neutral-base'];
 
 const Message = React.memo(
    ({
@@ -31,7 +31,7 @@ const Message = React.memo(
 
       return (
          <div
-        className={`w-full border-b border-black/10 dark:border-gray-900/50 text-gray-800 dark:text-white group ${
+        className={`w-full border-b border-black/10/50 text-gray-800 group ${
           backgroundStyle[messageIndex % 2]
                }`}
          >

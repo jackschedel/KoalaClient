@@ -47,7 +47,7 @@ const SettingsMenu = () => {
           title={t('setting') as string}
           cancelButton={false}
         >
-          <div className='px-10 py-3 mx-5 border-b border-gray-200 dark:border-gray-600 flex flex-col items-center gap-2'>
+          <div className='px-10 py-3 mx-5 border-b border-gray-200 flex flex-col items-center gap-2'>
             <LanguageSelector />
             <ThemeSwitcher />
             <ImportExportChat />

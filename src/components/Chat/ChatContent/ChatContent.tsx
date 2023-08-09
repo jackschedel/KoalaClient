@@ -50,13 +50,13 @@ const ChatContent = () => {
   return (
     <div className='flex-1 overflow-hidden'>
       <ScrollToBottom
-        className='h-full dark:bg-gray-800'
+        className='h-full'
         followButtonClassName='hidden'
       >
         <ScrollToBottomButton />
-        <div className='flex flex-col items-center text-sm dark:bg-gray-800'>
+        <div className='flex flex-col items-center text-sm'>
           <div
-            className='flex flex-col items-center text-sm dark:bg-gray-800 w-full'
+            className='flex flex-col items-center text-sm w-full'
             ref={saveRef}
           >
             <ModelConfigBar />
@@ -85,7 +85,7 @@ const ChatContent = () => {
                />
                {error !== '' && (
                   <div className='relative py-2 px-3 w-3/5 mt-3 max-md:w-11/12 border rounded-md border-red-500 bg-red-500/10'>
-                     <div className='text-gray-600 dark:text-gray-100 text-sm whitespace-pre-wrap'>
+                     <div className='text-gray-600 text-sm whitespace-pre-wrap'>
                         {error}
                      </div>
                      <div

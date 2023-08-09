@@ -48,7 +48,7 @@ const ConfigMenu = ({
       handleConfirm={handleConfirm}
       handleClickBackdrop={handleConfirm}
     >
-      <div className="p-6 border-b border-gray-200 dark:border-gray-600">
+      <div className="p-6 border-b border-gray-200">
         <ModelSelector _model={_model} _setModel={_setModel} />
         <MaxTokenSlider
           _maxToken={_maxToken}
@@ -90,7 +90,7 @@ export const ModelSelector = ({
   return (
     <div className="mb-4">
       <button
-        className="btn btn-neutral btn-small flex gap-1"
+        className="btn btn-neutral btn-small flex gap-1 bg-gray-600 hover:bg-gray-400"
         type="button"
         onClick={() => setDropDown((prev) => !prev)}
         aria-label="model"
@@ -102,15 +102,15 @@ export const ModelSelector = ({
         id="dropdown"
         className={`${
           dropDown ? "" : "hidden"
-        } absolute top-100 bottom-100 z-10 bg-white rounded-lg shadow-xl border-b border-black/10 dark:border-gray-900/50 text-gray-800 dark:text-gray-100 group dark:bg-gray-800 opacity-90`}
+        } absolute top-100 bottom-100 z-10 bg-white rounded-lg shadow-xl border-b border-black/10/50 text-white group`}
       >
         <ul
-          className="text-sm text-gray-700 dark:text-gray-200 p-0 m-0"
+          className="text-sm text-gray-800 p-0 m-0"
           aria-labelledby="dropdownDefaultButton"
         >
           {modelOptions.map((m) => (
             <li
-              className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+              className="px-4 py-2 hover:bg-gray-300 cursor-pointer rounded-lg"
               onClick={() => {
                 _setModel(m);
                 setDropDown(false);
@@ -146,7 +146,7 @@ export const MaxTokenSlider = ({
 
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-900 dark:text-white">
+      <label className="block text-sm font-medium text-gray-900">
         {t("token.label")}: {_maxToken}
       </label>
       <input
@@ -161,7 +161,7 @@ export const MaxTokenSlider = ({
         step={1}
         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
       />
-      <div className="min-w-fit text-gray-500 dark:text-gray-300 text-sm mt-2">
+      <div className="min-w-fit text-gray-500 text-sm mt-2">
         {t("token.description")}
       </div>
     </div>
@@ -188,7 +188,7 @@ export const MaxContextSlider = ({
 
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-900 dark:text-white">
+      <label className="block text-sm font-medium text-gray-900">
         {t("context.label")}: {_maxContext}
       </label>
       <input
@@ -203,7 +203,7 @@ export const MaxContextSlider = ({
         step={1}
         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
       />
-      <div className="min-w-fit text-gray-500 dark:text-gray-300 text-sm mt-2">
+      <div className="min-w-fit text-gray-500 text-sm mt-2">
         {t("context.description")}
       </div>
     </div>
@@ -221,7 +221,7 @@ export const TemperatureSlider = ({
 
   return (
     <div className="mt-5 pt-5 border-t border-gray-500">
-      <label className="block text-sm font-medium text-gray-900 dark:text-white">
+      <label className="block text-sm font-medium text-gray-900">
         {t("temperature.label")}: {_temperature}
       </label>
       <input
@@ -236,7 +236,7 @@ export const TemperatureSlider = ({
         step={0.1}
         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
       />
-      <div className="min-w-fit text-gray-500 dark:text-gray-300 text-sm mt-2">
+      <div className="min-w-fit text-gray-500 text-sm mt-2">
         {t("temperature.description")}
       </div>
     </div>
@@ -254,7 +254,7 @@ export const TopPSlider = ({
 
   return (
     <div className="mt-5 pt-5 border-t border-gray-500">
-      <label className="block text-sm font-medium text-gray-900 dark:text-white">
+      <label className="block text-sm font-medium text-gray-900">
         {t("topP.label")}: {_topP}
       </label>
       <input
@@ -269,7 +269,7 @@ export const TopPSlider = ({
         step={0.05}
         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
       />
-      <div className="min-w-fit text-gray-500 dark:text-gray-300 text-sm mt-2">
+      <div className="min-w-fit text-gray-500 text-sm mt-2">
         {t("topP.description")}
       </div>
     </div>
@@ -287,7 +287,7 @@ export const PresencePenaltySlider = ({
 
   return (
     <div className="mt-5 pt-5 border-t border-gray-500">
-      <label className="block text-sm font-medium text-gray-900 dark:text-white">
+      <label className="block text-sm font-medium text-gray-900">
         {t("presencePenalty.label")}: {_presencePenalty}
       </label>
       <input
@@ -302,7 +302,7 @@ export const PresencePenaltySlider = ({
         step={0.1}
         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
       />
-      <div className="min-w-fit text-gray-500 dark:text-gray-300 text-sm mt-2">
+      <div className="min-w-fit text-gray-500 text-sm mt-2">
         {t("presencePenalty.description")}
       </div>
     </div>
@@ -320,7 +320,7 @@ export const FrequencyPenaltySlider = ({
 
   return (
     <div className="mt-5 pt-5 border-t border-gray-500">
-      <label className="block text-sm font-medium text-gray-900 dark:text-white">
+      <label className="block text-sm font-medium text-gray-900">
         {t("frequencyPenalty.label")}: {_frequencyPenalty}
       </label>
       <input
@@ -335,7 +335,7 @@ export const FrequencyPenaltySlider = ({
         step={0.1}
         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
       />
-      <div className="min-w-fit text-gray-500 dark:text-gray-300 text-sm mt-2">
+      <div className="min-w-fit text-gray-500 text-sm mt-2">
         {t("frequencyPenalty.description")}
       </div>
     </div>

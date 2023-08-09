@@ -53,17 +53,21 @@ module.exports = {
         },
       },
       colors: {
-        // 10% darker/lighter using https://www.colors.tools/lighten-and-darken/
+        // darker/lighter using https://www.colors.tools/lighten-and-darken/
         // NOTE: ALSO NEEDS TO BE CHANGED ON CSS FILE
         accent: {
-          light: '#527cca',
+          light: '#799ad6',
           base: '#3762b2',
-          dark: '#2b4d8b',
+          dark: '#1f3764',
         },
-        bg: {
+        neutral: {
           light: '#424242',
           base: '#282828',
-          dark: '#0e0e0e',
+          dark: '#1f1f1f',
+        },
+        custom: {
+          white: '#ffffff',
+          black: '#000000',
         },
       },
     },

@@ -151,7 +151,7 @@ const GooglePopup = ({
       setIsModalOpen={setIsModalOpen}
       cancelButton={false}
     >
-      <div className='p-6 border-b border-gray-200 dark:border-gray-600 text-gray-900 dark:text-gray-300 text-sm flex flex-col items-center gap-4 text-center'>
+      <div className='p-6 border-b border-gray-200 text-gray-900 text-sm flex flex-col items-center gap-4 text-center'>
         <p>{t('tagline')}</p>
         <GoogleSyncButton
           loginHandler={() => {
@@ -279,7 +279,7 @@ const FileSelector = ({
 
   return (
     <label
-      className={`w-full flex items-center justify-between mb-2 gap-2 text-sm font-medium text-gray-900 dark:text-gray-300 ${
+      className={`w-full flex items-center justify-between mb-2 gap-2 text-sm font-medium text-gray-900 ${
         syncing ? 'cursor-not-allowed opacity-40' : ''
       }`}
     >
@@ -296,7 +296,7 @@ const FileSelector = ({
         {isEditing ? (
           <input
             type='text'
-            className='text-gray-800 dark:text-white p-3 text-sm border-none bg-gray-200 dark:bg-gray-600 rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+            className='text-gray-800 p-3 text-sm border-none bg-gray-200 rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
             value={_name}
             onChange={(e) => {
               _setName(e.target.value);

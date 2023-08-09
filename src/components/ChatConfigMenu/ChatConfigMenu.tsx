@@ -93,7 +93,7 @@ const ChatConfigPopup = ({
       setIsModalOpen={setIsModalOpen}
       handleConfirm={handleSave}
     >
-      <div className='p-6 border-b border-gray-200 dark:border-gray-600 w-[90vw] max-w-full text-sm text-gray-900 dark:text-gray-300'>
+      <div className='p-6 border-b border-gray-200 w-[90vw] max-w-full text-sm text-gray-900'>
         <DefaultSystemChat
           _systemMessage={_systemMessage}
           _setSystemMessage={_setSystemMessage}
@@ -161,7 +161,7 @@ const DefaultSystemChat = ({
 
   return (
     <div>
-      <div className='block text-sm font-medium text-gray-900 dark:text-white'>
+      <div className='block text-sm font-medium text-gray-900'>
         {t('defaultSystemMessage')}
       </div>
       <textarea
