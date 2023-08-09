@@ -34,7 +34,7 @@ const CodeBar = React.memo(
   }) => {
     const [isCopied, setIsCopied] = useState<boolean>(false);
     return (
-      <div className='flex items-center relative text-gray-200 bg-gray-800 px-4 py-2 text-xs font-sans'>
+      <div className='flex items-center relative text-custom-white bg-neutral-dark px-4 py-2 text-xs font-sans'>
         <span className=''>{lang}</span>
         <button
           className='flex ml-auto gap-2'

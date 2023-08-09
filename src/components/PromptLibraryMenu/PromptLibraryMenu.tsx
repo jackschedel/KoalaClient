@@ -97,20 +97,20 @@ const PromptLibraryMenuPopUp = ({
       setIsModalOpen={setIsModalOpen}
       handleConfirm={handleSave}
     >
-      <div className='p-6 border-b border-gray-200 w-[90vw] max-w-full text-sm text-gray-900'>
-        <div className='border px-4 py-2 rounded border-gray-200'>
+      <div className='p-6 border-b border-custom-white w-[90vw] max-w-full text-sm text-neutral-dark'>
+        <div className='border px-4 py-2 rounded border-custom-white'>
           <ImportPrompt />
           <ExportPrompt />
         </div>
         <div className='flex flex-col p-2 max-w-full' ref={container}>
-          <div className='flex font-bold border-b border-gray-500/50 mb-1 p-1'>
+          <div className='flex font-bold border-b border-neutral-base/50 mb-1 p-1'>
             <div className='sm:w-1/4 max-sm:flex-1'>{t('name')}</div>
             <div className='flex-1'>{t('prompt')}</div>
           </div>
           {_prompts.map((prompt, index) => (
             <div
               key={prompt.id}
-              className='flex items-center border-b border-gray-500/50 mb-1 p-1'
+              className='flex items-center border-b border-neutral-base/50 mb-1 p-1'
             >
               <div className='sm:w-1/4 max-sm:flex-1'>
                 <textarea

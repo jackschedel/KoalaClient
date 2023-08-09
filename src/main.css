@@ -14,7 +14,7 @@
   --accent-dark: 31, 55, 100;
 
   /* 10% darker/lighter using https://www.colors.tools/lighten-and-darken/ */
-  --neutral-light: 66, 66, 66;
+  --neutral-light: 49, 49, 49;
   --neutral-base: 40, 40, 40;
   --neutral-dark: 31, 31, 31;
 
@@ -175,9 +175,9 @@
   }
 
   .btn-neutral {
-    --tw-bg-opacity: 1;
+    --tw-bg-opacity: 0.7;
     --tw-text-opacity: 1;
-    background-color: rgba(var(--neutral-light), var(--tw-bg-opacity));
+    background-color: rgba(var(--neutral-dark), var(--tw-bg-opacity));
     border-width: 1px;
     color: rgba(var(--custom-white), var(--tw-text-opacity));
     font-size: 0.875rem;
@@ -207,6 +207,10 @@
 
   button.scroll-convo {
     display: none;
+  }
+
+  .markdown * {
+    color: rgba(var(--custom-white), 1.0);
   }
 
   .markdown ol,

@@ -13,7 +13,7 @@ const ExportChat = () => {
 
   return (
     <div className='mt-6'>
-      <div className='block mb-2 text-sm font-medium text-gray-900'>
+      <div className='block mb-2 text-sm font-medium text-neutral-dark'>
         {t('export')} (JSON)
       </div>
       <button

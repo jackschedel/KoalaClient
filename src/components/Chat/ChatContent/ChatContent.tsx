@@ -85,7 +85,7 @@ const ChatContent = () => {
                />
                {error !== '' && (
                   <div className='relative py-2 px-3 w-3/5 mt-3 max-md:w-11/12 border rounded-md border-red-500 bg-red-500/10'>
-                     <div className='text-gray-600 text-sm whitespace-pre-wrap'>
+                     <div className='text-neutral-base text-sm whitespace-pre-wrap'>
                         {error}
                      </div>
                      <div

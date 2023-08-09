@@ -54,14 +54,14 @@ const ImportChatOpenAI = ({
 
   return (
     <>
-      <div className='text-lg font-bold text-gray-900 text-center mb-3'>
+      <div className='text-lg font-bold text-neutral-dark text-center mb-3'>
         {t('import')} OpenAI ChatGPT {t('export')}
       </div>
-      <label className='block mb-2 text-sm font-medium text-gray-900'>
+      <label className='block mb-2 text-sm font-medium text-neutral-dark'>
         {t('import')} (JSON)
       </label>
       <input
-        className='w-full text-sm file:p-2 text-gray-800 file:text-gray-700 rounded-md cursor-pointer focus:outline-none bg-gray-50 file:bg-gray-100 file:border-0 border border-gray-300 placeholder-gray-900 file:cursor-pointer'
+        className='w-full text-sm file:p-2 text-neutral-dark file:text-neutral-base rounded-md cursor-pointer focus:outline-none bg-custom-white file:bg-custom-white file:border-0 border border-gray-300 placeholder-neutral-dark file:cursor-pointer'
         type='file'
         ref={inputRef}
       />

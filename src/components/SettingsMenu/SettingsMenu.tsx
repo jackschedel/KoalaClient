@@ -34,7 +34,7 @@ const SettingsMenu = () => {
   return (
     <>
       <a
-        className='flex py-2 px-2 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm'
+        className='flex py-2 px-2 items-center gap-3 rounded-md hover:bg-neutral-base/10 transition-colors duration-200 text-white cursor-pointer text-sm'
         onClick={() => {
           setIsModalOpen(true);
         }}
@@ -47,7 +47,7 @@ const SettingsMenu = () => {
           title={t('setting') as string}
           cancelButton={false}
         >
-          <div className='px-10 py-3 mx-5 border-b border-gray-200 flex flex-col items-center gap-2'>
+          <div className='px-10 py-3 mx-5 border-b border-custom-white flex flex-col items-center gap-2'>
             <LanguageSelector />
             <ThemeSwitcher />
             <ImportExportChat />

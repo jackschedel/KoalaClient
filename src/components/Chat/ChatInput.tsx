@@ -25,7 +25,7 @@ const TextField = () => {
         style={{ maxHeight: '200px', height: '24px', overflowY: 'hidden' }}
       ></textarea>
       <button
-        className='absolute p-1 rounded-md text-gray-500 bottom-1.5 right-1 md:bottom-2.5 md:right-2 hover:bg-gray-100 disabled:hover:bg-transparent:bg-transparent'
+        className='absolute p-1 rounded-md text-neutral-base bottom-1.5 right-1 md:bottom-2.5 md:right-2 hover:bg-custom-white disabled:hover:bg-transparent:bg-transparent'
         aria-label='submit'
       >
         <SendIcon />

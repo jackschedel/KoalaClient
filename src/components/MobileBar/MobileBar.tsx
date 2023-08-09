@@ -21,10 +21,10 @@ const MobileBar = () => {
    const addChat = useAddChat();
 
    return (
-      <div className='sticky top-0 left-0 w-full z-50 flex items-center border-b border-white/20 bg-gray-800 pl-1 pt-1 text-gray-200 sm:pl-3'>
+      <div className='sticky top-0 left-0 w-full z-50 flex items-center border-b border-white/20 bg-neutral-dark pl-1 pt-1 text-custom-white sm:pl-3'>
          <button
             type='button'
-            className='-ml-0.5 -mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-md hover:text-gray-900'
+            className='-ml-0.5 -mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-md hover:text-neutral-dark'
             onClick={() => {
                setHideSideMenu(!hideSideMenu);
             }}
@@ -37,7 +37,7 @@ const MobileBar = () => {
          </h1>
          <button
             type='button'
-        className={`px-3 text-gray-400 transition-opacity ${
+        className={`px-3 text-custom-white transition-opacity ${
           generating
                   ? 'cursor-not-allowed opacity-40'
                   : 'cursor-pointer opacity-100'

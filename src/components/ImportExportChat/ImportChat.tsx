@@ -141,11 +141,11 @@ const ImportChat = () => {
 
   return (
     <>
-      <label className='block mb-2 text-sm font-medium text-gray-900'>
+      <label className='block mb-2 text-sm font-medium text-neutral-dark'>
         {t('import')} (JSON)
       </label>
       <input
-        className='w-full text-sm file:p-2 text-gray-800 file:text-gray-700 rounded-md cursor-pointer focus:outline-none bg-gray-50 file:bg-gray-100 file:border-0 border border-gray-300 placeholder-gray-900 file:cursor-pointer'
+        className='w-full text-sm file:p-2 text-neutral-dark file:text-neutral-base rounded-md cursor-pointer focus:outline-none bg-custom-white file:bg-custom-white file:border-0 border border-gray-300 placeholder-neutral-dark file:cursor-pointer'
         type='file'
         ref={inputRef}
       />
@@ -158,7 +158,7 @@ const ImportChat = () => {
       </button>
       {alert && (
         <div
-          className={`relative py-2 px-3 w-full mt-3 border rounded-md text-gray-600 text-sm whitespace-pre-wrap ${
+          className={`relative py-2 px-3 w-full mt-3 border rounded-md text-neutral-base text-sm whitespace-pre-wrap ${
             alert.success
               ? 'border-green-500 bg-green-500/10'
               : 'border-red-500 bg-red-500/10'

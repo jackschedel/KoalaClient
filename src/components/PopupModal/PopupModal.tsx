@@ -40,14 +40,14 @@ const PopupModal = ({
     return ReactDOM.createPortal(
       <div className='fixed top-0 left-0 z-[999] w-full p-4 overflow-x-hidden overflow-y-auto h-full flex justify-center items-center'>
         <div className='relative z-2 max-w-2xl md:h-auto flex justify-center max-h-full'>
-          <div className='relative bg-gray-50 rounded-lg shadow max-h-full overflow-y-auto hide-scroll-bar'>
+          <div className='relative bg-neutral-base rounded-lg shadow max-h-full overflow-y-auto hide-scroll-bar'>
             <div className='flex items-center justify-between p-4 border-b rounded-t'>
-              <h3 className='ml-2 text-lg font-semibold text-gray-900'>
+              <h3 className='ml-2 text-lg font-semibold text-custom-white'>
                 {title}
               </h3>
               <button
                 type='button'
-                className='text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center'
+                className='text-custom-white bg-transparent hover:bg-custom-white hover:text-neutral-dark rounded-lg text-sm p-1.5 ml-auto inline-flex items-center'
                 onClick={_handleClose}
                 aria-label='close modal'
               >
@@ -56,8 +56,8 @@ const PopupModal = ({
             </div>
 
             {message && (
-              <div className='p-6 border-b border-gray-200'>
-                <div className='min-w-fit text-gray-900 text-sm mt-4'>
+              <div className='p-6 border-b border-custom-white'>
+                <div className='min-w-fit text-neutral-dark text-sm mt-4'>
                   {message}
                 </div>
               </div>
@@ -90,7 +90,7 @@ const PopupModal = ({
           </div>
         </div>
         <div
-          className='bg-gray-800/90 absolute top-0 left-0 h-full w-full z-[-1]'
+          className='bg-neutral-dark/90 absolute top-0 left-0 h-full w-full z-[-1]'
           onClick={_handleBackdropClose}
         />
       </div>,

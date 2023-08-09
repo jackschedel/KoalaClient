@@ -61,7 +61,7 @@ module.exports = {
           dark: '#1f3764',
         },
         neutral: {
-          light: '#424242',
+          light: '#313131',
           base: '#282828',
           dark: '#1f1f1f',
         },

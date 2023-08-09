@@ -25,14 +25,14 @@ const Toast = () => {
 
   return toastShow ? (
     <div
-      className={`flex fixed right-5 bottom-5 z-[1000] items-center w-3/4 md:w-full max-w-xs p-4 mb-4 text-gray-500 rounded-lg shadow-md border border-gray-400/30 animate-bounce`}
+      className={`flex fixed right-5 bottom-5 z-[1000] items-center w-3/4 md:w-full max-w-xs p-4 mb-4 text-neutral-base rounded-lg shadow-md border border-custom-white/30 animate-bounce`}
       role='alert'
     >
       <StatusIcon status={status} />
       <div className='ml-3 text-sm font-normal'>{message}</div>
       <button
         type='button'
-        className='ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8'
+        className='ml-auto -mx-1.5 -my-1.5 bg-white text-custom-white hover:text-neutral-dark rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-custom-white inline-flex h-8 w-8'
         aria-label='Close'
         onClick={() => {
           setToastShow(false);

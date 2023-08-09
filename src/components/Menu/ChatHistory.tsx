@@ -11,13 +11,9 @@ import useStore from '@store/store';
 
 const ChatHistoryClass = {
    normal:
-      'flex py-2 px-2 items-center gap-3 relative rounded-md bg-gray-900 hover:bg-gray-850 break-all hover:pr-4 group transition-opacity',
+      'flex py-2 px-2 items-center gap-3 relative rounded-md bg-neutral-light bg-opacity-40 hover:bg-opacity-20 hover:bg-custom-white break-all hover:pr-4 group transition-opacity',
    active:
-      'flex py-2 px-2 items-center gap-3 relative rounded-md break-all pr-14 bg-gray-800 hover:bg-gray-800 group transition-opacity',
-   normalGradient:
-      'absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-gray-850',
-   activeGradient:
-      'absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-800',
+      'flex py-2 px-2 items-center gap-3 relative rounded-md break-all pr-14 bg-accent-dark group hover:bg-accent-base hover:bg-opacity-80 transition-opacity',
 };
 
 const ChatHistory = React.memo(
@@ -121,8 +117,8 @@ const ChatHistory = React.memo(
             <div
               className={
                 active
-                  ? ChatHistoryClass.activeGradient
-                  : ChatHistoryClass.normalGradient
+                  ? ChatHistoryClass.active
+                  : ChatHistoryClass.normal
               }
             />
           )}

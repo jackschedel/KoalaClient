@@ -27,15 +27,15 @@ const LanguageSelector = () => {
         id='dropdown'
         className={`${
           dropDown ? '' : 'hidden'
-        } absolute top-100 bottom-100 z-10 bg-white rounded-lg shadow-xl border-b border-black/10/50 text-gray-800 group opacity-95 w-36`}
+        } absolute top-100 bottom-100 z-10 bg-white rounded-lg shadow-xl border-b border-black/10/50 text-neutral-dark group opacity-95 w-36`}
       >
         <ul
-          className='text-sm text-gray-700 p-0 m-0 max-h-72 overflow-auto'
+          className='text-sm text-neutral-base p-0 m-0 max-h-72 overflow-auto'
           aria-labelledby='dropdownDefaultButton'
         >
           {selectableLanguages.map((lang) => (
             <li
-              className='px-4 py-2 hover:bg-gray-100 cursor-pointer'
+              className='px-4 py-2 hover:bg-custom-white cursor-pointer'
               onClick={() => {
                 i18n.changeLanguage(lang);
                 setDropDown(false);

@@ -156,7 +156,7 @@ const ChatHistoryList = () => {
   return (
     <div
       className={`flex-col flex-1 overflow-y-auto hide-scroll-bar border-b border-white/20 ${
-        isHover ? 'bg-gray-800/40' : ''
+        isHover ? 'bg-neutral-dark/40' : ''
       }`}
       onDrop={handleDrop}
       onDragOver={handleDragOver}

@@ -46,8 +46,8 @@ const ApiMenu = ({
       setIsModalOpen={setIsModalOpen}
       handleConfirm={handleSave}
     >
-      <div className='p-6 border-b border-gray-200'>
-        <label className='flex gap-2 text-gray-900 text-sm items-center mb-4'>
+      <div className='p-6 border-b border-custom-white'>
+        <label className='flex gap-2 text-neutral-dark text-sm items-center mb-4'>
           <input
             type='checkbox'
             checked={_customEndpoint}
@@ -58,13 +58,13 @@ const ApiMenu = ({
         </label>
 
         <div className='flex gap-2 items-center mb-6'>
-          <div className='min-w-fit text-gray-900 text-sm'>
+          <div className='min-w-fit text-neutral-dark text-sm'>
             {t('apiEndpoint.inputLabel', { ns: 'api' })}
           </div>
           {_customEndpoint ? (
             <input
               type='text'
-              className='text-gray-800 p-3 text-sm border-none bg-gray-200 rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+              className='text-neutral-dark p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
               value={_apiEndpoint}
               onChange={(e) => {
                 _setApiEndpoint(e.target.value);
@@ -79,12 +79,12 @@ const ApiMenu = ({
         </div>
 
         <div className='flex gap-2 items-center justify-center mt-2'>
-          <div className='min-w-fit text-gray-900 text-sm'>
+          <div className='min-w-fit text-neutral-dark text-sm'>
             {t('apiKey.inputLabel', { ns: 'api' })}
           </div>
           <input
             type='text'
-            className='text-gray-800 p-3 text-sm border-none bg-gray-200 rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+            className='text-neutral-dark p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
             value={_apiKey}
             onChange={(e) => {
               _setApiKey(e.target.value);
@@ -92,7 +92,7 @@ const ApiMenu = ({
           />
         </div>
 
-        <div className='min-w-fit text-gray-900 text-sm flex flex-col gap-3 leading-relaxed'>
+        <div className='min-w-fit text-neutral-dark text-sm flex flex-col gap-3 leading-relaxed'>
           <p className='mt-4'>
             <Trans
               i18nKey='apiKey.howTo'
@@ -143,15 +143,15 @@ const ApiEndpointSelector = ({
         ref={dropDownRef}
         className={`${
           dropDown ? '' : 'hidden'
-        } absolute top-100 bottom-100 z-10 bg-white rounded-lg shadow-xl border-b border-black/10/50 text-gray-800 group opacity-90 w-32 w-full`}
+        } absolute top-100 bottom-100 z-10 bg-white rounded-lg shadow-xl border-b border-black/10/50 text-neutral-dark group opacity-90 w-32 w-full`}
       >
         <ul
-          className='text-sm text-gray-700 p-0 m-0'
+          className='text-sm text-neutral-base p-0 m-0'
           aria-labelledby='dropdownDefaultButton'
         >
           {availableEndpoints.map((endpoint) => (
             <li
-              className='px-4 py-2 hover:bg-gray-100 cursor-pointer truncate'
+              className='px-4 py-2 hover:bg-custom-white cursor-pointer truncate'
               onClick={() => {
                 _setApiEndpoint(endpoint);
                 setDropDown(false);
