@@ -175,18 +175,32 @@
   }
 
   .btn-neutral {
-    --tw-bg-opacity: 0.7;
+    --tw-bg-opacity: 1.0;
     --tw-text-opacity: 1;
-    background-color: rgba(var(--neutral-dark), var(--tw-bg-opacity));
-    border-width: 1px;
+    background-color: rgba(var(--neutral-light), var(--tw-bg-opacity));
     color: rgba(var(--custom-white), var(--tw-text-opacity));
     font-size: 0.875rem;
     line-height: 1.25rem;
   }
 
   .btn-neutral:hover {
+    --tw-bg-opacity: 0.2;
+    background-color: rgba(var(--custom-white), var(--tw-bg-opacity));
+  }
+
+  .btn-neutral-dark {
     --tw-bg-opacity: 1.0;
-    background-color: rgba(var(--neutral-dark), var(--tw-bg-opacity));
+    --tw-text-opacity: 1;
+    background-color: rgba(var(--neutral-base), var(--tw-bg-opacity));
+    border-width: 1px;
+    color: rgba(var(--custom-white), var(--tw-text-opacity));
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .btn-neutral-dark:hover {
+    --tw-bg-opacity: 0.5;
+    background-color: rgba(var(--custom-black), var(--tw-bg-opacity));
   }
 
   .btn-primary {
@@ -197,7 +211,7 @@
   }
 
   .btn-primary:hover {
-    --tw-bg-opacity: 1;
+    --tw-bg-opacity: 0.8;
     background-color: rgba(var(--accent-dark), var(--tw-bg-opacity));
   }
 

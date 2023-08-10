@@ -121,7 +121,7 @@ const EditView = ({
       <div
         className={`w-full ${
           sticky
-            ? "py-2 md:py-3 px-2 md:px-4 border border-black/10 bg-white/50 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)][0_0_15px_rgba(0,0,0,0.10)]"
+            ? "py-2 md:py-3 px-2 md:px-4 border border-black/10  bg-custom-black/20 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)][0_0_15px_rgba(0,0,0,0.10)]"
             : ""
         }`}
       >
@@ -150,6 +150,7 @@ const EditView = ({
         setIsEdit={setIsEdit}
         cursorPosition={cursorPosition}
         _setContent={_setContent}
+        messageIndex={messageIndex}
       />
       {isModalOpen && (
         <PopupModal
@@ -172,6 +173,7 @@ const EditViewButtons = memo(
     setIsEdit,
     cursorPosition,
     _setContent,
+    messageIndex,
   }: {
     sticky?: boolean;
     handleGenerate: () => void;
@@ -180,6 +182,7 @@ const EditViewButtons = memo(
     setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
     cursorPosition: number;
     _setContent: React.Dispatch<React.SetStateAction<string>>;
+    messageIndex: number;
   }) => {
     const { t } = useTranslation();
     const generating = useStore.getState().generating;
@@ -218,11 +221,13 @@ const EditViewButtons = memo(
 
           <button
             className={`btn relative mr-2 ${
+              messageIndex%2 ? 'btn-neutral' : 'btn-neutral-dark'
+            } ${
               sticky
-                ? `btn-neutral ${
+                ? `${
                   generating ? "cursor-not-allowed opacity-40" : ""
                 }`
-                : "btn-neutral"
+                : ""
             }`}
             onClick={handleSave}
             aria-label={t("save") as string}
@@ -234,7 +239,9 @@ const EditViewButtons = memo(
 
           {sticky || (
             <button
-              className="btn relative btn-neutral"
+              className={`btn relative ${
+                messageIndex%2 ? 'btn-neutral' : 'btn-neutral-dark'
+              }`}
               onClick={() => setIsEdit(false)}
               aria-label={t("cancel") as string}
             >
@@ -249,10 +256,12 @@ const EditViewButtons = memo(
           <WhisperRecord
             cursorPosition={cursorPosition}
             _setContent={_setContent}
+            messageIndex={messageIndex}
           />
           <CommandPrompt
             cursorPosition={cursorPosition}
             _setContent={_setContent}
+            messageIndex={messageIndex}
           />
         </div>
       </div>

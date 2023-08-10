@@ -24,7 +24,7 @@ const MobileBar = () => {
       <div className='sticky top-0 left-0 w-full z-50 flex items-center border-b border-white/20 bg-neutral-dark pl-1 pt-1 text-custom-white sm:pl-3'>
          <button
             type='button'
-            className='-ml-0.5 -mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-md hover:text-neutral-dark'
+            className='-ml-0.5 -mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-neutral-light'
             onClick={() => {
                setHideSideMenu(!hideSideMenu);
             }}
@@ -46,7 +46,9 @@ const MobileBar = () => {
                if (!generating) addChat();
             }}
          >
-            <PlusIcon className='h-6 w-6' />
+            <div className='-ml-0.5 -mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-neutral-light'>
+               <PlusIcon className='h-6 w-6' />
+            </div>
          </button>
       </div>
    );

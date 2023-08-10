@@ -10,9 +10,11 @@ import useHideOnOutsideClick from "@hooks/useHideOnOutsideClick";
 const CommandPrompt = ({
   cursorPosition,
   _setContent,
+  messageIndex,
 }: {
   cursorPosition: number;
   _setContent: React.Dispatch<React.SetStateAction<string>>;
+  messageIndex: number;
 }) => {
   const { t } = useTranslation();
   const prompts = useStore((state) => state.prompts);
@@ -51,7 +53,9 @@ const CommandPrompt = ({
   return (
     <div className="relative max-wd-sm" ref={dropDownRef}>
       <button
-        className="btn btn-neutral btn-small"
+        className={`btn ${
+          messageIndex%2 ? 'btn-neutral' : 'btn-neutral-dark'
+        } btn-small`}
         aria-label="prompt library"
         onClick={() => setDropDown(!dropDown)}
       >

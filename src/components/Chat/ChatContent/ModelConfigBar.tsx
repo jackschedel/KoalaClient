@@ -53,7 +53,6 @@ const ModelConfigBar = React.memo(() => {
             (
               <div className="sticky top-0 flex gap-x-3 gap-y-1 flex-wrap w-full items-center justify-center p-1 pb-0">
                 <div className="flex -mb-3 mr-1 ">
-                  <span className="w-11 top-1 relative">Model: &nbsp;</span>
                   <ModelSelector
                     _model={config.model}
                     _setModel={(ac) => {
@@ -66,7 +65,7 @@ const ModelConfigBar = React.memo(() => {
                   />
                 </div>
                 <div
-                  className="text-center p-1.5 opacity-100 rounded-md bg-neutral-base hover:bg-neutral-light cursor-pointer"
+                  className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
                   onClick={() => {
                     setIsModalOpen(true);
                   }}
@@ -74,7 +73,7 @@ const ModelConfigBar = React.memo(() => {
                   {t("token.label")}: {config.max_tokens}
                 </div>
                 <div
-                  className="text-center p-1.5 opacity-100 rounded-md bg-neutral-base hover:bg-neutral-light cursor-pointer"
+                  className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
                   onClick={() => {
                     setIsModalOpen(true);
                   }}
@@ -82,7 +81,7 @@ const ModelConfigBar = React.memo(() => {
                   {t("context.label")}: {config.max_context}
                 </div>
                 <div
-                  className="text-center p-1.5 opacity-100 rounded-md bg-neutral-base hover:bg-neutral-light cursor-pointer"
+                  className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
                   onClick={() => {
                     setIsModalOpen(true);
                   }}
@@ -90,7 +89,7 @@ const ModelConfigBar = React.memo(() => {
                   {t("temperature.label")}: {config.temperature}
                 </div>
                 <div
-                  className="text-center p-1.5 opacity-100 rounded-md bg-neutral-base hover:bg-neutral-light cursor-pointer"
+                  className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
                   onClick={() => {
                     setIsModalOpen(true);
                   }}
@@ -98,7 +97,7 @@ const ModelConfigBar = React.memo(() => {
                   {t("topP.label")}: {config.top_p}
                 </div>
                 <div
-                  className="text-center p-1.5 opacity-100 rounded-md bg-neutral-base hover:bg-neutral-light cursor-pointer"
+                  className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
                   onClick={() => {
                     setIsModalOpen(true);
                   }}
@@ -106,7 +105,7 @@ const ModelConfigBar = React.memo(() => {
                   {t("presencePenalty.label")}: {config.presence_penalty}
                 </div>
                 <div
-                  className="text-center p-1.5 opacity-100 rounded-md bg-neutral-base hover:bg-neutral-light cursor-pointer"
+                  className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
                   onClick={() => {
                     setIsModalOpen(true);
                   }}

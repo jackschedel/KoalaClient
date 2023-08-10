@@ -7,11 +7,6 @@ import MessageContent from './MessageContent';
 import { Role } from '@type/chat';
 import RoleSelector from './RoleSelector';
 
-// const backgroundStyle: { [role in Role]: string } = {
-//   user: 'bg-neutral-dark',
-//   assistant: 'bg-custom-white',
-//   system: 'bg-custom-white',
-// };
 const backgroundStyle = ['bg-neutral-light', 'bg-neutral-base'];
 
 const Message = React.memo(
@@ -31,7 +26,7 @@ const Message = React.memo(
 
       return (
          <div
-        className={`w-full border-b border-neutral-dark text-neutral-dark group ${
+        className={`w-full border-b border-neutral-dark group ${
           backgroundStyle[messageIndex % 2]
                }`}
          >
