@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import AboutIcon from '@icon/AboutIcon';
 
-const AboutMenu = () => {
+const GithubLink = () => {
   const { t } = useTranslation();
   return (
     <a
@@ -18,4 +18,4 @@ const AboutMenu = () => {
 };
 
 
-export default AboutMenu;
+export default GithubLink;
