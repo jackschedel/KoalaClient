@@ -58,7 +58,7 @@ const PopupModal = ({
 
             {message && (
               <div className='p-6 border-b border-custom-white'>
-                <div className='min-w-fit text-custom-white text-sm mt-4'>
+                <div className='min-w-fit text-custom-white text-sm my-3'>
                   {message}
                 </div>
               </div>
@@ -87,14 +87,6 @@ const PopupModal = ({
                   {t('cancel')}
                 </button>
               )}
-                {title===(t('setting') as string) && <a
-                  className='flex p-2 items-center gap-2 rounded-md hover:bg-neutral-dark transition-colors duration-200 text-custom-white/20 cursor-pointer text-sm'
-                  href='https://github.com/ztjhz/BetterChatGPT'
-                  target='_blank'
-                >
-                  <div className='opacity-20'><HeartIcon /></div>
-                  {t('originalRepo')}
-              </a>}
             </div>
           </div>
         </div>

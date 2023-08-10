@@ -22,7 +22,7 @@ const ClearConversation = () => {
   return (
     <>
       <button
-        className='btn btn-neutral bg-neutral-light'
+        className='btn btn-neutral gap-3 bg-neutral-light'
         onClick={() => {
           setIsModalOpen(true);
         }}
