@@ -11,7 +11,7 @@ const StopGeneratingButton = () => {
       onClick={() => setGenerating(false)}
     >
       <button
-        className='btn relative btn-neutral border-0 md:border'
+        className='btn relative btn-neutral border-0 md:border hover:bg-neutral-dark'
         aria-label='stop generating'
       >
         <div className='flex w-full items-center justify-center gap-2'>

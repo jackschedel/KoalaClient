@@ -5,6 +5,7 @@ import PopupModal from "@components/PopupModal";
 import { ConfigInterface, ModelOptions } from "@type/chat";
 import DownChevronArrow from "@icon/DownChevronArrow";
 import { modelMaxToken, modelOptions } from "@constants/chat";
+import useHideOnOutsideClick from '@hooks/useHideOnOutsideClick';
 
 const ConfigMenu = ({
   setIsModalOpen,
@@ -88,7 +89,7 @@ export const ModelSelector = ({
   _model: ModelOptions;
   _setModel: React.Dispatch<React.SetStateAction<ModelOptions>>;
 }) => {
-  const [dropDown, setDropDown] = useState<boolean>(false);
+  const [dropDown, setDropDown, dropDownRef] = useHideOnOutsideClick();
 
   return (
     <div className="mb-4">
@@ -103,6 +104,7 @@ export const ModelSelector = ({
       </button>
       <div
         id="dropdown"
+        ref={dropDownRef}
         className={`${
           dropDown ? "" : "hidden"
         } absolute top-100 bottom-100 z-10 bg-neutral-light shadow-xl rounded-lg border border-neutral-light text-neutral-dark group w-36`}

@@ -57,7 +57,7 @@ const PopupModal = ({
 
             {message && (
               <div className='p-6 border-b border-custom-white'>
-                <div className='min-w-fit text-neutral-dark text-sm mt-4'>
+                <div className='min-w-fit text-custom-white text-sm mt-4'>
                   {message}
                 </div>
               </div>

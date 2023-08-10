@@ -51,7 +51,7 @@ const TotalTokenCost = () => {
     <div className='flex flex-col items-center gap-2 pt-2'>
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
         <table className='w-full text-sm text-left text-neutral-base'>
-          <thead className='text-xs text-neutral-base uppercase bg-custom-white'>
+          <thead className='text-xs text-custom-white uppercase bg-neutral-dark'>
             <tr>
               <th className='px-4 py-2'>{t('model', { ns: 'model' })}</th>
               <th className='px-4 py-2'>USD</th>
@@ -61,13 +61,13 @@ const TotalTokenCost = () => {
             {costMapping.map(({ model, cost }) => (
               <tr
                 key={model}
-                className='bg-white border-b hover:bg-custom-white'
+                className='bg-neutral-light text-custom-white border-b-2 border-neutral-base'
               >
                 <td className='px-4 py-2'>{model}</td>
                 <td className='px-4 py-2'>{cost.toPrecision(3)}</td>
               </tr>
             ))}
-            <tr className='bg-white border-b font-bold'>
+            <tr className='bg-neutral-light text-custom-white font-bold'>
               <td className='px-4 py-2'>{t('total', { ns: 'main' })}</td>
               <td className='px-4 py-2'>
                 {costMapping

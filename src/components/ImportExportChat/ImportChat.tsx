@@ -141,11 +141,11 @@ const ImportChat = () => {
 
   return (
     <>
-      <label className='block mb-2 text-sm font-medium text-neutral-dark'>
+      <label className='block mb-2 text-sm font-medium text-custom-white'>
         {t('import')} (JSON)
       </label>
       <input
-        className='w-full text-sm file:p-2 text-neutral-dark file:text-neutral-base rounded-md cursor-pointer focus:outline-none bg-custom-white file:bg-custom-white file:border-0 border border-gray-300 placeholder-neutral-dark file:cursor-pointer'
+        className='w-full text-sm file:p-2 text-custom-white file:text-custom-white rounded-md cursor-pointer focus:outline-none bg-neutral-light file:bg-neutral-dark file:border-0 placeholder-neutral-dark file:cursor-pointer'
         type='file'
         ref={inputRef}
       />

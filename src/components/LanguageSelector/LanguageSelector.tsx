@@ -6,10 +6,13 @@ import { languageCodeToName, selectableLanguages } from '@constants/language';
 import FileTextIcon from '@icon/FileTextIcon';
 import LanguageIcon from '@icon/LanguageIcon';
 
+import useHideOnOutsideClick from '@hooks/useHideOnOutsideClick';
+
 const LanguageSelector = () => {
   const { i18n } = useTranslation();
 
-  const [dropDown, setDropDown] = useState<boolean>(false);
+  const [dropDown, setDropDown, dropDownRef] = useHideOnOutsideClick();
+
   return (
     <div className='prose relative'>
       <button
@@ -25,6 +28,7 @@ const LanguageSelector = () => {
       </button>
       <div
         id='dropdown'
+        ref={dropDownRef}
         className={`${
           dropDown ? '' : 'hidden'
         } absolute top-100 bottom-100 z-10 bg-neutral-light shadow-xl rounded-lg border border-neutral-light text-neutral-dark group w-36`}
