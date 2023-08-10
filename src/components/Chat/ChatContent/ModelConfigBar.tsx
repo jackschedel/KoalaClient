@@ -48,10 +48,10 @@ const ModelConfigBar = React.memo(() => {
   return config
     ? (
       <>
-        <div className="sticky p-1 pb-0.5  mb-19 top-0 flex gap-x-3 gap-y-1 flex-wrap w-full items-center justify-center border-b border-black/20 bg-neutral-dark text-white z-50">
+        <div className="sticky p-1 pb-0.5  mb-19 top-0 flex gap-x-3 gap-y-1 flex-wrap w-full items-center justify-center border-b border-black/20 bg-neutral-dark text-custom-white z-50">
           {advancedMode &&
             (
-              <div className="sticky top-0 flex gap-x-3 gap-y-1 flex-wrap w-full items-center justify-center p-1 pb-0">
+              <div className="sticky top-0 flex gap-x-1 gap-y-0 flex-wrap w-full items-center justify-center pt-0 pb-1">
                 <div className="flex -mb-3 mr-1 mt-1">
                   <ModelSelector
                     _model={config.model}
@@ -95,22 +95,6 @@ const ModelConfigBar = React.memo(() => {
                   }}
                 >
                   {t("topP.label")}: {config.top_p}
-                </div>
-                <div
-                  className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
-                  onClick={() => {
-                    setIsModalOpen(true);
-                  }}
-                >
-                  {t("presencePenalty.label")}: {config.presence_penalty}
-                </div>
-                <div
-                  className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
-                  onClick={() => {
-                    setIsModalOpen(true);
-                  }}
-                >
-                  {t("frequencyPenalty.label")}: {config.frequency_penalty}
                 </div>
               </div>
             )}
