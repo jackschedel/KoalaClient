@@ -64,10 +64,8 @@ const WhisperRecord = ({
   return (
     <div className="relative max-wd-sm">
       <button
-        className={`btn ${
-          messageIndex%2 ? 'btn-neutral' : 'btn-neutral-dark'
-        } btn-small mr-5`}
-        aria-label="whisper record"
+        className={`btn ${isRecording ? (messageIndex%2 ? 'btn-primary' : 'btn-neutral-dark') : 'btn-primary'} btn-small inline-flex p-0 h-8 w-8 items-center justify-center mr-3`}
+        aria-label="whisper"
         onClick={handleRecording}
       >
         {isRecording ? <StopIcon /> : <MicrophoneIcon />}

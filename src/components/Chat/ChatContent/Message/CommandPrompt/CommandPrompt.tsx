@@ -54,7 +54,7 @@ const CommandPrompt = ({
       <button
         className={`btn ${
           messageIndex%2 ? 'btn-neutral' : 'btn-neutral-dark'
-        } btn-small`}
+        } btn-small inline-flex h-8 w-8 items-center justify-center`}
         aria-label="prompt library"
         onClick={() => setDropDown(!dropDown)}
       >
