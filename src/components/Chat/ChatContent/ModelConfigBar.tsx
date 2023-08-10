@@ -52,7 +52,7 @@ const ModelConfigBar = React.memo(() => {
           {advancedMode &&
             (
               <div className="sticky top-0 flex gap-x-3 gap-y-1 flex-wrap w-full items-center justify-center p-1 pb-0">
-                <div className="flex -mb-3 mr-1 ">
+                <div className="flex -mb-3 mr-1 mt-1">
                   <ModelSelector
                     _model={config.model}
                     _setModel={(ac) => {

@@ -49,7 +49,10 @@ const ConfigMenu = ({
       handleClickBackdrop={handleConfirm}
     >
       <div className="p-6 border-b bg-neutral-base">
-        <ModelSelector _model={_model} _setModel={_setModel} />
+      <label className="block text-sm font-medium text-custom-white pb-2">
+        {t("model")}:
+      </label>
+      <ModelSelector _model={_model} _setModel={_setModel} />
         <MaxTokenSlider
           _maxToken={_maxToken}
           _setMaxToken={_setMaxToken}
@@ -90,7 +93,7 @@ export const ModelSelector = ({
   return (
     <div className="mb-4">
       <button
-        className="btn btn-neutral btn-small flex gap-1"
+        className="btn btn-neutral btn-small flex gap-1 p-1.5 rounded-md"
         type="button"
         onClick={() => setDropDown((prev) => !prev)}
         aria-label="model"

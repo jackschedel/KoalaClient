@@ -93,12 +93,15 @@ const ChatConfigPopup = ({
       setIsModalOpen={setIsModalOpen}
       handleConfirm={handleSave}
     >
-      <div className='p-6 border-b border-custom-white w-[90vw] max-w-full text-sm text-neutral-dark'>
+      <div className='p-6 border-b border-custom-white w-[90vw] max-w-full text-sm text-custom-white'>
+        <label className="block text-sm font-medium text-custom-white pb-2">
+          {t("model")}:
+        </label>
+        <ModelSelector _model={_model} _setModel={_setModel} />
         <DefaultSystemChat
           _systemMessage={_systemMessage}
           _setSystemMessage={_setSystemMessage}
         />
-        <ModelSelector _model={_model} _setModel={_setModel} />
         <MaxTokenSlider
           _maxToken={_maxToken}
           _setMaxToken={_setMaxToken}
@@ -156,16 +159,16 @@ const DefaultSystemChat = ({
 
   const handleOnBlur = (e: React.FocusEvent<HTMLTextAreaElement, Element>) => {
     e.target.style.height = 'auto';
-    e.target.style.maxHeight = '2.5rem';
+    e.target.style.maxHeight = `${e.target.scrollHeight}px`;
   };
 
   return (
     <div>
-      <div className='block text-sm font-medium text-neutral-dark'>
+      <div className='block text-sm font-medium text-custom-white'>
         {t('defaultSystemMessage')}
       </div>
       <textarea
-        className='my-2 mx-0 px-2 resize-none rounded-lg bg-transparent overflow-y-hidden leading-7 p-1 border border-neutral-light/50 focus:ring-1 focus:ring-blue w-full max-h-10 transition-all'
+        className='my-2 mx-0 px-2 resize-none rounded-lg bg-custom-white/10 leading-7 p-1 border border-neutral-dark w-full transition-all'
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
         onChange={(e) => {
@@ -173,7 +176,7 @@ const DefaultSystemChat = ({
         }}
         onInput={handleInput}
         value={_systemMessage}
-        rows={1}
+        rows={3}
       ></textarea>
     </div>
   );

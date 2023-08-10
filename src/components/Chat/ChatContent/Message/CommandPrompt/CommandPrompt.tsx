@@ -26,7 +26,6 @@ const CommandPrompt = ({
 
   useEffect(() => {
     if (dropDown && inputRef.current) {
-      // When dropdown is visible, focus the input
       inputRef.current.focus();
     }
   }, [dropDown]);
@@ -64,23 +63,21 @@ const CommandPrompt = ({
       <div
         className={`${dropDown ? "" : "hidden"} absolute ${
           isAbove ? "bottom-full" : "top-100 bottom-100"
-        } right-0 z-10 bg-white rounded-lg shadow-xl border-b border-black/10/50 text-neutral-dark group opacity-90`}
-      >
-        <div className="text-sm px-4 py-2 w-max">{t("promptLibrary")}</div>
-        <input
+        } right-0 z-10 bg-neutral-light rounded-lg shadow-xl text-custom-white group`}
+      >        <input
           ref={inputRef}
           type="text"
-          className="text-neutral-dark p-3 text-sm border-none bg-custom-white m-0 w-full mr-0 h-8 focus:outline-none"
+          className="text-custom-white p-3 text-sm bg-neutral-light m-0 w-full mr-0 h-8 rounded-t-lg focus:outline-none border-b-2 border-neutral-dark"
           value={input}
           placeholder={t("search") as string}
           onChange={(e) => {
             setInput(e.target.value);
           }}
         />
-        <ul className="text-sm text-neutral-base p-0 m-0 w-max max-w-sm max-md:max-w-[90vw] max-h-32 overflow-auto">
+        <ul className="text-sm text-custom-white p-0 m-0 w-max max-w-sm max-md:max-w-[90vw] max-h-32 overflow-auto">
           {_prompts.map((cp) => (
             <li
-              className="px-4 py-2 hover:bg-custom-white cursor-pointer text-start w-full"
+              className="px-4 py-2 hover:bg-neutral-dark cursor-pointer text-start w-full"
               onClick={() => {
                 _setContent((prev) => {
                   let startContent = prev.slice(0, cursorPosition);
