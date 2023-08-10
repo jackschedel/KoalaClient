@@ -52,7 +52,7 @@ const Menu = () => {
           id='menu-close'
           className={`${
             hideSideMenu ? 'hidden' : ''
-          } md:hidden absolute z-[999] right-0 translate-x-full top-10 bg-neutral-dark p-2 cursor-pointer hover:bg-black text-white`}
+          } md:hidden absolute z-[999] right-0 translate-x-full top-10 bg-neutral-base p-2 cursor-pointer hover:bg-neutral-light text-custom-white rounded-r`}
           onClick={() => {
             setHideSideMenu(true);
           }}

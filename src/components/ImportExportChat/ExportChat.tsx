@@ -12,9 +12,9 @@ const ExportChat = () => {
   const { t } = useTranslation();
 
   return (
-    <div className='mt-6'>
+    <div className='mt-6 mb-6'>
       <div className='block mb-2 text-sm font-medium text-custom-white'>
-        {t('export')} (JSON)
+        {t('export')} (JSON):
       </div>
       <button
         className='btn btn-small btn-primary'

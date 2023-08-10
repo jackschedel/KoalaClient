@@ -97,13 +97,13 @@ const PromptLibraryMenuPopUp = ({
       setIsModalOpen={setIsModalOpen}
       handleConfirm={handleSave}
     >
-      <div className='p-6 border-b border-custom-white w-[90vw] max-w-full text-sm text-neutral-dark'>
+      <div className='p-4 pb-2 w-[90vw] max-w-full text-sm text-custom-white border-b-2'>
         <div className='border px-4 py-2 rounded border-custom-white'>
           <ImportPrompt />
           <ExportPrompt />
         </div>
-        <div className='flex flex-col p-2 max-w-full' ref={container}>
-          <div className='flex font-bold border-b border-neutral-base/50 mb-1 p-1'>
+        <div className='flex flex-col pt-6 max-w-full' ref={container}>
+          <div className='flex font-bold border-b border-neutral-base mb-0 p-1'>
             <div className='sm:w-1/4 max-sm:flex-1'>{t('name')}</div>
             <div className='flex-1'>{t('prompt')}</div>
           </div>
@@ -114,7 +114,7 @@ const PromptLibraryMenuPopUp = ({
             >
               <div className='sm:w-1/4 max-sm:flex-1'>
                 <textarea
-                  className='m-0 resize-none rounded-lg bg-transparent overflow-y-hidden leading-7 p-1 focus:ring-1 focus:ring-blue w-full max-h-10 transition-all'
+                  className='m-0 resize-none rounded-l-lg bg-neutral-light overflow-y-hidden leading-7 p-1 focus:bg-neutral-dark w-full max-h-10 border-r-2 border-neutral-base transition-all'
                   onFocus={handleOnFocus}
                   onBlur={handleOnBlur}
                   onChange={(e) => {
@@ -131,7 +131,7 @@ const PromptLibraryMenuPopUp = ({
               </div>
               <div className='flex-1'>
                 <textarea
-                  className='m-0 resize-none rounded-lg bg-transparent overflow-y-hidden leading-7 p-1 focus:ring-1 focus:ring-blue w-full max-h-10 transition-all'
+                  className='m-0 resize-none rounded-r-lg focus:rounded-lg bg-neutral-light focus:overflow-y-hidden leading-7 p-1 focus:bg-neutral-dark w-full max-h-10 transition-all'
                   onFocus={handleOnFocus}
                   onBlur={handleOnBlur}
                   onChange={(e) => {
@@ -147,16 +147,21 @@ const PromptLibraryMenuPopUp = ({
                 ></textarea>
               </div>
               <div
-                className='cursor-pointer'
-                onClick={() => deletePrompt(index)}
+                  className='p-1 ml-2 hover:text-neutral-dark hover:bg-custom-white hover:rounded'
+                  onClick={() => deletePrompt(index)}
               >
                 <CrossIcon />
               </div>
             </div>
           ))}
         </div>
-        <div className='flex justify-center cursor-pointer' onClick={addPrompt}>
-          <PlusIcon />
+        <div className='flex justify-center mt-0 mb-8'>
+          <div 
+            className='cursor-pointer p-2 mt-0 rounded-xl btn btn-neutral'
+            onClick={addPrompt}
+          >
+            <PlusIcon />
+            </div>
         </div>
         <div className='flex justify-center mt-2'>
           <div
@@ -166,7 +171,7 @@ const PromptLibraryMenuPopUp = ({
             {t('clearPrompts')}
           </div>
         </div>
-        <div className='mt-6 px-2'>
+        <div className='mt-6 px-2 text-center'>
           {t('morePrompts')}
           <a
             href='https://github.com/f/awesome-chatgpt-prompts'
