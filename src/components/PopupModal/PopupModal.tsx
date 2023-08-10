@@ -41,8 +41,8 @@ const PopupModal = ({
     return ReactDOM.createPortal(
       <div className='fixed top-0 left-0 z-[999] w-full p-4 overflow-x-hidden overflow-y-auto h-full flex justify-center items-center'>
         <div className='relative z-2 max-w-2xl md:h-auto flex justify-center max-h-full'>
-          <div className='relative bg-neutral-base rounded-lg shadow max-h-full overflow-y-auto hide-scroll-bar'>
-            <div className='flex items-center justify-between p-4 border-b rounded-t'>
+          <div className='relative bg-neutral-base rounded-lg shadow max-h-full overflow-x-auto'>
+            <div className='flex items-center justify-between p-2 border-b rounded-t'>
               <h3 className='ml-2 text-lg font-semibold text-custom-white'>
                 {title}
               </h3>
@@ -65,7 +65,7 @@ const PopupModal = ({
             )}
 
             {children}
-
+            {(handleConfirm || cancelButton) && (
             <div className='flex items-center justify-center p-4 gap-4'>
               {handleConfirm && (
                 <button
@@ -87,7 +87,7 @@ const PopupModal = ({
                   {t('cancel')}
                 </button>
               )}
-            </div>
+            </div>)}
           </div>
         </div>
         <div

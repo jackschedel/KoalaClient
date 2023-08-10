@@ -28,7 +28,7 @@ const ImportExportChat = () => {
           setIsModalOpen={setIsModalOpen}
           cancelButton={false}
         >
-          <div className='p-6 pb-0'>
+          <div className='p-6'>
             <ImportChat />
             <ExportChat />
             <div className='border-t my-3 border-custom-white' />

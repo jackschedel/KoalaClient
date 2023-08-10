@@ -65,7 +65,7 @@ const SettingsMenu = () => {
             </div>
             <TotalTokenCost />
             <a
-              className='flex p-2 mt-4 items-center gap-2 rounded-md hover:bg-neutral-dark transition-colors duration-200 text-custom-white/20 cursor-pointer text-sm'
+              className='flex p-2 mb-2 items-center gap-2 rounded-md hover:bg-neutral-dark transition-colors duration-200 text-custom-white/20 cursor-pointer text-sm'
               href='https://github.com/ztjhz/BetterChatGPT'
               target='_blank'
             >
