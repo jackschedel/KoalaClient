@@ -155,7 +155,7 @@ const ChatHistoryList = () => {
 
   return (
     <div
-      className={`flex-col flex-1 overflow-y-auto hide-scroll-bar border-b border-white/20 ${
+      className={`flex-col flex-1 overflow-y-auto hide-scroll-bar border-b border-custom-white/20 ${
         isHover ? 'bg-neutral-dark/40' : ''
       }`}
       onDrop={handleDrop}
@@ -164,7 +164,7 @@ const ChatHistoryList = () => {
       onDragEnd={handleDragEnd}
     >
       <ChatSearch filter={filter} setFilter={setFilter} />
-      <div className='flex flex-col gap-2 text-white text-sm'>
+      <div className='flex flex-col gap-2 text-custom-white text-sm'>
         {Object.keys(chatFolders).map((folderId) => (
           <ChatFolder
             folderChats={chatFolders[folderId]}

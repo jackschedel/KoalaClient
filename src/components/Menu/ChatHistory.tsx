@@ -124,7 +124,7 @@ const ChatHistory = React.memo(
           )}
         </div>
         {active && (
-          <div className='absolute flex right-1 z-10 text-gray-300 visible'>
+          <div className='absolute flex right-1 z-10 text-custom-white/60 visible'>
             {isDelete || isEdit ? (
               <>
                 <button

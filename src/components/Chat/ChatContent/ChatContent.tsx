@@ -89,7 +89,7 @@ const ChatContent = () => {
                         {error}
                      </div>
                      <div
-                        className='text-white absolute top-1 right-1 cursor-pointer'
+                        className='text-custom-white absolute top-1 right-1 cursor-pointer'
                         onClick={() => {
                            setError('');
                         }}

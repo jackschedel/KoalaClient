@@ -132,7 +132,7 @@ const ContentView = memo(
                      {content}
                   </ReactMarkdown>
                ) : (
-                  <span className='whitespace-pre-wrap text-white'>{content}</span>
+                  <span className='whitespace-pre-wrap text-custom-white'>{content}</span>
                )}
             </div>
         <div className='flex justify-end gap-2 w-full mt-2'>

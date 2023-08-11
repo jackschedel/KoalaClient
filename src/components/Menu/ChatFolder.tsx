@@ -206,20 +206,20 @@ const ChatFolder = ({
           )}
         </div>
         <div
-          className='flex text-gray-300'
+          className='flex text-custom-white/60'
           onClick={(e) => e.stopPropagation()}
         >
           {isDelete || isEdit ? (
             <>
               <button
-                className='p-1 hover:text-white'
+                className='p-1 hover:text-custom-white'
                 onClick={handleTick}
                 aria-label='confirm'
               >
                 <TickIcon />
               </button>
               <button
-                className='p-1 hover:text-white'
+                className='p-1 hover:text-custom-white'
                 onClick={handleCross}
                 aria-label='cancel'
               >
@@ -283,7 +283,7 @@ const ChatFolder = ({
                 <DeleteIcon />
               </button>
               <button
-                className='p-1 hover:text-white'
+                className='p-1 hover:text-custom-white'
                 onClick={toggleExpanded}
                 aria-label='expand folder'
               >

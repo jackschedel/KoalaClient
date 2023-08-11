@@ -21,7 +21,7 @@ const MobileBar = () => {
    const addChat = useAddChat();
 
    return (
-      <div className='sticky top-0 left-0 w-full z-50 flex items-center border-b border-white/20 bg-neutral-dark pl-1 pt-1.5 pb-1 text-custom-white sm:pl-3'>
+      <div className='sticky top-0 left-0 w-full z-50 flex items-center border-b border-custom-white/20 bg-neutral-dark pl-1 pt-1.5 pb-1 text-custom-white sm:pl-3'>
          <button
             type='button'
             className='-ml-0.5 -mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light'

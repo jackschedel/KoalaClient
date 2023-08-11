@@ -18,7 +18,7 @@ const NewChat = ({ folder }: { folder?: string }) => {
           ? 'cursor-not-allowed opacity-40'
           : 'cursor-pointer opacity-100'
       } ${
-        folder ? 'justify-start gap-3 text-custom-white/50 hover:text-custom-white' : 'text-custom-white gap-2 mb-2 border border-white/20'
+        folder ? 'justify-start gap-3 text-custom-white/50 hover:text-custom-white' : 'text-custom-white gap-2 mb-2 border border-custom-white/20'
       }`}
       onClick={() => {
         if (!generating) addChat(folder);
