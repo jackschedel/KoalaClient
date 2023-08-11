@@ -31,10 +31,10 @@ const Message = React.memo(
                }`}
          >
             <div
-               className={`text-base gap-3 md:gap-5 m-auto p-3 md:py-6 flex transition-all ease-in-out 
+               className={`text-base gap-3 md:gap-5 p-3 md:py-6 flex transition-all ease-in-out 
                  ${hideSideMenu
-                     ? 'md:max-w-5xl lg:max-w-5xl xl:max-w-6xl'
-                     : 'md:max-w-3xl lg:max-w-3xl xl:max-w-4xl'
+                     ? 'md:mx-5 lg:mx-40 xl:mx-80'
+                     : 'md:mx-5 lg:mx-20 xl:mx-40'
                   }`}
             >
                <Avatar role={role} />
