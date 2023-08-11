@@ -67,7 +67,7 @@ const CommandPrompt = ({
       >        <input
           ref={inputRef}
           type="text"
-          className="text-custom-white p-3 text-sm bg-neutral-light m-0 w-full mr-0 h-8 rounded-t-lg focus:outline-none border-b-2 border-neutral-dark"
+          className="text-custom-white p-3 text-sm bg-neutral-light m-0 w-full mr-0 h-8 rounded-t-lg bg-custom-black/25 focus:outline-none border-b border-neutral-dark"
           value={input}
           placeholder={t("search") as string}
           onChange={(e) => {
