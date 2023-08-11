@@ -6,7 +6,7 @@
   "homepage": "./",
   "main": "electron/index.cjs",
   "author": "Jack Schedel <client@koaladev.io>",
-  "description": "Cutting edge GPT API client with all the features you could want to use in your workflow",
+  "description": "KoalaClient is an OpenAI API user interface designed to make integrating generative AI into your workflow seamless.",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
