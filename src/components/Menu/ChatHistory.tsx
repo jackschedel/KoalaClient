@@ -28,7 +28,7 @@ const ChatHistory = React.memo(
       const [isEdit, setIsEdit] = useState<boolean>(false);
       const [_title, _setTitle] = useState<string>(title);
       const inputRef = useRef<HTMLInputElement>(null);
-
+      
       const editTitle = () => {
          const updatedChats = JSON.parse(
             JSON.stringify(useStore.getState().chats)
@@ -68,7 +68,6 @@ const ChatHistory = React.memo(
 
       const handleCross = () => {
          setIsDelete(false);
-         setIsEdit(false);
       };
 
       const handleDragStart = (e: React.DragEvent<HTMLAnchorElement>) => {
@@ -106,6 +105,9 @@ const ChatHistory = React.memo(
               onChange={(e) => {
                 _setTitle(e.target.value);
               }}
+              onBlur={(e) => {
+                setIsEdit(false);
+              }}
               onKeyDown={handleKeyDown}
               ref={inputRef}
             />
@@ -113,7 +115,7 @@ const ChatHistory = React.memo(
             _title
           )}
 
-          {isEdit || (
+          {isEdit && (
             <div
               className={
                 active
@@ -125,7 +127,7 @@ const ChatHistory = React.memo(
         </div>
         {active && (
           <div className='absolute flex right-1 z-10 text-custom-white/60 visible'>
-            {isDelete || isEdit ? (
+            {isDelete ? (
               <>
                 <button
                   className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded'
@@ -144,13 +146,13 @@ const ChatHistory = React.memo(
               </>
             ) : (
               <>
-                <button
+                {!isEdit && <button
                   className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded'
                   onClick={() => setIsEdit(true)}
                   aria-label='edit chat title'
                 >
                   <EditIcon />
-                </button>
+                </button>}
                 <button
                   className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded'
                   onClick={() => setIsDelete(true)}
