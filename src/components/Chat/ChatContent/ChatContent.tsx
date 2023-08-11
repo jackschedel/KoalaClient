@@ -59,7 +59,6 @@ const ChatContent = () => {
             className='flex flex-col items-center text-sm w-full'
             ref={saveRef}
           >
-            <ModelConfigBar />
             {!generating && advancedMode && messages?.length === 0 && (
               <NewMessageButton messageIndex={-1} />
             )}
