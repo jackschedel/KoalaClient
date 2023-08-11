@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
 import AboutIcon from '@icon/AboutIcon';
 
 const GithubLink = () => {

@@ -6,7 +6,8 @@ import CollapseOptions from './CollapseOptions';
 import GoogleSync from '@components/GoogleSync';
 import { TotalTokenCostDisplay } from '@components/SettingsMenu/TotalTokenCost';
 import isElectron from '@utils/electron';
-import GithubLink from '@components/AboutMenu/AboutMenu';
+import GithubLink from './GithubLink';
+import DesktopLink from './DesktopLink';
 
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || undefined;
 
@@ -20,8 +21,9 @@ const MenuOptions = () => {
           hideMenuOptions ? 'max-h-0' : 'max-h-full'
         } overflow-hidden transition-all`}
       >
+        {!isElectron() && googleClientId && <GoogleSync clientId={googleClientId} />}
+        {!isElectron() && <DesktopLink />}
         <GithubLink />
-        {!isElectron && googleClientId && <GoogleSync clientId={googleClientId} />}
         <SettingsMenu />
       </div>
     </>
