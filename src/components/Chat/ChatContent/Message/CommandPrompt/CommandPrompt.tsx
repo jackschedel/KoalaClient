@@ -63,7 +63,7 @@ const CommandPrompt = ({
       <div
         className={`${dropDown ? "" : "hidden"} absolute ${
           isAbove ? "bottom-full" : "top-100 bottom-100"
-        } right-0 z-10 bg-neutral-light rounded-lg shadow-xl text-custom-white group`}
+        } border border-neutral-base right-0 z-10 bg-neutral-light rounded-lg shadow-xl text-custom-white group `}
       >        <input
           ref={inputRef}
           type="text"
