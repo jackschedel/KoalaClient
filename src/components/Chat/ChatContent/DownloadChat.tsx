@@ -37,7 +37,7 @@ const DownloadChat = React.memo(
             title={t('downloadChat') as string}
             cancelButton={false}
           >
-            <div className='pt-6 px-6 flex gap-4'>
+            <div className='p-6 flex gap-4'>
               <button
                 className='btn btn-neutral gap-2'
                 aria-label='markdown'
