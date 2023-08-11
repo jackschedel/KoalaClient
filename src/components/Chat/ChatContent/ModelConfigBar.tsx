@@ -48,7 +48,7 @@ const ModelConfigBar = React.memo(() => {
   return config
     ? (
       <>
-        <div className="sticky p-1 pb-0.5  mb-19 top-0 flex gap-x-3 gap-y-1 flex-wrap w-full items-center justify-center border-b border-black/20 bg-neutral-dark text-custom-white z-50">
+        <div className="sticky p-1 pb-0.5  mb-19 top-0 flex gap-x-3 gap-y-1 flex-wrap w-full items-center justify-center border-b-2 border-neutral-base bg-neutral-dark text-custom-white z-50">
           {advancedMode &&
             (
               <div className="sticky top-0 flex gap-x-1 gap-y-0 flex-wrap w-full items-center justify-center pt-0 pb-1">

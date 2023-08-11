@@ -155,7 +155,7 @@ const ChatHistoryList = () => {
 
   return (
     <div
-      className={`flex-col flex-1 overflow-y-auto hide-scroll-bar border-b border-custom-white/20 ${
+      className={`flex-col flex-1 overflow-y-auto hide-scroll-bar border-b-2 border-custom-white/20 ${
         isHover ? 'bg-neutral-dark/40' : ''
       }`}
       onDrop={handleDrop}
