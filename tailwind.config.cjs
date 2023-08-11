@@ -15,17 +15,16 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: [
-        'NotoSans Nerd Font',
-        'Ubuntu Nerd Font',
-        'Söhne',
+        'Noto Sans',
         'Segoe UI',
+        'Ubuntu',
+        'Söhne',
         'Roboto',
         'ui-sans-serif',
         'system-ui',
         '-apple-system',
         'Ubuntu',
         'Cantarell',
-        'Noto Sans',
         'sans-serif',
         'Helvetica Neue',
         'Arial',
