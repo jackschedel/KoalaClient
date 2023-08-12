@@ -92,7 +92,7 @@ const ChatHistory = React.memo(
         onClick={() => {
           if (!generating) setCurrentChatIndex(chatIndex);
         }}
-        draggable
+        draggable={!isEdit}
         onDragStart={handleDragStart}
       >
         <ChatIcon />
