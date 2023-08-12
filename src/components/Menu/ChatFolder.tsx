@@ -171,7 +171,9 @@ const ChatFolder = ({
           if (gradientRef.current) gradientRef.current.style.width = '1rem';
         }}
       >
-        <FolderIcon className='h-4 w-4' />
+        <div className='py-2'>
+          <FolderIcon className='h-4 w-4' />
+        </div>
         <div className='flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative'>
           {isEdit ? (
             <input
@@ -209,14 +211,14 @@ const ChatFolder = ({
           className='flex text-custom-white/60'
         >
           <button
-            className='pr-3 py-2 hover:text-custom-white'
+            className='pr-3 hover:text-custom-white'
             aria-label='expand'
           >
             <DownChevronArrow />
           </button>
         </div>}
         {isExpanded && <div
-          className='flex py-1 text-custom-white/60'
+          className='flex text-custom-white/60'
           onClick={(e) => e.stopPropagation()}
         >
           {isDelete ? (
@@ -238,20 +240,20 @@ const ChatFolder = ({
             </>
           ) : (
             <>
-              <div
-                className='relative md:hidden group-hover/folder:md:inline'
-                ref={paletteRef}
-              >
-                {!isEdit && <button
+              {!isEdit && <button
                   className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded md:hidden group-hover/folder:md:inline'
                   onClick={() => setIsEdit(true)}
                   aria-label='edit folder title'
                 >
                   <EditIcon />
-                </button>}
+              </button>}
+              <div
+                className='relative md:hidden group-hover/folder:md:inline'
+                ref={paletteRef}
+              >
                 <button
-                  className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded'
-                  onClick={() => {
+                className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded md:hidden group-hover/folder:md:inline'
+                onClick={() => {
                     setShowPalette((prev) => !prev);
                   }}
                   aria-label='folder color'
@@ -259,7 +261,7 @@ const ChatFolder = ({
                   <ColorPaletteIcon />
                 </button>
                 {showPalette && (
-                  <div className='absolute left-4 bottom-0 translate-y-full p-2 z-20 bg-neutral-dark rounded border border-neutral-base flex flex-col gap-2 items-center'>
+                  <div className='absolute bottom-0 translate-y-full p-2 z-20 bg-neutral-dark rounded border border-neutral-base flex flex-col gap-2 items-center'>
                     <>
                       {folderColorOptions.map((c) => (
                         <button
