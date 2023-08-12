@@ -93,28 +93,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-Linux/koala-client-2.0.0-linux-x86_64.AppImage
-          asset_name: koala-client-2.0.0-${{ steps.committag.outputs.substring }}-linux-x86_64.AppImage
-          asset_content_type: application
-
-      - name: Upload Release Asset - Ubuntu
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-Linux/latest-linux.yml
-          asset_name: linux-hashinfo.yml
-          asset_content_type: text
-
-      - name: Upload Release Asset - MacOS
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-macOS/koala-client-2.0.0-mac-x64.dmg
-          asset_name: release-macOS/koala-client-2.0.0-${{ steps.committag.outputs.substring }}-mac-x64.dmg
+          asset_path: ./release-Linux/koala-client-2.0.1-linux-x86_64.AppImage
+          asset_name: KoalaClient-2.0.1-${{ steps.committag.outputs.substring }}-linux-x86_64.AppImage
           asset_content_type: application
 
       - name: Upload Release Asset - MacOS
@@ -123,9 +103,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-macOS/latest-mac.yml
-          asset_name: mac-hashinfo.yml
-          asset_content_type: text
+          asset_path: ./release-macOS/koala-client-2.0.1-mac-x64.dmg
+          asset_name: KoalaClient-2.0.1-${{ steps.committag.outputs.substring }}-mac-x64.dmg
+          asset_content_type: application
 
       - name: Upload Release Asset - Windows
         uses: actions/upload-release-asset@v1
@@ -133,13 +113,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-Windows/koala-client-2.0.0-win-x64.exe
-          asset_name: release-Windows/koala-client-2.0.0-${{ steps.committag.outputs.substring }}-win-x64.exe
+          asset_path: ./release-Windows/koala-client-2.0.1-win-x64.exe
+          asset_name: KoalaClient-2.0.1-${{ steps.committag.outputs.substring }}-win-x64.exe
           asset_content_type: application
           
       - name: Zip Unpacked Release - Windows
         run: |
-          # Zip the folder
           cd ./release-Windows
           7z a win-unpacked.zip win-unpacked/
           cd ..
@@ -151,15 +130,21 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./release-Windows/win-unpacked.zip
-          asset_name: KoalaClient-2.0.0-${{ steps.committag.outputs.substring }}-win-unpacked-x64.zip
+          asset_name: KoalaClient-2.0.1-${{ steps.committag.outputs.substring }}-win-unpacked-x64.zip
           asset_content_type: zip
 
-      - name: Upload Release Asset - Windows
+      - name: Zip Hash Info
+        run: |
+          7z a hash-info.zip ./release-Linux/latest-linux.yml ./release-macOS/latest-mac.yml
+          cp ./release-Windows/latest.yml ./release-Windows/latest-windows.yml
+          7z a hash-info.zip ./release-Windows/latest-windows.yml
+
+      - name: Upload Hash Info
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-Windows/latest.yml
-          asset_name: windows-hashinfo.yml
-          asset_content_type: text
+          asset_path: ./hash-info.zip
+          asset_name: hash-info.zip
+          asset_content_type: zip
