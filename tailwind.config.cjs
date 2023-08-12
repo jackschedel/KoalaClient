@@ -15,6 +15,10 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: [
+        'NotoSans Nerd Font',
+        'Noto Sans',
+        'Segoe UI',
+        'Ubuntu',
         'Söhne',
         'Roboto',
         'ui-sans-serif',
@@ -22,7 +26,6 @@ module.exports = {
         '-apple-system',
         'Ubuntu',
         'Cantarell',
-        'Noto Sans',
         'sans-serif',
         'Helvetica Neue',
         'Arial',
@@ -52,19 +55,26 @@ module.exports = {
         },
       },
       colors: {
-        gray: {
-          50: '#f7f7f8',
-          100: '#ececf1',
-          200: '#d9d9e3',
-          300: '#d1d5db',
-          400: '#acacbe',
-          500: '#8e8ea0',
-          600: '#4b5563',
-          650: '#444654',
-          700: '#40414f',
-          800: '#343541',
-          850: '#2A2B32',
-          900: '#202123',
+        // darker/lighter using https://www.colors.tools/lighten-and-darken/
+        // NOTE: ALSO NEEDS TO BE CHANGED ON CSS FILE
+        accent: {
+          light: '#799ad6',
+          base: '#3762b2',
+          dark: '#1f3764',
+        },
+        neutral: {
+          light: '#313131',
+          base: '#282828',
+          dark: '#1f1f1f',
+        },
+        custom: {
+          white: '#ffffff',
+          black: '#000000',
+        },
+        role: {
+          system:'#594e50',
+          assistant: '#7a4f99',
+          user: '#36999b',
         },
       },
     },

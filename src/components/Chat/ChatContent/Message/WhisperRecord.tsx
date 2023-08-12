@@ -7,9 +7,11 @@ import MicrophoneIcon from "@icon/MicrophoneIcon";
 const WhisperRecord = ({
   cursorPosition,
   _setContent,
+  messageIndex,
 }: {
   cursorPosition: number;
   _setContent: React.Dispatch<React.SetStateAction<string>>;
+  messageIndex: number;
 }) => {
   let apiKey = useStore((state) => state.apiKey);
 
@@ -62,8 +64,8 @@ const WhisperRecord = ({
   return (
     <div className="relative max-wd-sm">
       <button
-        className="btn btn-neutral btn-small mr-5"
-        aria-label="whisper record"
+        className={`btn ${isRecording ? (messageIndex%2 ? 'btn-primary' : 'btn-neutral-dark') : 'btn-primary'} btn-small inline-flex p-0 h-8 w-8 items-center justify-center mr-3`}
+        aria-label="whisper"
         onClick={handleRecording}
       >
         {isRecording ? <StopIcon /> : <MicrophoneIcon />}

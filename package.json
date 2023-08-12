@@ -1,26 +1,26 @@
 {
-  "name": "better-chatgpt",
+  "name": "koala-client",
   "private": true,
-  "version": "1.0.4",
+  "version": "2.0.0",
   "type": "module",
   "homepage": "./",
   "main": "electron/index.cjs",
-  "author": "Jing Hua <betterchatgpt@mail.tjh.sg>",
-  "description": "Play and chat smarter with BetterChatGPT - an amazing open-source web app with a better UI for exploring OpenAI's ChatGPT API!",
+  "author": "Jack Schedel <client@koaladev.io>",
+  "description": "KoalaClient is an OpenAI API user interface designed to make integrating generative AI into your workflow seamless.",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "electron": "concurrently -k \"BROWSER=none yarn dev\" \"wait-on tcp:5173 && electron .\"",
     "pack": "yarn build && electron-builder --dir",
-    "wslbuild": "yarn build && electron-builder --dir --win && cp -r release/win-unpacked/* /mnt/c/Programs/BetterChatGPT",
-    "wslcopy": "cp -r release/win-unpacked/* /mnt/c/Programs/BetterChatGPT",
+    "wslbuild": "yarn build && electron-builder --dir --win && cp -r release/win-unpacked/* /mnt/c/Programs/KoalaClient",
+    "wslcopy": "cp -r release/win-unpacked/* /mnt/c/Programs/KoalaClient",
     "make": "yarn build && electron-builder"
   },
   "build": {
-    "appId": "better-chatgpt",
-    "productName": "Better ChatGPT",
-    "artifactName": "${os}-${name}-${version}-${arch}.${ext}",
+    "appId": "koala-client",
+    "productName": "KoalaClient",
+    "artifactName": "${name}-${version}-${os}-${arch}.${ext}",
     "directories": {
       "output": "release"
     },

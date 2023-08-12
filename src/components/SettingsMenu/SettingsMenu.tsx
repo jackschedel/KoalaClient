@@ -9,9 +9,9 @@ import ThemeSwitcher from '@components/Menu/MenuOptions/ThemeSwitcher';
 import LanguageSelector from '@components/LanguageSelector';
 import AutoTitleToggle from './AutoTitleToggle';
 import CloseToTrayToggle from './CloseToTrayToggle';
-import AdvancedModeToggle from './AdvencedModeToggle';
+//import AdvancedModeToggle from './AdvencedModeToggle';
 import InlineLatexToggle from './InlineLatexToggle';
-
+import HeartIcon from '@icon/HeartIcon';
 import PromptLibraryMenu from '@components/PromptLibraryMenu';
 import ChatConfigMenu from '@components/ChatConfigMenu';
 import EnterToSubmitToggle from './EnterToSubmitToggle';
@@ -34,7 +34,7 @@ const SettingsMenu = () => {
   return (
     <>
       <a
-        className='flex py-2 px-2 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm'
+        className='flex py-2 px-2 items-center gap-3 rounded-md hover:bg-custom-white/20 transition-colors duration-200 text-custom-white cursor-pointer text-sm'
         onClick={() => {
           setIsModalOpen(true);
         }}
@@ -47,9 +47,8 @@ const SettingsMenu = () => {
           title={t('setting') as string}
           cancelButton={false}
         >
-          <div className='px-10 py-3 mx-5 border-b border-gray-200 dark:border-gray-600 flex flex-col items-center gap-2'>
+          <div className='px-10 pt-3 mx-5 flex flex-col items-center gap-2'>
             <LanguageSelector />
-            <ThemeSwitcher />
             <ImportExportChat />
             <Api />
             <ClearConversation />
@@ -61,10 +60,17 @@ const SettingsMenu = () => {
               <EnterToSubmitToggle />
               <ConfirmEditSubmissionToggle />
               <InlineLatexToggle />
-              <AdvancedModeToggle />
               <TotalTokenCostToggle />
             </div>
             <TotalTokenCost />
+            <a
+              className='flex p-2 mb-2 items-center gap-2 rounded-md hover:bg-neutral-dark transition-colors duration-200 text-custom-white/20 cursor-pointer text-sm'
+              href='https://github.com/ztjhz/BetterChatGPT'
+              target='_blank'
+            >
+              <div className='opacity-20'><HeartIcon /></div>
+              {t('originalRepo')}
+            </a>
           </div>
         </PopupModal>
       )}

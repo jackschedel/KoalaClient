@@ -89,8 +89,8 @@ export const validateExportV1 = (data: ExportV1): data is ExportV1 => {
   return validateAndFixChats(data.chats) && validateFolders(data.folders);
 };
 
-// Convert OpenAI chat format to BetterChatGPT format
-export const convertOpenAIToBetterChatGPTFormat = (
+// Convert OpenAI chat format to KoalaClient format
+export const convertOpenAIToKoalaClientFormat = (
   openAIChat: OpenAIChat
 ): ChatInterface => {
   const messages: MessageInterface[] = [];
@@ -126,7 +126,7 @@ export const convertOpenAIToBetterChatGPTFormat = (
   };
 };
 
-// Import OpenAI chat data and convert it to BetterChatGPT format
+// Import OpenAI chat data and convert it to KoalaClient format
 export const importOpenAIChatExport = (openAIChatExport: OpenAIChat[]) => {
-  return openAIChatExport.map(convertOpenAIToBetterChatGPTFormat);
+  return openAIChatExport.map(convertOpenAIToKoalaClientFormat);
 };

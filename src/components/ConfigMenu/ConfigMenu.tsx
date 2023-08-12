@@ -5,6 +5,7 @@ import PopupModal from "@components/PopupModal";
 import { ConfigInterface, ModelOptions } from "@type/chat";
 import DownChevronArrow from "@icon/DownChevronArrow";
 import { modelMaxToken, modelOptions } from "@constants/chat";
+import useHideOnOutsideClick from '@hooks/useHideOnOutsideClick';
 
 const ConfigMenu = ({
   setIsModalOpen,
@@ -48,8 +49,11 @@ const ConfigMenu = ({
       handleConfirm={handleConfirm}
       handleClickBackdrop={handleConfirm}
     >
-      <div className="p-6 border-b border-gray-200 dark:border-gray-600">
-        <ModelSelector _model={_model} _setModel={_setModel} />
+      <div className="p-6 border-b bg-neutral-base">
+      <label className="block text-sm font-medium text-custom-white pb-2">
+        {t("model")}:
+      </label>
+      <ModelSelector _model={_model} _setModel={_setModel} />
         <MaxTokenSlider
           _maxToken={_maxToken}
           _setMaxToken={_setMaxToken}
@@ -85,12 +89,12 @@ export const ModelSelector = ({
   _model: ModelOptions;
   _setModel: React.Dispatch<React.SetStateAction<ModelOptions>>;
 }) => {
-  const [dropDown, setDropDown] = useState<boolean>(false);
+  const [dropDown, setDropDown, dropDownRef] = useHideOnOutsideClick();
 
   return (
     <div className="mb-4">
       <button
-        className="btn btn-neutral btn-small flex gap-1"
+        className="btn btn-neutral btn-small flex gap-1 p-1.5 rounded-md"
         type="button"
         onClick={() => setDropDown((prev) => !prev)}
         aria-label="model"
@@ -100,18 +104,19 @@ export const ModelSelector = ({
       </button>
       <div
         id="dropdown"
+        ref={dropDownRef}
         className={`${
           dropDown ? "" : "hidden"
-        } absolute top-100 bottom-100 z-10 bg-white rounded-lg shadow-xl border-b border-black/10 dark:border-gray-900/50 text-gray-800 dark:text-gray-100 group dark:bg-gray-800 opacity-90`}
-      >
+        } absolute top-100 bottom-100 z-10 bg-neutral-light shadow-xl rounded-lg border border-neutral-base text-neutral-dark group w-36`}
+        >
         <ul
-          className="text-sm text-gray-700 dark:text-gray-200 p-0 m-0"
+          className='text-sm text-neutral-base p-0 m-0 max-h-72 overflow-auto'
           aria-labelledby="dropdownDefaultButton"
         >
           {modelOptions.map((m) => (
             <li
-              className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
-              onClick={() => {
+            className='px-4 py-2 hover:bg-neutral-dark cursor-pointer text-custom-white'
+            onClick={() => {
                 _setModel(m);
                 setDropDown(false);
               }}
@@ -146,7 +151,7 @@ export const MaxTokenSlider = ({
 
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-900 dark:text-white">
+      <label className="block text-sm font-medium text-custom-white">
         {t("token.label")}: {_maxToken}
       </label>
       <input
@@ -159,9 +164,9 @@ export const MaxTokenSlider = ({
         min={0}
         max={modelMaxToken[_model]}
         step={1}
-        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+        className="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer"
       />
-      <div className="min-w-fit text-gray-500 dark:text-gray-300 text-sm mt-2">
+      <div className="min-w-fit text-custom-white text-sm mt-2">
         {t("token.description")}
       </div>
     </div>
@@ -187,8 +192,8 @@ export const MaxContextSlider = ({
   }, [_model]);
 
   return (
-    <div>
-      <label className="block text-sm font-medium text-gray-900 dark:text-white">
+    <div className="mt-5 pt-5 border-t border-neutral-base">
+      <label className="block text-sm font-medium text-custom-white">
         {t("context.label")}: {_maxContext}
       </label>
       <input
@@ -201,9 +206,9 @@ export const MaxContextSlider = ({
         min={0}
         max={modelMaxToken[_model]}
         step={1}
-        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+        className="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer"
       />
-      <div className="min-w-fit text-gray-500 dark:text-gray-300 text-sm mt-2">
+      <div className="min-w-fit text-custom-white text-sm mt-2">
         {t("context.description")}
       </div>
     </div>
@@ -220,8 +225,8 @@ export const TemperatureSlider = ({
   const { t } = useTranslation("model");
 
   return (
-    <div className="mt-5 pt-5 border-t border-gray-500">
-      <label className="block text-sm font-medium text-gray-900 dark:text-white">
+    <div className="mt-5 pt-5 border-t border-neutral-base">
+      <label className="block text-sm font-medium text-custom-white">
         {t("temperature.label")}: {_temperature}
       </label>
       <input
@@ -234,9 +239,9 @@ export const TemperatureSlider = ({
         min={0}
         max={2}
         step={0.1}
-        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+        className="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer"
       />
-      <div className="min-w-fit text-gray-500 dark:text-gray-300 text-sm mt-2">
+      <div className="min-w-fit text-custom-white text-sm mt-2">
         {t("temperature.description")}
       </div>
     </div>
@@ -253,8 +258,8 @@ export const TopPSlider = ({
   const { t } = useTranslation("model");
 
   return (
-    <div className="mt-5 pt-5 border-t border-gray-500">
-      <label className="block text-sm font-medium text-gray-900 dark:text-white">
+    <div className="mt-5 pt-5 border-t border-neutral-base">
+      <label className="block text-sm font-medium text-custom-white">
         {t("topP.label")}: {_topP}
       </label>
       <input
@@ -267,9 +272,9 @@ export const TopPSlider = ({
         min={0}
         max={1}
         step={0.05}
-        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+        className="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer"
       />
-      <div className="min-w-fit text-gray-500 dark:text-gray-300 text-sm mt-2">
+      <div className="min-w-fit text-custom-white text-sm mt-2">
         {t("topP.description")}
       </div>
     </div>
@@ -286,8 +291,8 @@ export const PresencePenaltySlider = ({
   const { t } = useTranslation("model");
 
   return (
-    <div className="mt-5 pt-5 border-t border-gray-500">
-      <label className="block text-sm font-medium text-gray-900 dark:text-white">
+    <div className="mt-5 pt-5 border-t border-neutral-base">
+      <label className="block text-sm font-medium text-custom-white">
         {t("presencePenalty.label")}: {_presencePenalty}
       </label>
       <input
@@ -300,9 +305,9 @@ export const PresencePenaltySlider = ({
         min={-2}
         max={2}
         step={0.1}
-        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+        className="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer"
       />
-      <div className="min-w-fit text-gray-500 dark:text-gray-300 text-sm mt-2">
+      <div className="min-w-fit text-custom-white text-sm mt-2">
         {t("presencePenalty.description")}
       </div>
     </div>
@@ -319,8 +324,8 @@ export const FrequencyPenaltySlider = ({
   const { t } = useTranslation("model");
 
   return (
-    <div className="mt-5 pt-5 border-t border-gray-500">
-      <label className="block text-sm font-medium text-gray-900 dark:text-white">
+    <div className="mt-5 pt-5 border-t border-neutral-base">
+      <label className="block text-sm font-medium text-custom-white">
         {t("frequencyPenalty.label")}: {_frequencyPenalty}
       </label>
       <input
@@ -333,9 +338,9 @@ export const FrequencyPenaltySlider = ({
         min={-2}
         max={2}
         step={0.1}
-        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+        className="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer"
       />
-      <div className="min-w-fit text-gray-500 dark:text-gray-300 text-sm mt-2">
+      <div className="min-w-fit text-custom-white text-sm mt-2">
         {t("frequencyPenalty.description")}
       </div>
     </div>

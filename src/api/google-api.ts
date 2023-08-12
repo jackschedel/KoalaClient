@@ -15,7 +15,7 @@ export const createDriveFile = async (
   file: File,
   accessToken: string
 ): Promise<GoogleFileResource> => {
-  const boundary = 'better_chatgpt';
+  const boundary = 'koala_client';
   const metadata = {
     name: file.name,
     mimeType: file.type,

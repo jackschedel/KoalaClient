@@ -100,7 +100,6 @@ const ChatFolder = ({
 
   const handleCross = () => {
     setIsDelete(false);
-    setIsEdit(false);
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -149,9 +148,7 @@ const ChatFolder = ({
 
   return (
     <div
-      className={`w-full transition-colors group/folder ${
-        isHover ? 'bg-gray-800/40' : ''
-      }`}
+      className={`w-full transition-colors group/folder`}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
@@ -159,8 +156,8 @@ const ChatFolder = ({
       <div
         style={{ background: color || '' }}
         className={`${
-          color ? '' : 'hover:bg-gray-850'
-        } transition-colors flex py-2 pl-2 pr-1 items-center gap-3 relative rounded-md break-all cursor-pointer parent-sibling`}
+          color ? 'border-custom-black/20' : 'hover:bg-custom-white/20 border-neutral-base'
+        } border-2 transition-colors flex pl-2 items-center gap-3 relative rounded-md break-all cursor-pointer parent-sibling`}
         onClick={toggleExpanded}
         ref={folderRef}
         onMouseEnter={() => {
@@ -174,7 +171,9 @@ const ChatFolder = ({
           if (gradientRef.current) gradientRef.current.style.width = '1rem';
         }}
       >
-        <FolderIcon className='h-4 w-4' />
+        <div className='py-2'>
+          <FolderIcon className='h-4 w-4' />
+        </div>
         <div className='flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative'>
           {isEdit ? (
             <input
@@ -183,6 +182,9 @@ const ChatFolder = ({
               value={_folderName}
               onChange={(e) => {
                 _setFolderName(e.target.value);
+              }}
+              onBlur={(e) => {
+                setIsEdit(false);
               }}
               onClick={(e) => e.stopPropagation()}
               onKeyDown={handleKeyDown}
@@ -205,21 +207,31 @@ const ChatFolder = ({
             />
           )}
         </div>
-        <div
-          className='flex text-gray-300'
+        {!isExpanded && <div
+          className='flex text-custom-white/60'
+        >
+          <button
+            className='pr-3 hover:text-custom-white'
+            aria-label='expand'
+          >
+            <DownChevronArrow />
+          </button>
+        </div>}
+        {isExpanded && <div
+          className='flex text-custom-white/60'
           onClick={(e) => e.stopPropagation()}
         >
-          {isDelete || isEdit ? (
+          {isDelete ? (
             <>
               <button
-                className='p-1 hover:text-white'
+                className='p-1 hover:text-custom-white'
                 onClick={handleTick}
                 aria-label='confirm'
               >
                 <TickIcon />
               </button>
               <button
-                className='p-1 hover:text-white'
+                className='p-1 hover:text-custom-white'
                 onClick={handleCross}
                 aria-label='cancel'
               >
@@ -228,13 +240,20 @@ const ChatFolder = ({
             </>
           ) : (
             <>
+              {!isEdit && <button
+                  className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded md:hidden group-hover/folder:md:inline'
+                  onClick={() => setIsEdit(true)}
+                  aria-label='edit folder title'
+                >
+                  <EditIcon />
+              </button>}
               <div
                 className='relative md:hidden group-hover/folder:md:inline'
                 ref={paletteRef}
               >
                 <button
-                  className='p-1 hover:text-white'
-                  onClick={() => {
+                className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded md:hidden group-hover/folder:md:inline'
+                onClick={() => {
                     setShowPalette((prev) => !prev);
                   }}
                   aria-label='folder color'
@@ -242,13 +261,13 @@ const ChatFolder = ({
                   <ColorPaletteIcon />
                 </button>
                 {showPalette && (
-                  <div className='absolute left-0 bottom-0 translate-y-full p-2 z-20 bg-gray-900 rounded border border-gray-600 flex flex-col gap-2 items-center'>
+                  <div className='absolute bottom-0 translate-y-full p-2 z-20 bg-neutral-dark rounded border border-neutral-base flex flex-col gap-2 items-center'>
                     <>
                       {folderColorOptions.map((c) => (
                         <button
                           key={c}
                           style={{ background: c }}
-                          className={`hover:scale-90 transition-transform h-4 w-4 rounded-full`}
+                          className={`hover:scale-90 transition-transform h-6 w-6 rounded-full`}
                           onClick={() => {
                             updateColor(c);
                           }}
@@ -267,38 +286,25 @@ const ChatFolder = ({
                   </div>
                 )}
               </div>
-
               <button
-                className='p-1 hover:text-white md:hidden group-hover/folder:md:inline'
-                onClick={() => setIsEdit(true)}
-                aria-label='edit folder title'
-              >
-                <EditIcon />
-              </button>
-              <button
-                className='p-1 hover:text-white md:hidden group-hover/folder:md:inline'
+                className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded md:hidden group-hover/folder:md:inline'
                 onClick={() => setIsDelete(true)}
                 aria-label='delete folder'
               >
                 <DeleteIcon />
               </button>
               <button
-                className='p-1 hover:text-white'
+                className='p-1 hover:text-custom-white'
                 onClick={toggleExpanded}
                 aria-label='expand folder'
               >
-                <DownChevronArrow
-                  className={`${
-                    isExpanded ? 'rotate-180' : ''
-                  } transition-transform`}
-                />
               </button>
             </>
           )}
-        </div>
+        </div>}
       </div>
-      <div className='ml-3 pl-1 border-l-2 border-gray-700 flex flex-col gap-1 parent'>
-        {isExpanded && <NewChat folder={folderId} />}
+      <div className='ml-3 pl-1 border-l-2 border-neutral-base flex flex-col gap-1 parent'>
+        {isExpanded && <div className='pt-1'><NewChat folder={folderId} /></div>}
         {isExpanded &&
           folderChats.map((chat) => (
             <ChatHistory

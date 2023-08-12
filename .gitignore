@@ -28,7 +28,6 @@ release/
 .env
 .gitignore
 package-lock.json
-package.json
 yarn.lock
 .gitignore
 yarn.lock

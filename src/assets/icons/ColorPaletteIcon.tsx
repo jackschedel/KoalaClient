@@ -3,7 +3,7 @@ import React from 'react';
 const ColorPaletteIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      viewBox='0 0 24 24'
+      viewBox='0 0 24 22'
       fill='currentColor'
       height='1em'
       width='1em'

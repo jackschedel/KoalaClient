@@ -10,9 +10,11 @@ import useHideOnOutsideClick from "@hooks/useHideOnOutsideClick";
 const CommandPrompt = ({
   cursorPosition,
   _setContent,
+  messageIndex,
 }: {
   cursorPosition: number;
   _setContent: React.Dispatch<React.SetStateAction<string>>;
+  messageIndex: number;
 }) => {
   const { t } = useTranslation();
   const prompts = useStore((state) => state.prompts);
@@ -24,7 +26,6 @@ const CommandPrompt = ({
 
   useEffect(() => {
     if (dropDown && inputRef.current) {
-      // When dropdown is visible, focus the input
       inputRef.current.focus();
     }
   }, [dropDown]);
@@ -51,7 +52,9 @@ const CommandPrompt = ({
   return (
     <div className="relative max-wd-sm" ref={dropDownRef}>
       <button
-        className="btn btn-neutral btn-small"
+        className={`btn ${
+          messageIndex%2 ? 'btn-neutral' : 'btn-neutral-dark'
+        } btn-small inline-flex h-8 w-8 items-center justify-center`}
         aria-label="prompt library"
         onClick={() => setDropDown(!dropDown)}
       >
@@ -60,23 +63,21 @@ const CommandPrompt = ({
       <div
         className={`${dropDown ? "" : "hidden"} absolute ${
           isAbove ? "bottom-full" : "top-100 bottom-100"
-        } right-0 z-10 bg-white rounded-lg shadow-xl border-b border-black/10 dark:border-gray-900/50 text-gray-800 dark:text-gray-100 group dark:bg-gray-800 opacity-90`}
-      >
-        <div className="text-sm px-4 py-2 w-max">{t("promptLibrary")}</div>
-        <input
+        } border border-neutral-base right-0 z-10 bg-neutral-light rounded-lg shadow-xl text-custom-white group `}
+      >        <input
           ref={inputRef}
           type="text"
-          className="text-gray-800 dark:text-white p-3 text-sm border-none bg-gray-200 dark:bg-gray-600 m-0 w-full mr-0 h-8 focus:outline-none"
+          className="text-custom-white p-3 text-sm bg-neutral-base m-0 w-full mr-0 h-8 rounded-t-lg bg-custom-black/25 focus:outline-none border-b border-neutral-dark"
           value={input}
           placeholder={t("search") as string}
           onChange={(e) => {
             setInput(e.target.value);
           }}
         />
-        <ul className="text-sm text-gray-700 dark:text-gray-200 p-0 m-0 w-max max-w-sm max-md:max-w-[90vw] max-h-32 overflow-auto">
+        <ul className="text-sm text-custom-white p-0 m-0 w-max max-w-sm max-md:max-w-[90vw] max-h-32 overflow-auto">
           {_prompts.map((cp) => (
             <li
-              className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer text-start w-full"
+              className="px-4 py-2 hover:bg-neutral-dark cursor-pointer text-start w-full"
               onClick={() => {
                 _setContent((prev) => {
                   let startContent = prev.slice(0, cursorPosition);

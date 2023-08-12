@@ -25,9 +25,11 @@ const RoleSelector = React.memo(
     const [dropDown, setDropDown, dropDownRef] = useHideOnOutsideClick();
 
     return (
-      <div className='prose dark:prose-invert relative'>
+      <div className='prose relative'>
         <button
-          className='btn btn-neutral btn-small flex gap-1'
+          className={`btn ${
+            messageIndex%2 ? 'btn-neutral' : 'btn-neutral-dark'
+          } btn-small flex gap-1`}
           aria-label={t(role) as string}
           type='button'
           onClick={() => setDropDown((prev) => !prev)}
@@ -40,15 +42,15 @@ const RoleSelector = React.memo(
           id='dropdown'
           className={`${
             dropDown ? '' : 'hidden'
-          } absolute top-100 bottom-100 z-10 bg-white rounded-lg shadow-xl border-b border-black/10 dark:border-gray-900/50 text-gray-800 dark:text-gray-100 group dark:bg-gray-800 opacity-90`}
-        >
+          } absolute top-100 bottom-100 z-10 bg-neutral-light shadow-xl rounded-lg border border-neutral-base text-neutral-dark group w-36`}
+          >
           <ul
-            className='text-sm text-gray-700 dark:text-gray-200 p-0 m-0'
-            aria-labelledby='dropdownDefaultButton'
+          className='text-sm text-neutral-base p-0 m-0 max-h-72 overflow-auto'
+          aria-labelledby='dropdownDefaultButton'
           >
             {roles.map((r) => (
               <li
-                className='px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer'
+              className='px-4 py-2 hover:bg-neutral-dark cursor-pointer text-custom-white'
                 onClick={() => {
                   if (!sticky) {
                     const updatedChats: ChatInterface[] = JSON.parse(

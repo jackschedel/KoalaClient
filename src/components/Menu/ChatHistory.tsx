@@ -11,13 +11,9 @@ import useStore from '@store/store';
 
 const ChatHistoryClass = {
    normal:
-      'flex py-2 px-2 items-center gap-3 relative rounded-md bg-gray-900 hover:bg-gray-850 break-all hover:pr-4 group transition-opacity',
+      'flex py-2 px-2 items-center gap-3 relative rounded-md bg-opacity-0 hover:bg-opacity-20 hover:bg-custom-white break-all hover:pr-4 group transition-opacity',
    active:
-      'flex py-2 px-2 items-center gap-3 relative rounded-md break-all pr-14 bg-gray-800 hover:bg-gray-800 group transition-opacity',
-   normalGradient:
-      'absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-gray-850',
-   activeGradient:
-      'absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-800',
+      'flex py-2 px-2 items-center gap-3 relative rounded-md break-all pr-14 bg-accent-dark bg-opacity-40 group hover:bg-opacity-100 transition-opacity',
 };
 
 const ChatHistory = React.memo(
@@ -32,7 +28,7 @@ const ChatHistory = React.memo(
       const [isEdit, setIsEdit] = useState<boolean>(false);
       const [_title, _setTitle] = useState<string>(title);
       const inputRef = useRef<HTMLInputElement>(null);
-
+      
       const editTitle = () => {
          const updatedChats = JSON.parse(
             JSON.stringify(useStore.getState().chats)
@@ -72,7 +68,6 @@ const ChatHistory = React.memo(
 
       const handleCross = () => {
          setIsDelete(false);
-         setIsEdit(false);
       };
 
       const handleDragStart = (e: React.DragEvent<HTMLAnchorElement>) => {
@@ -110,6 +105,9 @@ const ChatHistory = React.memo(
               onChange={(e) => {
                 _setTitle(e.target.value);
               }}
+              onBlur={(e) => {
+                setIsEdit(false);
+              }}
               onKeyDown={handleKeyDown}
               ref={inputRef}
             />
@@ -117,29 +115,29 @@ const ChatHistory = React.memo(
             _title
           )}
 
-          {isEdit || (
+          {isEdit && (
             <div
               className={
                 active
-                  ? ChatHistoryClass.activeGradient
-                  : ChatHistoryClass.normalGradient
+                  ? ChatHistoryClass.active
+                  : ChatHistoryClass.normal
               }
             />
           )}
         </div>
         {active && (
-          <div className='absolute flex right-1 z-10 text-gray-300 visible'>
-            {isDelete || isEdit ? (
+          <div className='absolute flex pr-1 right-1 z-10 text-custom-white/60 visible'>
+            {isDelete ? (
               <>
                 <button
-                  className='p-1 hover:text-white'
+                  className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded'
                   onClick={handleTick}
                   aria-label='confirm'
                 >
                   <TickIcon />
                 </button>
                 <button
-                  className='p-1 hover:text-white'
+                  className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded'
                   onClick={handleCross}
                   aria-label='cancel'
                 >
@@ -148,15 +146,15 @@ const ChatHistory = React.memo(
               </>
             ) : (
               <>
-                <button
-                  className='p-1 hover:text-white'
+                {!isEdit && <button
+                  className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded'
                   onClick={() => setIsEdit(true)}
                   aria-label='edit chat title'
                 >
                   <EditIcon />
-                </button>
+                </button>}
                 <button
-                  className='p-1 hover:text-white'
+                  className='p-1 hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded'
                   onClick={() => setIsDelete(true)}
                   aria-label='delete chat'
                 >

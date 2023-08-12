@@ -32,7 +32,6 @@ const ChatContent = () => {
          ? state.chats[state.currentChatIndex].messages.length
          : 0
    );
-   const advancedMode = useStore((state) => state.advancedMode);
    const generating = useStore.getState().generating;
    const hideSideMenu = useStore((state) => state.hideSideMenu);
 
@@ -48,32 +47,27 @@ const ChatContent = () => {
    const { error } = useSubmit();
 
   return (
-    <div className='flex-1 overflow-hidden'>
+    <div className='flex-1 overflow-hidden bg-neutral-dark'>
       <ScrollToBottom
-        className='h-full dark:bg-gray-800'
+        className='h-full'
         followButtonClassName='hidden'
       >
         <ScrollToBottomButton />
-        <div className='flex flex-col items-center text-sm dark:bg-gray-800'>
+        <div className='flex flex-col items-center text-sm'>
           <div
-            className='flex flex-col items-center text-sm dark:bg-gray-800 w-full'
+            className='flex flex-col items-center text-sm w-full'
             ref={saveRef}
           >
-            <ModelConfigBar />
-            {!generating && advancedMode && messages?.length === 0 && (
-              <NewMessageButton messageIndex={-1} />
-            )}
+            {!generating && <NewMessageButton messageIndex={-1} />}
             {messages?.map((message, index) => (
-              (advancedMode || index !== 0 || message.role !== 'system') && (
-                <React.Fragment key={index}>
-                  <Message
-                    role={message.role}
-                    content={message.content}
-                    messageIndex={index}
-                  />
-                  {!generating && advancedMode && <NewMessageButton messageIndex={index} />}
-                </React.Fragment>
-              )
+               <React.Fragment key={index}>
+               <Message
+                  role={message.role}
+                  content={message.content}
+                  messageIndex={index}
+               />
+               {!generating && <NewMessageButton messageIndex={index} />}
+               </React.Fragment>
             ))}
           </div>
 
@@ -85,11 +79,11 @@ const ChatContent = () => {
                />
                {error !== '' && (
                   <div className='relative py-2 px-3 w-3/5 mt-3 max-md:w-11/12 border rounded-md border-red-500 bg-red-500/10'>
-                     <div className='text-gray-600 dark:text-gray-100 text-sm whitespace-pre-wrap'>
+                     <div className='text-neutral-base text-sm whitespace-pre-wrap'>
                         {error}
                      </div>
                      <div
-                        className='text-white absolute top-1 right-1 cursor-pointer'
+                        className='text-custom-white absolute top-1 right-1 cursor-pointer'
                         onClick={() => {
                            setError('');
                         }}

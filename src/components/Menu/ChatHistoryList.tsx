@@ -154,17 +154,18 @@ const ChatHistoryList = () => {
   };
 
   return (
+    <>
+    <ChatSearch filter={filter} setFilter={setFilter} />
     <div
-      className={`flex-col flex-1 overflow-y-auto hide-scroll-bar border-b border-white/20 ${
-        isHover ? 'bg-gray-800/40' : ''
+      className={`flex-col flex-1 overflow-y-auto hide-scroll-bar border-y-2 border-custom-white/40 ${
+        isHover ? 'bg-neutral-dark/40' : ''
       }`}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDragEnd={handleDragEnd}
     >
-      <ChatSearch filter={filter} setFilter={setFilter} />
-      <div className='flex flex-col gap-2 text-gray-100 text-sm'>
+      <div className='flex flex-col gap-2 text-custom-white text-sm pt-2'>
         {Object.keys(chatFolders).map((folderId) => (
           <ChatFolder
             folderChats={chatFolders[folderId]}
@@ -176,16 +177,9 @@ const ChatHistoryList = () => {
           <ChatHistory title={title} key={`${title}-${id}`} chatIndex={index} />
         ))}
       </div>
-      <div className='w-full h-10' />
+      <div className='w-full h-2' />
     </div>
-  );
-};
-
-const ShowMoreButton = () => {
-  return (
-    <button className='btn relative btn-dark btn-small m-auto mb-2'>
-      <div className='flex items-center justify-center gap-2'>Show more</div>
-    </button>
+    </>
   );
 };
 

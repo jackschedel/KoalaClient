@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useStore from "@store/store";
-
+import isElectron from "@utils/electron";
 import useSubmit from "@hooks/useSubmit";
 
 import { ChatInterface } from "@type/chat";
@@ -121,13 +121,13 @@ const EditView = ({
       <div
         className={`w-full ${
           sticky
-            ? "py-2 md:py-3 px-2 md:px-4 border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]"
+            ? "py-2 md:py-3 px-2 md:px-4 border border-black/10  bg-custom-black/20 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)][0_0_15px_rgba(0,0,0,0.10)]"
             : ""
         }`}
       >
         <textarea
           ref={textareaRef}
-          className="m-0 resize-none rounded-lg bg-transparent overflow-y-hidden focus:ring-0 focus-visible:ring-0 leading-7 w-full placeholder:text-gray-500/40"
+          className="m-0 resize-none rounded-lg bg-transparent overflow-y-hidden focus:ring-0 focus-visible:ring-0 leading-7 w-full text-custom-white placeholder:text-custom-white/10"
           onChange={(e) => {
             _setContent(e.target.value);
           }}
@@ -150,6 +150,7 @@ const EditView = ({
         setIsEdit={setIsEdit}
         cursorPosition={cursorPosition}
         _setContent={_setContent}
+        messageIndex={messageIndex}
       />
       {isModalOpen && (
         <PopupModal
@@ -172,6 +173,7 @@ const EditViewButtons = memo(
     setIsEdit,
     cursorPosition,
     _setContent,
+    messageIndex,
   }: {
     sticky?: boolean;
     handleGenerate: () => void;
@@ -180,10 +182,21 @@ const EditViewButtons = memo(
     setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
     cursorPosition: number;
     _setContent: React.Dispatch<React.SetStateAction<string>>;
+    messageIndex: number;
   }) => {
     const { t } = useTranslation();
     const generating = useStore.getState().generating;
-    const advancedMode = useStore((state) => state.advancedMode);
+    const confirmEditSubmission = useStore((state) => state.confirmEditSubmission);
+
+    const handleEditGenerate = () => {
+      if (generating)
+        return;
+
+      if(confirmEditSubmission)
+        setIsModalOpen(true);
+      else
+        handleGenerate();
+    }
 
     return (
       <div className="flex">
@@ -207,7 +220,7 @@ const EditViewButtons = memo(
             <button
               className="btn relative mr-2 btn-primary"
               onClick={() => {
-                !generating && setIsModalOpen(true);
+                handleEditGenerate();
               }}
             >
               <div className="flex items-center justify-center gap-2">
@@ -218,11 +231,13 @@ const EditViewButtons = memo(
 
           <button
             className={`btn relative mr-2 ${
+              messageIndex%2 ? 'btn-neutral' : 'btn-neutral-dark'
+            } ${
               sticky
-                ? `btn-neutral ${
+                ? `${
                   generating ? "cursor-not-allowed opacity-40" : ""
                 }`
-                : "btn-neutral"
+                : ""
             }`}
             onClick={handleSave}
             aria-label={t("save") as string}
@@ -234,7 +249,9 @@ const EditViewButtons = memo(
 
           {sticky || (
             <button
-              className="btn relative btn-neutral"
+              className={`btn relative ${
+                messageIndex%2 ? 'btn-neutral' : 'btn-neutral-dark'
+              }`}
               onClick={() => setIsEdit(false)}
               aria-label={t("cancel") as string}
             >
@@ -245,14 +262,16 @@ const EditViewButtons = memo(
           )}
         </div>
         <div className="flex-1 flex items-center justify-end">
-          {sticky && advancedMode && <TokenCount />}
-          <WhisperRecord
+          {sticky && <TokenCount />}
+          {isElectron() && <WhisperRecord
             cursorPosition={cursorPosition}
             _setContent={_setContent}
-          />
+            messageIndex={messageIndex}
+          />}
           <CommandPrompt
             cursorPosition={cursorPosition}
             _setContent={_setContent}
+            messageIndex={messageIndex}
           />
         </div>
       </div>
