@@ -93,8 +93,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-Linux/KoalaClient-2.0.0-linux-x86_64.AppImage
-          asset_name: KoalaClient-2.0.0-${{ steps.committag.outputs.substring }}-linux-x86_64.AppImage
+          asset_path: ./release-Linux/koala-client-2.0.0-linux-x86_64.AppImage
+          asset_name: koala-client-2.0.0-${{ steps.committag.outputs.substring }}-linux-x86_64.AppImage
           asset_content_type: application
 
       - name: Upload Release Asset - Ubuntu
@@ -113,8 +113,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-macOS/KoalaClient-2.0.0-mac-x64.dmg
-          asset_name: release-macOS/KoalaClient-2.0.0-${{ steps.committag.outputs.substring }}-mac-x64.dmg
+          asset_path: ./release-macOS/koala-client-2.0.0-mac-x64.dmg
+          asset_name: release-macOS/koala-client-2.0.0-${{ steps.committag.outputs.substring }}-mac-x64.dmg
           asset_content_type: application
 
       - name: Upload Release Asset - MacOS
@@ -133,8 +133,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-Windows/KoalaClient-2.0.0-win-x64.exe
-          asset_name: release-Windows/KoalaClient-2.0.0-${{ steps.committag.outputs.substring }}-win-x64.exe
+          asset_path: ./release-Windows/koala-client-2.0.0-win-x64.exe
+          asset_name: release-Windows/koala-client-2.0.0-${{ steps.committag.outputs.substring }}-win-x64.exe
           asset_content_type: application
           
       - name: Zip Unpacked Release - Windows
