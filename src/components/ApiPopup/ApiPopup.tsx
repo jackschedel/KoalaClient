@@ -42,8 +42,8 @@ const ApiPopup = () => {
     >
       <div className='p-6 border-b border-custom-white'>
         <div className='flex gap-2 items-center justify-center mt-2'>
-          <div className='min-w-fit text-neutral-dark text-sm'>
-            {t('apiKey.inputLabel', { ns: 'api' })}
+          <div className='min-w-fit text-custom-white text-sm'>
+            {t('apiKey.inputLabel', { ns: 'api' })}:
           </div>
           <input
             type='text'
@@ -55,7 +55,7 @@ const ApiPopup = () => {
           />
         </div>
 
-        <div className='min-w-fit text-neutral-dark text-sm mt-4'>
+        <div className='min-w-fit text-custom-white text-sm mt-4'>
           <Trans
             i18nKey='apiKey.howTo'
             ns='api'
@@ -68,7 +68,7 @@ const ApiPopup = () => {
             ]}
           />
         </div>
-        <div className='min-w-fit text-neutral-dark text-sm mt-4'>
+        <div className='min-w-fit text-custom-white text-sm mt-4'>
           <Trans
             i18nKey='advancedConfig'
             ns='api'
@@ -84,7 +84,7 @@ const ApiPopup = () => {
           />
         </div>
 
-        <div className='min-w-fit text-neutral-dark text-sm mt-4'>
+        <div className='min-w-fit text-custom-white text-sm mt-4'>
           {t('securityMessage', { ns: 'api' })}
         </div>
 
