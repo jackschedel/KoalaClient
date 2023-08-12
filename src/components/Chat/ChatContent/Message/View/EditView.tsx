@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import useStore from "@store/store";
-
+import isElectron from "@utils/electron";
 import useSubmit from "@hooks/useSubmit";
 
 import { ChatInterface } from "@type/chat";
@@ -263,11 +263,11 @@ const EditViewButtons = memo(
         </div>
         <div className="flex-1 flex items-center justify-end">
           {sticky && <TokenCount />}
-          <WhisperRecord
+          {isElectron() && <WhisperRecord
             cursorPosition={cursorPosition}
             _setContent={_setContent}
             messageIndex={messageIndex}
-          />
+          />}
           <CommandPrompt
             cursorPosition={cursorPosition}
             _setContent={_setContent}
