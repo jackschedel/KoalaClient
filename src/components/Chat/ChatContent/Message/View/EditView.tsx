@@ -186,7 +186,17 @@ const EditViewButtons = memo(
   }) => {
     const { t } = useTranslation();
     const generating = useStore.getState().generating;
-    const advancedMode = useStore((state) => state.advancedMode);
+    const confirmEditSubmission = useStore((state) => state.confirmEditSubmission);
+
+    const handleEditGenerate = () => {
+      if (generating)
+        return;
+
+      if(confirmEditSubmission)
+        setIsModalOpen(true);
+      else
+        handleGenerate();
+    }
 
     return (
       <div className="flex">
@@ -210,7 +220,7 @@ const EditViewButtons = memo(
             <button
               className="btn relative mr-2 btn-primary"
               onClick={() => {
-                !generating && setIsModalOpen(true);
+                handleEditGenerate();
               }}
             >
               <div className="flex items-center justify-center gap-2">
@@ -252,7 +262,7 @@ const EditViewButtons = memo(
           )}
         </div>
         <div className="flex-1 flex items-center justify-end">
-          {sticky && advancedMode && <TokenCount />}
+          {sticky && <TokenCount />}
           <WhisperRecord
             cursorPosition={cursorPosition}
             _setContent={_setContent}

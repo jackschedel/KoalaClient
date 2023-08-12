@@ -20,7 +20,6 @@ const ModelConfigBar = React.memo(() => {
     shallow,
   );
   const setChats = useStore((state) => state.setChats);
-  const advancedMode = useStore((state) => state.advancedMode);
   const currentChatIndex = useStore((state) => state.currentChatIndex);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [_model, _setModel] = useState<ModelOptions>(
@@ -49,55 +48,52 @@ const ModelConfigBar = React.memo(() => {
     ? (
       <>
         <div className="sticky p-1 pb-0.5  mb-19 top-0 flex gap-x-3 gap-y-1 flex-wrap w-full items-center justify-center border-b-2 border-neutral-base bg-neutral-dark text-custom-white z-50">
-          {advancedMode &&
-            (
-              <div className="sticky top-0 flex gap-x-1 gap-y-0 flex-wrap w-full items-center justify-center pt-0 pb-1">
-                <div className="flex -mb-3 mr-1 mt-1">
-                  <ModelSelector
-                    _model={config.model}
-                    _setModel={(ac) => {
-                      const updatedConfig = {
-                        ...config,
-                        model: ac.valueOf() as ModelOptions,
-                      };
-                      setConfig(updatedConfig);
-                    }}
-                  />
-                </div>
-                <div
-                  className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
-                  onClick={() => {
-                    setIsModalOpen(true);
-                  }}
-                >
-                  {t("token.label")}: {config.max_tokens}
-                </div>
-                <div
-                  className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
-                  onClick={() => {
-                    setIsModalOpen(true);
-                  }}
-                >
-                  {t("context.label")}: {config.max_context}
-                </div>
-                <div
-                  className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
-                  onClick={() => {
-                    setIsModalOpen(true);
-                  }}
-                >
-                  {t("temperature.label")}: {config.temperature}
-                </div>
-                <div
-                  className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
-                  onClick={() => {
-                    setIsModalOpen(true);
-                  }}
-                >
-                  {t("topP.label")}: {config.top_p}
-                </div>
-              </div>
-            )}
+          <div className="sticky top-0 flex gap-x-1 gap-y-0 flex-wrap w-full items-center justify-center pt-0 pb-1">
+            <div className="flex -mb-3 mr-1 mt-1">
+              <ModelSelector
+                _model={config.model}
+                _setModel={(ac) => {
+                  const updatedConfig = {
+                    ...config,
+                    model: ac.valueOf() as ModelOptions,
+                  };
+                  setConfig(updatedConfig);
+                }}
+              />
+            </div>
+            <div
+              className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
+            >
+              {t("token.label")}: {config.max_tokens}
+            </div>
+            <div
+              className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
+            >
+              {t("context.label")}: {config.max_context}
+            </div>
+            <div
+              className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
+            >
+              {t("temperature.label")}: {config.temperature}
+            </div>
+            <div
+              className="text-center p-1.5 rounded-md btn-neutral cursor-pointer"
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
+            >
+              {t("topP.label")}: {config.top_p}
+            </div>
+          </div>
         </div>
         {isModalOpen && (
           <ConfigMenu

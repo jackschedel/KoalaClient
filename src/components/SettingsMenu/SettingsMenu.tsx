@@ -9,7 +9,7 @@ import ThemeSwitcher from '@components/Menu/MenuOptions/ThemeSwitcher';
 import LanguageSelector from '@components/LanguageSelector';
 import AutoTitleToggle from './AutoTitleToggle';
 import CloseToTrayToggle from './CloseToTrayToggle';
-import AdvancedModeToggle from './AdvencedModeToggle';
+//import AdvancedModeToggle from './AdvencedModeToggle';
 import InlineLatexToggle from './InlineLatexToggle';
 import HeartIcon from '@icon/HeartIcon';
 import PromptLibraryMenu from '@components/PromptLibraryMenu';
@@ -60,7 +60,6 @@ const SettingsMenu = () => {
               <EnterToSubmitToggle />
               <ConfirmEditSubmissionToggle />
               <InlineLatexToggle />
-              <AdvancedModeToggle />
               <TotalTokenCostToggle />
             </div>
             <TotalTokenCost />

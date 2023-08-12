@@ -21,8 +21,8 @@ const MenuOptions = () => {
           hideMenuOptions ? 'max-h-0' : 'max-h-full'
         } overflow-hidden transition-all`}
       >
-        {!isElectron() && googleClientId && <GoogleSync clientId={googleClientId} />}
         {!isElectron() && <DesktopLink />}
+        {!isElectron() && googleClientId && <GoogleSync clientId={googleClientId} />}
         <GithubLink />
         <SettingsMenu />
       </div>

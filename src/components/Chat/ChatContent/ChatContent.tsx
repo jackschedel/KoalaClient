@@ -32,7 +32,6 @@ const ChatContent = () => {
          ? state.chats[state.currentChatIndex].messages.length
          : 0
    );
-   const advancedMode = useStore((state) => state.advancedMode);
    const generating = useStore.getState().generating;
    const hideSideMenu = useStore((state) => state.hideSideMenu);
 
@@ -59,20 +58,16 @@ const ChatContent = () => {
             className='flex flex-col items-center text-sm w-full'
             ref={saveRef}
           >
-            {!generating && advancedMode && messages?.length === 0 && (
-              <NewMessageButton messageIndex={-1} />
-            )}
+            {!generating && <NewMessageButton messageIndex={-1} />}
             {messages?.map((message, index) => (
-              (advancedMode || index !== 0 || message.role !== 'system') && (
-                <React.Fragment key={index}>
-                  <Message
-                    role={message.role}
-                    content={message.content}
-                    messageIndex={index}
-                  />
-                  {!generating && advancedMode && <NewMessageButton messageIndex={index} />}
-                </React.Fragment>
-              )
+               <React.Fragment key={index}>
+               <Message
+                  role={message.role}
+                  content={message.content}
+                  messageIndex={index}
+               />
+               {!generating && <NewMessageButton messageIndex={index} />}
+               </React.Fragment>
             ))}
           </div>
 
