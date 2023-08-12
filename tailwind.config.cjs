@@ -15,6 +15,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: [
+        'NotoSans Nerd Font',
         'Noto Sans',
         'Segoe UI',
         'Ubuntu',

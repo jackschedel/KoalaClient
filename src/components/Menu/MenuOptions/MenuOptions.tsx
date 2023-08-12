@@ -17,13 +17,10 @@ const MenuOptions = () => {
   return (
     <>
       <div
-        className={`${
-          hideMenuOptions ? 'max-h-0' : 'max-h-full'
-        } overflow-hidden transition-all`}
+        className={`max-h-full py-1 overflow-hidden transition-all`}
       >
         {!isElectron() && <DesktopLink />}
         {!isElectron() && googleClientId && <GoogleSync clientId={googleClientId} />}
-        <GithubLink />
         <SettingsMenu />
       </div>
     </>
