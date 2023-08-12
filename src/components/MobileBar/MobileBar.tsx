@@ -1,14 +1,22 @@
 import React from 'react';
-
+import useGStore from '@store/cloud-auth-store';
 import useStore from '@store/store';
 import PlusIcon from '@icon/PlusIcon';
 import MenuIcon from '@icon/MenuIcon';
 import useAddChat from '@hooks/useAddChat';
+import { SyncIcon } from '@components/GoogleSync/GoogleSync';
+import isElectron from '@utils/electron';
+
+const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || undefined;
 
 const MobileBar = () => {
    const generating = useStore((state) => state.generating);
    const setHideSideMenu = useStore((state) => state.setHideSideMenu);
    const hideSideMenu = useStore((state) => state.hideSideMenu);
+   
+   const cloudSync = useGStore((state) => state.cloudSync);
+   const syncStatus = useGStore((state) => state.syncStatus);
+
    const chatTitle = useStore((state) =>
       state.chats &&
          state.chats.length > 0 &&
@@ -32,6 +40,9 @@ const MobileBar = () => {
             <span className='sr-only'>Open sidebar</span>
             <MenuIcon />
          </button>
+         <div className='mb-1'>
+            {!isElectron() && googleClientId && cloudSync && <SyncIcon status={syncStatus} />}
+         </div>
          <h1 className='flex-1 text-center text-base font-normal px-2 py-0 max-h-20 overflow-y-auto'>
             {chatTitle}
          </h1>

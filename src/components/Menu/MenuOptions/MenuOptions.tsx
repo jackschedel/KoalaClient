@@ -3,7 +3,7 @@ import useStore from '@store/store';
 
 import SettingsMenu from '@components/SettingsMenu';
 import CollapseOptions from './CollapseOptions';
-import GoogleSync from '@components/GoogleSync';
+import { GoogleSync } from '@components/GoogleSync/GoogleSync';
 import { TotalTokenCostDisplay } from '@components/SettingsMenu/TotalTokenCost';
 import isElectron from '@utils/electron';
 import GithubLink from './GithubLink';

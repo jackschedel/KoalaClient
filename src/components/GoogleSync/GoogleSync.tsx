@@ -36,7 +36,7 @@ const GoogleSync = ({ clientId }: { clientId: string }) => {
   const cloudSync = useGStore((state) => state.cloudSync);
   const setSyncStatus = useGStore((state) => state.setSyncStatus);
 
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(cloudSync);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [files, setFiles] = useState<GoogleFileResource[]>([]);
 
   const initialiseState = async (_googleAccessToken: string) => {
@@ -85,7 +85,7 @@ const GoogleSync = ({ clientId }: { clientId: string }) => {
   return (
     <GoogleOAuthProvider clientId={clientId}>
       <div
-        className='flex py-2 px-2 items-center gap-3 rounded-md hover:bg-neutral-base/10 transition-colors duration-200 text-custom-white cursor-pointer text-sm'
+        className='flex py-2 px-2 items-center gap-3 rounded-md hover:bg-custom-white/20 transition-colors duration-200 text-custom-white cursor-pointer text-sm'
         onClick={() => {
           setIsModalOpen(true);
         }}
@@ -151,7 +151,7 @@ const GooglePopup = ({
       setIsModalOpen={setIsModalOpen}
       cancelButton={false}
     >
-      <div className='p-6 border-b border-custom-white text-neutral-dark text-sm flex flex-col items-center gap-4 text-center'>
+      <div className='p-6 text-custom-white text-sm flex flex-col items-center gap-4 text-center'>
         <p>{t('tagline')}</p>
         <GoogleSyncButton
           loginHandler={() => {
@@ -161,7 +161,7 @@ const GooglePopup = ({
             }, 3540000); // timeout - 3540000ms = 59 min (access token last 60 min)
           }}
         />
-        <p className='border border-neutral-light px-3 py-2 rounded-md'>
+        <p className='border border-white/20 px-3 py-2 rounded-md'>
           {t('notice')}
         </p>
         {cloudSync && syncStatus !== 'unauthenticated' && (
@@ -279,7 +279,7 @@ const FileSelector = ({
 
   return (
     <label
-      className={`w-full flex items-center justify-between mb-2 gap-2 text-sm font-medium text-neutral-dark ${
+      className={`w-full flex items-center justify-between mb-2 gap-2 text-sm font-medium text-custom-white ${
         syncing ? 'cursor-not-allowed opacity-40' : ''
       }`}
     >
@@ -296,7 +296,7 @@ const FileSelector = ({
         {isEditing ? (
           <input
             type='text'
-            className='text-neutral-dark p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+            className='text-custom-white p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
             value={_name}
             onChange={(e) => {
               _setName(e.target.value);
@@ -376,4 +376,4 @@ const SyncIcon = ({ status }: { status: SyncStatus }) => {
   return statusToIcon[status] || null;
 };
 
-export default GoogleSync;
+export {GoogleSync, SyncIcon};
