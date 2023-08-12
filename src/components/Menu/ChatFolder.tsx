@@ -148,9 +148,7 @@ const ChatFolder = ({
 
   return (
     <div
-      className={`w-full transition-colors group/folder ${
-        isHover ? 'bg-neutral-dark/40' : ''
-      }`}
+      className={`w-full transition-colors group/folder`}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
@@ -158,8 +156,8 @@ const ChatFolder = ({
       <div
         style={{ background: color || '' }}
         className={`${
-          color ? '' : 'hover:bg-custom-white'
-        } hover:bg-opacity-20 transition-colors flex py-2 pl-2 items-center gap-3 relative rounded-md break-all cursor-pointer parent-sibling`}
+          color ? 'border-custom-black/20' : 'hover:bg-custom-white/20 border-neutral-base'
+        } border-2 transition-colors flex pl-2 items-center gap-3 relative rounded-md break-all cursor-pointer parent-sibling`}
         onClick={toggleExpanded}
         ref={folderRef}
         onMouseEnter={() => {
@@ -207,8 +205,18 @@ const ChatFolder = ({
             />
           )}
         </div>
-        {isExpanded && <div
+        {!isExpanded && <div
           className='flex text-custom-white/60'
+        >
+          <button
+            className='pr-3 py-2 hover:text-custom-white'
+            aria-label='expand'
+          >
+            <DownChevronArrow />
+          </button>
+        </div>}
+        {isExpanded && <div
+          className='flex py-1 text-custom-white/60'
           onClick={(e) => e.stopPropagation()}
         >
           {isDelete ? (
@@ -294,7 +302,7 @@ const ChatFolder = ({
         </div>}
       </div>
       <div className='ml-3 pl-1 border-l-2 border-neutral-base flex flex-col gap-1 parent'>
-        {isExpanded && <NewChat folder={folderId} />}
+        {isExpanded && <div className='pt-1'><NewChat folder={folderId} /></div>}
         {isExpanded &&
           folderChats.map((chat) => (
             <ChatHistory
