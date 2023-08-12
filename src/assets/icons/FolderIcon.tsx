@@ -3,13 +3,13 @@ import React from 'react';
 const FolderIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      viewBox='0 0 1024 1024'
+      viewBox='0 -960 960 960'
       fill='currentColor'
       height='1em'
       width='1em'
       {...props}
     >
-      <path d='M880 298.4H521L403.7 186.2a8.15 8.15 0 00-5.5-2.2H144c-17.7 0-32 14.3-32 32v592c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V330.4c0-17.7-14.3-32-32-32zM840 768H184V256h188.5l119.6 114.4H840V768z' />
+      <path d="M140-160q-24 0-42-18.5T80-220v-520q0-23 18-41.5t42-18.5h281l60 60h339q23 0 41.5 18.5T880-680v460q0 23-18.5 41.5T820-160H140Zm0-60h680v-460H456l-60-60H140v520Zm0 0v-520 520Z"/>
     </svg>
   );
 };
