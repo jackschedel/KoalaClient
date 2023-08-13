@@ -41,7 +41,7 @@ const MobileBar = () => {
             <MenuIcon />
          </button>
          <div className='mb-1'>
-            {!isElectron() && googleClientId && cloudSync && <SyncIcon status={syncStatus} />}
+            {!isElectron() && googleClientId && cloudSync && syncStatus === 'unauthenticated' && <SyncIcon status={syncStatus} />}
          </div>
          <h1 className='flex-1 text-center text-base font-normal px-2 py-0 max-h-20 overflow-y-auto'>
             {chatTitle}
