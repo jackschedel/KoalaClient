@@ -64,7 +64,7 @@ const ApiMenu = ({
           {_customEndpoint ? (
             <input
               type='text'
-              className='text-neutral-dark p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+              className='text-custom-white p-3 text-sm border-none bg-neutral-light focus:bg-neutral-dark rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
               value={_apiEndpoint}
               onChange={(e) => {
                 _setApiEndpoint(e.target.value);
@@ -143,10 +143,10 @@ const ApiEndpointSelector = ({
         ref={dropDownRef}
         className={`${
           dropDown ? '' : 'hidden'
-        } absolute top-100 bottom-100 z-10 bg-neutral-light rounded-lg shadow-xl text-neutral-dark group w-32 w-full`}
+        } absolute top-100 bottom-100 z-10 bg-neutral-light rounded-lg shadow-xl group w-32 w-full`}
       >
         <ul
-          className='text-sm text-neutral-base p-0 m-0'
+          className='text-sm p-0 m-0'
           aria-labelledby='dropdownDefaultButton'
         >
           {availableEndpoints.map((endpoint) => (

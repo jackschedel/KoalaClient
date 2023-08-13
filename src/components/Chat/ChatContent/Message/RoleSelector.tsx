@@ -42,10 +42,10 @@ const RoleSelector = React.memo(
           id='dropdown'
           className={`${
             dropDown ? '' : 'hidden'
-          } absolute top-100 bottom-100 z-10 bg-neutral-light shadow-xl rounded-lg border border-neutral-base text-neutral-dark group w-36`}
+          } absolute top-100 bottom-100 z-10 bg-neutral-light shadow-xl rounded-lg border border-neutral-base group w-36`}
           >
           <ul
-          className='text-sm text-neutral-base p-0 m-0 max-h-72 overflow-auto'
+          className='text-sm p-0 m-0 max-h-72 overflow-auto'
           aria-labelledby='dropdownDefaultButton'
           >
             {roles.map((r) => (
