@@ -157,7 +157,7 @@
   }
 
   a.link {
-    @apply underline hover:text-black;
+    @apply underline hover:text-custom-black;
   }
 }
 

@@ -84,13 +84,13 @@ const ApiPopup = () => {
           />
         </div>
 
-        <div className='min-w-fit text-white text-sm mt-4'>
+        <div className='min-w-fit text-custom-white text-sm mt-4'>
           {t('securityMessage', { ns: 'api' })}
         </div>
 
         {error.length > 0 && (
           <div className='relative py-2 px-3 w-full mt-3 border rounded-md border-red-500 bg-red-500/10'>
-            <div className='text-white text-sm whitespace-pre-wrap'>
+            <div className='text-custom-white text-sm whitespace-pre-wrap'>
               {error}
             </div>
             <div

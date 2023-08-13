@@ -13,7 +13,7 @@ const CodeBlock = ({
   const codeRef = useRef<HTMLElement>(null);
 
   return (
-    <div className='bg-black rounded-md'>
+    <div className='bg-custom-black rounded-md'>
       <CodeBar lang={lang} codeRef={codeRef} />
       <div className='p-4 overflow-y-auto'>
         <code ref={codeRef} className={`!whitespace-pre hljs language-${lang}`}>

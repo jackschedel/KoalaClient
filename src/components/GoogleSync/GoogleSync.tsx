@@ -161,7 +161,7 @@ const GooglePopup = ({
             }, 3540000); // timeout - 3540000ms = 59 min (access token last 60 min)
           }}
         />
-        <p className='border border-white/20 px-3 py-2 rounded-md'>
+        <p className='border border-custom-white/20 px-3 py-2 rounded-md'>
           {t('notice')}
         </p>
         {cloudSync && syncStatus !== 'unauthenticated' && (
