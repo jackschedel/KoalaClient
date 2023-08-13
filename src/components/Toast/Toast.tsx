@@ -25,7 +25,7 @@ const Toast = () => {
 
   return toastShow ? (
     <div
-      className={`flex fixed right-5 bottom-5 z-[1000] items-center w-3/4 md:w-full max-w-xs p-4 mb-4 text-neutral-base rounded-lg shadow-md border border-custom-white/30 animate-bounce bg-neutral-dark`}
+      className={`flex fixed right-5 bottom-5 z-[1000] items-center w-3/4 md:w-full max-w-xs p-4 mb-4 text-custom-white rounded-lg shadow-md border border-custom-white/30 animate-bounce bg-neutral-dark`}
       role='alert'
     >
       <StatusIcon status={status} />
