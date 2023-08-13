@@ -48,15 +48,6 @@ export const getChatCompletion = async (
     restConfig.model = "gpt-3.5-turbo";
   }
 
-  let tokenCount = 0;
-  for (let i = 0; i < messages.length; i++) {
-    tokenCount += countTokens([messages[i]], restConfig.model);
-  }
-
-  if (modelMaxToken[restConfig.model] < restConfig.max_tokens + tokenCount) {
-    restConfig.max_tokens = modelMaxToken[restConfig.model] - tokenCount;
-  }
-
   const response = await fetch(endpoint, {
     method: "POST",
     headers,
@@ -107,15 +98,6 @@ export const getChatCompletionStream = async (
   }
 
   const { max_context, ...restConfig } = config;
-
-  let tokenCount = 0;
-  for (let i = 0; i < messages.length; i++) {
-    tokenCount += countTokens([messages[i]], restConfig.model);
-  }
-
-  if (modelMaxToken[restConfig.model] < restConfig.max_tokens + tokenCount) {
-    restConfig.max_tokens = modelMaxToken[restConfig.model] - tokenCount;
-  }
 
   const response = await fetch(endpoint, {
     method: "POST",
@@ -169,4 +151,4 @@ export const submitShareGPT = async (body: ShareGPTSubmitBodyInterface) => {
   const { id } = response;
   const url = `https://shareg.pt/${id}`;
   window.open(url, "_blank");
-};
+}
