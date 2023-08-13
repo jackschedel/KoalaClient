@@ -50,7 +50,7 @@ const TotalTokenCost = () => {
   return countTotalTokens ? (
     <div className='flex flex-col items-center gap-2 pt-2'>
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
-        <table className='w-full text-sm text-left text-neutral-base'>
+        <table className='w-full text-sm text-left'>
           <thead className='text-xs text-custom-white uppercase bg-neutral-dark'>
             <tr>
               <th className='px-4 py-2'>{t('model', { ns: 'model' })}</th>
