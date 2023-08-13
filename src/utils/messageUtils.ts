@@ -45,16 +45,32 @@ const countTokens = (messages: MessageInterface[], model: ModelOptions) => {
 
 export const limitMessageTokens = (
   messages: MessageInterface[],
-  limit: number = 4096,
+  context_limit: number = 4096,
   model: ModelOptions,
   max_model_token: number = 4096,
+  token_limit: number,
 ): MessageInterface[] => {
   const limitedMessages: MessageInterface[] = [];
   let tokenCount = 0;
 
-  if (max_model_token < limit) {
-    limit = max_model_token;
+  if (max_model_token < context_limit) {
+    context_limit = max_model_token;
   }
+
+  let wholeTokenCount = 0;
+  for (let i = 0; i < messages.length; i++) {
+    wholeTokenCount += countTokens([messages[i]], model);
+  }
+
+  console.log(wholeTokenCount);
+  console.log(context_limit);
+  console.log(token_limit);
+
+  if (token_limit < context_limit + wholeTokenCount) {
+    context_limit = max_model_token - token_limit;
+  }
+  console.log(context_limit);
+  console.log(token_limit);
 
   const isSystemFirstMessage = messages[0]?.role === "system";
   let retainSystemMessage = false;
@@ -62,7 +78,7 @@ export const limitMessageTokens = (
   // Check if the first message is a system message and if it fits within the token limit
   if (isSystemFirstMessage) {
     const systemTokenCount = countTokens([messages[0]], model);
-    if (systemTokenCount < limit) {
+    if (systemTokenCount < context_limit) {
       tokenCount += systemTokenCount;
       retainSystemMessage = true;
     }
@@ -72,7 +88,7 @@ export const limitMessageTokens = (
   // until the token limit is reached (excludes first message)
   for (let i = messages.length - 1; i >= 1; i--) {
     const count = countTokens([messages[i]], model);
-    if (count + tokenCount > limit) break;
+    if (count + tokenCount > context_limit) break;
     tokenCount += count;
     limitedMessages.unshift({ ...messages[i] });
   }
@@ -84,7 +100,7 @@ export const limitMessageTokens = (
   } else if (!isSystemFirstMessage) {
     // Check if the first message (non-system) can fit within the limit
     const firstMessageTokenCount = countTokens([messages[0]], model);
-    if (firstMessageTokenCount + tokenCount < limit) {
+    if (firstMessageTokenCount + tokenCount < context_limit) {
       limitedMessages.unshift({ ...messages[0] });
     }
   }
