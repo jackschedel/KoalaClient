@@ -62,15 +62,9 @@ export const limitMessageTokens = (
     wholeTokenCount += countTokens([messages[i]], model);
   }
 
-  console.log(wholeTokenCount);
-  console.log(context_limit);
-  console.log(token_limit);
-
   if (token_limit < context_limit + wholeTokenCount) {
     context_limit = max_model_token - token_limit;
   }
-  console.log(context_limit);
-  console.log(token_limit);
 
   const isSystemFirstMessage = messages[0]?.role === "system";
   let retainSystemMessage = false;
