@@ -5,7 +5,7 @@ import PopupModal from "@components/PopupModal";
 import { ConfigInterface, ModelOptions } from "@type/chat";
 import DownChevronArrow from "@icon/DownChevronArrow";
 import { modelMaxToken, modelOptions } from "@constants/chat";
-import useHideOnOutsideClick from '@hooks/useHideOnOutsideClick';
+import useHideOnOutsideClick from "@hooks/useHideOnOutsideClick";
 
 const ConfigMenu = ({
   setIsModalOpen,
@@ -50,10 +50,10 @@ const ConfigMenu = ({
       handleClickBackdrop={handleConfirm}
     >
       <div className="p-6 border-b bg-neutral-base">
-      <label className="block text-sm font-medium text-custom-white pb-2">
-        {t("model")}:
-      </label>
-      <ModelSelector _model={_model} _setModel={_setModel} />
+        <label className="block text-sm font-medium text-custom-white pb-2">
+          {t("model")}:
+        </label>
+        <ModelSelector _model={_model} _setModel={_setModel} />
         <MaxTokenSlider
           _maxToken={_maxToken}
           _setMaxToken={_setMaxToken}
@@ -108,15 +108,15 @@ export const ModelSelector = ({
         className={`${
           dropDown ? "" : "hidden"
         } absolute top-100 bottom-100 z-10 bg-neutral-light shadow-xl rounded-lg border border-neutral-base group w-36`}
-        >
+      >
         <ul
-          className='text-sm p-0 m-0 max-h-72 overflow-auto'
+          className="text-sm p-0 m-0 max-h-72 overflow-auto"
           aria-labelledby="dropdownDefaultButton"
         >
           {modelOptions.map((m) => (
             <li
-            className='px-4 py-2 hover:bg-neutral-dark cursor-pointer text-custom-white'
-            onClick={() => {
+              className="px-4 py-2 hover:bg-neutral-dark cursor-pointer text-custom-white"
+              onClick={() => {
                 _setModel(m);
                 setDropDown(false);
               }}
