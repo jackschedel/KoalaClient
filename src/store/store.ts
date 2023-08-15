@@ -1,11 +1,11 @@
-import { StoreApi, create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { ChatSlice, createChatSlice } from './chat-slice';
-import { InputSlice, createInputSlice } from './input-slice';
-import { AuthSlice, createAuthSlice } from './auth-slice';
-import { ConfigSlice, createConfigSlice } from './config-slice';
-import { PromptSlice, createPromptSlice } from './prompt-slice';
-import { ToastSlice, createToastSlice } from './toast-slice';
+import { create, StoreApi } from "zustand";
+import { persist } from "zustand/middleware";
+import { ChatSlice, createChatSlice } from "./chat-slice";
+import { createInputSlice, InputSlice } from "./input-slice";
+import { AuthSlice, createAuthSlice } from "./auth-slice";
+import { ConfigSlice, createConfigSlice } from "./config-slice";
+import { createPromptSlice, PromptSlice } from "./prompt-slice";
+import { createToastSlice, ToastSlice } from "./toast-slice";
 import {
   LocalStorageInterfaceV0ToV1,
   LocalStorageInterfaceV1ToV2,
@@ -16,7 +16,7 @@ import {
   LocalStorageInterfaceV6ToV7,
   LocalStorageInterfaceV7ToV8,
   LocalStorageInterfaceV8ToV9,
-} from '@type/chat';
+} from "@type/chat";
 import {
   migrateV0,
   migrateV1,
@@ -27,18 +27,19 @@ import {
   migrateV6,
   migrateV7,
   migrateV8,
-} from './migrate';
+} from "./migrate";
 
-export type StoreState = ChatSlice &
-  InputSlice &
-  AuthSlice &
-  ConfigSlice &
-  PromptSlice &
-  ToastSlice;
+export type StoreState =
+  & ChatSlice
+  & InputSlice
+  & AuthSlice
+  & ConfigSlice
+  & PromptSlice
+  & ToastSlice;
 
 export type StoreSlice<T> = (
-  set: StoreApi<StoreState>['setState'],
-  get: StoreApi<StoreState>['getState']
+  set: StoreApi<StoreState>["setState"],
+  get: StoreApi<StoreState>["getState"],
 ) => T;
 
 export const createPartializedState = (state: StoreState) => ({
@@ -76,7 +77,7 @@ const useStore = create<StoreState>()(
       ...createToastSlice(set, get),
     }),
     {
-      name: 'free-chat-gpt',
+      name: "free-chat-gpt",
       partialize: (state) => createPartializedState(state),
       version: 9,
       migrate: (persistedState, version) => {
@@ -103,8 +104,8 @@ const useStore = create<StoreState>()(
         }
         return persistedState as StoreState;
       },
-    }
-  )
+    },
+  ),
 );
 
 export default useStore;

@@ -151,4 +151,4 @@ export const submitShareGPT = async (body: ShareGPTSubmitBodyInterface) => {
   const { id } = response;
   const url = `https://shareg.pt/${id}`;
   window.open(url, "_blank");
-}
+};

@@ -186,17 +186,21 @@ const EditViewButtons = memo(
   }) => {
     const { t } = useTranslation();
     const generating = useStore.getState().generating;
-    const confirmEditSubmission = useStore((state) => state.confirmEditSubmission);
+    const confirmEditSubmission = useStore((state) =>
+      state.confirmEditSubmission
+    );
 
     const handleEditGenerate = () => {
-      if (generating)
+      if (generating) {
         return;
+      }
 
-      if(confirmEditSubmission)
+      if (confirmEditSubmission) {
         setIsModalOpen(true);
-      else
+      } else {
         handleGenerate();
-    }
+      }
+    };
 
     return (
       <div className="flex">
@@ -231,12 +235,10 @@ const EditViewButtons = memo(
 
           <button
             className={`btn relative mr-2 ${
-              messageIndex%2 ? 'btn-neutral' : 'btn-neutral-dark'
+              messageIndex % 2 ? "btn-neutral" : "btn-neutral-dark"
             } ${
               sticky
-                ? `${
-                  generating ? "cursor-not-allowed opacity-40" : ""
-                }`
+                ? `${generating ? "cursor-not-allowed opacity-40" : ""}`
                 : ""
             }`}
             onClick={handleSave}
@@ -250,7 +252,7 @@ const EditViewButtons = memo(
           {sticky || (
             <button
               className={`btn relative ${
-                messageIndex%2 ? 'btn-neutral' : 'btn-neutral-dark'
+                messageIndex % 2 ? "btn-neutral" : "btn-neutral-dark"
               }`}
               onClick={() => setIsEdit(false)}
               aria-label={t("cancel") as string}
@@ -263,11 +265,13 @@ const EditViewButtons = memo(
         </div>
         <div className="flex-1 flex items-center justify-end">
           {sticky && <TokenCount />}
-          {isElectron() && <WhisperRecord
-            cursorPosition={cursorPosition}
-            _setContent={_setContent}
-            messageIndex={messageIndex}
-          />}
+          {isElectron() && (
+            <WhisperRecord
+              cursorPosition={cursorPosition}
+              _setContent={_setContent}
+              messageIndex={messageIndex}
+            />
+          )}
           <CommandPrompt
             cursorPosition={cursorPosition}
             _setContent={_setContent}
