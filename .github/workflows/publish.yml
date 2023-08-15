@@ -67,12 +67,17 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:    
-      - name: Commit substring
+      - name: Create commit substring
         uses: bhowell2/github-substring-action@1.0.2
         id: committag
         with:
           value: ${{ github.sha }}
           length_from_start: 7
+
+      - name: Get version from package.json
+        id: package
+        run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
+        shell: bash
 
       - name: Create Release
         id: create_release
@@ -80,8 +85,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
         with:
-          tag_name: ${{ github.sha }}-${{ github.run_id }}
-          release_name: Automated Release for ${{ steps.committag.outputs.substring }}
+          tag_name: ${{ steps.package.outputs.version }}-${{ github.sha }}-${{ github.run_id }}
+          release_name: v${{ steps.package.outputs.version }} (${{ steps.committag.outputs.substring }})
           draft: false
           prerelease: false
 
@@ -94,8 +99,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-Linux/koala-client-2.0.3-linux-x86_64.AppImage
-          asset_name: KoalaClient-2.0.3-${{ steps.committag.outputs.substring }}-linux-x86_64.AppImage
+          asset_path: ./release-Linux/koala-client-${{ steps.package.outputs.version }}-linux-x86_64.AppImage
+          asset_name: KoalaClient-${{ steps.package.outputs.version }}-linux-x86_64.AppImage
           asset_content_type: application
 
       - name: Upload Release Asset - MacOS
@@ -104,8 +109,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-macOS/koala-client-2.0.3-mac-x64.dmg
-          asset_name: KoalaClient-2.0.3-${{ steps.committag.outputs.substring }}-mac-x64.dmg
+          asset_path: ./release-macOS/koala-client-${{ steps.package.outputs.version }}-mac-x64.dmg
+          asset_name: KoalaClient-${{ steps.package.outputs.version }}-mac-x64.dmg
           asset_content_type: application
 
       - name: Upload Release Asset - Windows
@@ -114,8 +119,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-Windows/koala-client-2.0.3-win-x64.exe
-          asset_name: KoalaClient-2.0.3-${{ steps.committag.outputs.substring }}-win-x64.exe
+          asset_path: ./release-Windows/koala-client-${{ steps.package.outputs.version }}-win-x64.exe
+          asset_name: KoalaClient-${{ steps.package.outputs.version }}-win-x64.exe
           asset_content_type: application
           
       - name: Zip Unpacked Release - Windows
@@ -131,7 +136,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./release-Windows/win-unpacked.zip
-          asset_name: KoalaClient-2.0.3-${{ steps.committag.outputs.substring }}-win-unpacked-x64.zip
+          asset_name: KoalaClient-${{ steps.package.outputs.version }}-win-unpacked-x64.zip
           asset_content_type: zip
 
       - name: Zip Hash Info
