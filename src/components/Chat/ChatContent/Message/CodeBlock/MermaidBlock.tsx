@@ -21,7 +21,7 @@ const MermaidBlock = ({
       if (mermaidContainerRef.current) {
          mermaid.initialize({
             startOnLoad: true,
-            theme: 'default',
+            theme: 'dark',
          });
          mermaid.mermaidAPI.render('mermaidSvg', chartDefinition).then(resultSvg => {
             if (mermaidContainerRef.current) {
