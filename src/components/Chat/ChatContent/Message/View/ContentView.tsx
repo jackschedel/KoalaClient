@@ -175,6 +175,7 @@ const ContentView = memo(
                         <TickIcon />
                      </button>
                   </>
+
                )}
             </div>
          </>
