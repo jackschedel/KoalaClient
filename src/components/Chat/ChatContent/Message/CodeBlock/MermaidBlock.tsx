@@ -7,6 +7,7 @@ import CodeBar from './CodeBar';
 import mermaid from 'mermaid';
 import useStore from '@store/store';
 import PannableDiv from './PannableDiv';
+import { fontStyle } from 'html2canvas/dist/types/css/property-descriptors/font-style';
 
 
 const MermaidBlock = ({
@@ -15,14 +16,18 @@ const MermaidBlock = ({
    chartDefinition: string
 }) => {
 
+   const chartId = `mermaidChart_${hashWith(chartDefinition)}`
+   const forcedFontSize = 16;
+
    function hashWith(str: string) {
-      let hashOut = (Number(new Date().getUTCMilliseconds().toString().slice(-8)) * 33)
+      // micro hash derived from: content, time, & rng
+      let hashOut = (Number(new Date().getUTCMilliseconds().toString().slice(-8)) * 47)
       for (let i = 0; i < str.length; i++) {
-         hashOut += (str.charCodeAt(i) * 27);
-         if (Math.random() < 0.33)
-            hashOut += (i * 27)
+         hashOut += (str.charCodeAt(i) * 33);
+         if (Math.random() < 0.4)
+            hashOut += (i * 33)
       }
-      return (hashOut).toString(36).padStart(3, 'x');
+      return (hashOut).toString(36).padStart(4, 'x');
    };
 
    const mermaidContainerRef = useRef<HTMLDivElement>(null);
@@ -36,23 +41,12 @@ const MermaidBlock = ({
 
          mermaid.initialize({
             startOnLoad: true,
-            securityLevel: 'strict',
+            securityLevel: 'loose',
             theme: 'dark',
             logLevel: 'fatal',
             arrowMarkerAbsolute: false,
-            fontSize: 14,
-            flowchart: {
-               htmlLabels: false,
-               curve: 'basis',
-               rankSpacing: 25,
-               useMaxWidth: true,
-               nodeSpacing: 20,
-               diagramPadding: 10,
+            fontSize: forcedFontSize,
 
-            },
-            gantt: {
-               fontSize: 12
-            }
          });
 
 
@@ -62,29 +56,40 @@ const MermaidBlock = ({
                try {
 
                   if (!mermaidContainerRef.current)
-                     throw ("chart failed - null reference")
+                     throw ("chart failed - null reference on mermaidContainerRef")
 
-                  if (chartDefinition.trim() === '') { } // empty chart - do nothing
+
+                  if (chartDefinition.trim() === '')
+                     // empty chart (do nothing):
+                     return;
+
+
+
                   else if (!isSyntaxValid) {
-                     if (isGenerating) { }  // still generating - leave existing chart
+                     if (isGenerating)
+                        // still generating (leave existing chart):
+                        return;
+
                      else
-                        mermaidContainerRef.current.innerHTML = chartDefinition ?? "" // fallback to raw
-                  } else  // syntax valid - try render
-                     mermaid.render(`mermaidChart_${hashWith(chartDefinition)}`, chartDefinition).then(resultSvg => {
+                        // invalid syntax (fallback to raw):
+                        mermaidContainerRef.current.innerHTML = chartDefinition ?? ""
+
+
+                  } else
+                     // syntax valid (try render):
+                     mermaid.render(chartId, chartDefinition).then(resultSvg => {
                         if (mermaidContainerRef.current) {
                            mermaidContainerRef.current.innerHTML = resultSvg.svg
                         }
                      })
-
-                  // chart failed - falling back to raw code
 
 
 
                } catch (err: any) {
                   if (!mermaidContainerRef.current)
                      throw (err)
-                  mermaidContainerRef.current.innerHTML = chartDefinition ?? "" // fallback to raw
-
+                  mermaidContainerRef.current.innerHTML = chartDefinition ?? "" // error rendering (fallback to raw)
+                  throw (err)
                }
             });
 
@@ -96,13 +101,19 @@ const MermaidBlock = ({
    }, [chartDefinition]);
 
    return (
-      <div className="bg-gray-900 rounded-md">
+      <div className="bg-gray-900 rounded-md" >
          <CodeBar lang='mermaid' blockRef={mermaidContainerRef} code={chartDefinition} />
          <div className=''>
-            <PannableDiv>
+            <PannableDiv minZoom={0.5} maxZoom={3.0}>
                <div className="" ref={mermaidContainerRef}></div>
             </PannableDiv>
          </div>
+         <style>
+            {
+               // override mermaid font setting (messes up zoom rendering)
+               `#${chartId} .label { font-size: ${forcedFontSize}px !important; }`
+            }
+         </style>
       </div>
    );
 

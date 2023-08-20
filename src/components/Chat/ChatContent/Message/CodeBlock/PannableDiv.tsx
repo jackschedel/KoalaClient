@@ -2,9 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 
 type PannerProps = {
    children?: React.ReactNode;
+   minZoom?: number,
+   maxZoom?: number
 };
 
-const Panner: React.FC<PannerProps> = ({ children }) => {
+const Panner: React.FC<PannerProps> = ({ children, minZoom = 0.5, maxZoom = 3.0 }) => {
    const [dragging, setDragging] = useState(false);
    const [startX, setStartX] = useState(0);
    const [startY, setStartY] = useState(0);
@@ -38,9 +40,7 @@ const Panner: React.FC<PannerProps> = ({ children }) => {
 
    const handleScroll = (e: WheelEvent) => {
       e.preventDefault();
-      const minZoom = 0.5
-      const maxZoom = 2.5
-      let newScale = scale - e.deltaY * 0.0004;
+      let newScale = scale - e.deltaY * 0.0006;
       newScale = Math.min(Math.max(newScale, minZoom), maxZoom);
       setScale(newScale);
       const newTransform = `translate(${posX}px, ${posY}px) scale(${newScale})`;
@@ -71,9 +71,12 @@ const Panner: React.FC<PannerProps> = ({ children }) => {
    return (
       <div className='overflow-hidden' onMouseDown={handleMouseDown} ref={pannerRef}>
          <div className='select-none origin-center box-border overflow-clip transform-gpu' style={{ transform }}>
-            {children}
+            <div className=''>
+               {children}
+            </div>
          </div>
       </div>
+
    );
 };
 
