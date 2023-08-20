@@ -16,6 +16,8 @@ const MermaidBlock = ({
    chartDefinition: string
 }) => {
 
+
+
    const chartId = `mermaidChart_${hashWith(chartDefinition)}`
    const forcedFontSize = 16;
 
@@ -32,6 +34,8 @@ const MermaidBlock = ({
 
    const mermaidContainerRef = useRef<HTMLDivElement>(null);
    const isGenerating = useStore.getState().generating;
+   const [isPannable, setIsPannable] = useState(false);
+
 
    const lang = 'mermaid'
 
@@ -66,20 +70,22 @@ const MermaidBlock = ({
 
 
                   else if (!isSyntaxValid) {
-                     if (isGenerating)
+                     if (isGenerating) {
                         // still generating (leave existing chart):
-                        return;
-
-                     else
+                        setIsPannable(false)
+                     }
+                     else {
                         // invalid syntax (fallback to raw):
                         mermaidContainerRef.current.innerHTML = chartDefinition ?? ""
-
+                        setIsPannable(false)
+                     }
 
                   } else
                      // syntax valid (try render):
                      mermaid.render(chartId, chartDefinition).then(resultSvg => {
                         if (mermaidContainerRef.current) {
                            mermaidContainerRef.current.innerHTML = resultSvg.svg
+                           setIsPannable(true)
                         }
                      })
 
@@ -104,7 +110,7 @@ const MermaidBlock = ({
       <div className="bg-gray-900 rounded-md" >
          <CodeBar lang='mermaid' blockRef={mermaidContainerRef} code={chartDefinition} />
          <div className=''>
-            <PannableDiv minZoom={0.5} maxZoom={3.0}>
+            <PannableDiv isPannable={isPannable}>
                <div className="" ref={mermaidContainerRef}></div>
             </PannableDiv>
          </div>
