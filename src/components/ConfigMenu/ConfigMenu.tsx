@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import useStore from "@store/store";
 import { useTranslation } from "react-i18next";
 import PopupModal from "@components/PopupModal";
-import { ConfigInterface, ModelOptions } from "@type/chat";
+import { ConfigInterface, ModelChoice } from "@type/chat";
 import { modelMaxToken } from "@constants/chat";
 import { ModelSelect } from "./ModelSelect";
 
@@ -17,7 +17,7 @@ const ConfigMenu = ({
 }) => {
    const [_maxToken, _setMaxToken] = useState<number>(config.max_tokens);
    const [_maxContext, _setMaxContext] = useState<number>(config.max_context);
-   const [_model, _setModel] = useState<ModelOptions>(config.model);
+   const [_model, _setModel] = useState<ModelChoice>(config.model);
    const [_temperature, _setTemperature] = useState<number>(config.temperature);
    const [_presencePenalty, _setPresencePenalty] = useState<number>(
       config.presence_penalty,
@@ -88,7 +88,7 @@ export const MaxTokenSlider = ({
 }: {
    _maxToken: number;
    _setMaxToken: React.Dispatch<React.SetStateAction<number>>;
-   _model: ModelOptions;
+   _model: ModelChoice;
 }) => {
    const { t } = useTranslation("model");
    const inputRef = useRef<HTMLInputElement>(null);
@@ -130,7 +130,7 @@ export const MaxContextSlider = ({
 }: {
    _maxContext: number;
    _setMaxContext: React.Dispatch<React.SetStateAction<number>>;
-   _model: ModelOptions;
+   _model: ModelChoice;
 }) => {
    const { t } = useTranslation("model");
    const inputRef = useRef<HTMLInputElement>(null);

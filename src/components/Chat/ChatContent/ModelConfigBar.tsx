@@ -3,8 +3,9 @@ import { useTranslation } from "react-i18next";
 import { shallow } from "zustand/shallow";
 import useStore from "@store/store";
 import ConfigMenu from "@components/ConfigMenu";
-import { ChatInterface, ConfigInterface, ModelOptions } from "@type/chat";
-import { _defaultChatConfig, modelOptions } from "@constants/chat";
+import { ChatInterface, ConfigInterface } from "@type/chat";
+import { ModelChoice } from "@type/chat";
+import { _defaultChatConfig, modelMaxToken, modelOptions } from "@constants/chat";
 import { ModelSelect } from "@components/ConfigMenu/ModelSelect";
 
 const ModelConfigBar = React.memo(() => {
@@ -22,7 +23,7 @@ const ModelConfigBar = React.memo(() => {
    const setChats = useStore((state) => state.setChats);
    const currentChatIndex = useStore((state) => state.currentChatIndex);
    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-   const [_model, _setModel] = useState<ModelOptions>(
+   const [_model, _setModel] = useState<ModelChoice>(
       config?.model || "gpt-3.5-turbo",
    );
 
@@ -53,10 +54,19 @@ const ModelConfigBar = React.memo(() => {
                      <ModelSelect
                         _model={config.model}
                         _setModel={(ac) => {
+                           const newModel = ac.valueOf()
+
+                           let newMaxTokens = config.max_tokens
+                           if (newMaxTokens > modelMaxToken[newModel as ModelChoice]) {
+                              newMaxTokens = modelMaxToken[newModel as ModelChoice]
+                           }
+
                            const updatedConfig = {
                               ...config,
-                              model: ac.valueOf() as ModelOptions,
+                              max_tokens: Number(newMaxTokens.valueOf()),
+                              model: newModel as ModelChoice,
                            };
+
                            setConfig(updatedConfig);
                         }}
                      />

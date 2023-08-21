@@ -14,7 +14,7 @@ import {
 } from "@components/ConfigMenu/ConfigMenu";
 import { ModelSelect } from "@components/ConfigMenu/ModelSelect";
 
-import { ModelOptions } from "@type/chat";
+import { ModelChoice } from "@type/chat";
 import { _defaultChatConfig, _defaultSystemMessage } from "@constants/chat";
 
 const ChatConfigMenu = () => {
@@ -48,7 +48,7 @@ const ChatConfigPopup = ({
    const [_systemMessage, _setSystemMessage] = useState<string>(
       useStore.getState().defaultSystemMessage,
    );
-   const [_model, _setModel] = useState<ModelOptions>(config.model);
+   const [_model, _setModel] = useState<ModelChoice>(config.model);
    const [_maxToken, _setMaxToken] = useState<number>(config.max_tokens);
    const [_maxContext, _setMaxContext] = useState<number>(config.max_context);
    const [_temperature, _setTemperature] = useState<number>(config.temperature);

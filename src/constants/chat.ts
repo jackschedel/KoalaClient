@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { ChatInterface, ConfigInterface, ModelOptions } from "@type/chat";
+import { ChatInterface, ConfigInterface, ModelChoice } from "@type/chat";
 import useStore from "@store/store";
 
 const date = new Date();
@@ -12,11 +12,11 @@ const dateString = date.getFullYear() +
 // default system message obtained using the following method: https://twitter.com/DeminDimin/status/1619935545144279040
 export const _defaultSystemMessage =
   import.meta.env.VITE_DEFAULT_SYSTEM_MESSAGE ??
-    `You are ChatGPT, a large language model trained by OpenAI.
+  `You are ChatGPT, a large language model trained by OpenAI.
 Carefully heed the user's instructions. 
 Respond using Markdown.`;
 
-export const modelOptions: ModelOptions[] = [
+export const modelOptions: ModelChoice[] = [
   "gpt-3.5-turbo",
   "gpt-3.5-turbo-16k",
   "gpt-4",

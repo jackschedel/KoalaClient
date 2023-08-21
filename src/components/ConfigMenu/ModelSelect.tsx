@@ -1,5 +1,5 @@
 import React from "react";
-import { ModelOptions } from "@type/chat";
+import { ModelChoice } from "@type/chat";
 import DownChevronArrow from "@icon/DownChevronArrow";
 import { modelOptions } from "@constants/chat";
 import useHideOnOutsideClick from "@hooks/useHideOnOutsideClick";
@@ -8,8 +8,8 @@ import useHideOnOutsideClick from "@hooks/useHideOnOutsideClick";
 export const ModelSelect = ({
    _model, _setModel,
 }: {
-   _model: ModelOptions;
-   _setModel: React.Dispatch<React.SetStateAction<ModelOptions>>;
+   _model: ModelChoice;
+   _setModel: React.Dispatch<React.SetStateAction<ModelChoice>>;
 }) => {
    const [dropDown, setDropDown, dropDownRef] = useHideOnOutsideClick();
 
