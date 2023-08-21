@@ -3,6 +3,7 @@ import { MessageInterface, ModelChoice, TotalTokenUsed } from "@type/chat";
 import useStore from "@store/store";
 
 import { Tiktoken } from "@dqbd/tiktoken/lite";
+import { modelMaxToken } from "@constants/chat";
 const cl100k_base = await import("@dqbd/tiktoken/encoders/cl100k_base.json");
 
 const encoder = new Tiktoken(
@@ -47,7 +48,7 @@ export const limitMessageTokens = (
   messages: MessageInterface[],
   context_limit: number = 4096,
   model: ModelChoice,
-  max_model_token: number = 4096,
+  max_model_token: number = modelMaxToken[model],
   token_limit: number,
 ): MessageInterface[] => {
   const limitedMessages: MessageInterface[] = [];
