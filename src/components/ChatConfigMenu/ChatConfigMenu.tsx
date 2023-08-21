@@ -11,7 +11,8 @@ import {
   PresencePenaltySlider,
   TemperatureSlider,
   TopPSlider,
-} from "@components/ConfigMenu/ConfigMenu";
+} from "@components/ConfigMenu/SettingsSliders";
+
 import { ModelSelect } from "@components/ConfigMenu/ModelSelect";
 
 import { ModelChoice } from "@type/chat";
