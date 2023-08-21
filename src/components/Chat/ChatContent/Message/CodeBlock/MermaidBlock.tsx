@@ -50,6 +50,7 @@ const MermaidBlock = ({
             logLevel: 'fatal',
             arrowMarkerAbsolute: false,
             fontSize: forcedFontSize,
+            htmlLabels: false
 
          });
 
@@ -104,7 +105,7 @@ const MermaidBlock = ({
 
 
       }
-   }, [chartDefinition]);
+   }, [chartDefinition, isPannable, isGenerating]);
 
    return (
       <div className="bg-gray-900 rounded-md" >
