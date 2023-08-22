@@ -5,7 +5,11 @@ import useStore from "@store/store";
 import ConfigMenu from "@components/ConfigMenu";
 import { ChatInterface, ConfigInterface } from "@type/chat";
 import { ModelChoice } from "@type/chat";
-import { _defaultChatConfig, modelMaxToken, modelOptions } from "@constants/chat";
+import {
+  _defaultChatConfig,
+  modelMaxToken,
+  modelOptions,
+} from "@constants/chat";
 import { ModelSelect } from "@components/ConfigMenu/ModelSelect";
 
 const ModelConfigBar = React.memo(() => {
@@ -54,11 +58,11 @@ const ModelConfigBar = React.memo(() => {
               <ModelSelect
                 _model={config.model}
                 _setModel={(ac) => {
-                  const newModel = ac.valueOf()
+                  const newModel = ac.valueOf();
 
-                  let newMaxTokens = config.max_tokens
+                  let newMaxTokens = config.max_tokens;
                   if (newMaxTokens > modelMaxToken[newModel as ModelChoice]) {
-                    newMaxTokens = modelMaxToken[newModel as ModelChoice]
+                    newMaxTokens = modelMaxToken[newModel as ModelChoice];
                   }
 
                   const updatedConfig = {
