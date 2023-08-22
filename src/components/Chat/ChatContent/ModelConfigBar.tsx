@@ -3,9 +3,10 @@ import { useTranslation } from "react-i18next";
 import { shallow } from "zustand/shallow";
 import useStore from "@store/store";
 import ConfigMenu from "@components/ConfigMenu";
-import { ChatInterface, ConfigInterface, ModelOptions } from "@type/chat";
-import { _defaultChatConfig, modelOptions } from "@constants/chat";
-import { ModelSelector } from "@components/ConfigMenu/ConfigMenu";
+import { ChatInterface, ConfigInterface } from "@type/chat";
+import { ModelChoice } from "@type/chat";
+import { _defaultChatConfig, modelMaxToken, modelOptions } from "@constants/chat";
+import { ModelSelect } from "@components/ConfigMenu/ModelSelect";
 
 const ModelConfigBar = React.memo(() => {
   const { t } = useTranslation("model");
@@ -22,7 +23,7 @@ const ModelConfigBar = React.memo(() => {
   const setChats = useStore((state) => state.setChats);
   const currentChatIndex = useStore((state) => state.currentChatIndex);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [_model, _setModel] = useState<ModelOptions>(
+  const [_model, _setModel] = useState<ModelChoice>(
     config?.model || "gpt-3.5-turbo",
   );
 
@@ -50,13 +51,22 @@ const ModelConfigBar = React.memo(() => {
         <div className="sticky p-1 pb-0.5  mb-19 top-0 flex gap-x-3 gap-y-1 flex-wrap w-full items-center justify-center border-b-2 border-neutral-base bg-neutral-dark text-custom-white z-50">
           <div className="sticky top-0 flex gap-x-1 gap-y-0 flex-wrap w-full items-center justify-center pt-0 pb-1">
             <div className="flex -mb-3 mr-1 mt-1">
-              <ModelSelector
+              <ModelSelect
                 _model={config.model}
                 _setModel={(ac) => {
+                  const newModel = ac.valueOf()
+
+                  let newMaxTokens = config.max_tokens
+                  if (newMaxTokens > modelMaxToken[newModel as ModelChoice]) {
+                    newMaxTokens = modelMaxToken[newModel as ModelChoice]
+                  }
+
                   const updatedConfig = {
                     ...config,
-                    model: ac.valueOf() as ModelOptions,
+                    max_tokens: Number(newMaxTokens.valueOf()),
+                    model: newModel as ModelChoice,
                   };
+
                   setConfig(updatedConfig);
                 }}
               />

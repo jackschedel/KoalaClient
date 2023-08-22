@@ -1,8 +1,9 @@
-import { MessageInterface, ModelOptions, TotalTokenUsed } from "@type/chat";
+import { MessageInterface, ModelChoice, TotalTokenUsed } from "@type/chat";
 
 import useStore from "@store/store";
 
 import { Tiktoken } from "@dqbd/tiktoken/lite";
+import { modelMaxToken } from "@constants/chat";
 const cl100k_base = await import("@dqbd/tiktoken/encoders/cl100k_base.json");
 
 const encoder = new Tiktoken(
@@ -19,7 +20,7 @@ const encoder = new Tiktoken(
 // https://github.com/dqbd/tiktoken/issues/23#issuecomment-1483317174
 export const getChatGPTEncoding = (
   messages: MessageInterface[],
-  model: ModelOptions,
+  model: ModelChoice,
 ) => {
   const isGpt3 = model === "gpt-3.5-turbo";
 
@@ -38,7 +39,7 @@ export const getChatGPTEncoding = (
   return encoder.encode(serialized, "all");
 };
 
-const countTokens = (messages: MessageInterface[], model: ModelOptions) => {
+const countTokens = (messages: MessageInterface[], model: ModelChoice) => {
   if (messages.length === 0) return 0;
   return getChatGPTEncoding(messages, model).length;
 };
@@ -46,8 +47,8 @@ const countTokens = (messages: MessageInterface[], model: ModelOptions) => {
 export const limitMessageTokens = (
   messages: MessageInterface[],
   context_limit: number = 4096,
-  model: ModelOptions,
-  max_model_token: number = 4096,
+  model: ModelChoice,
+  max_model_token: number = modelMaxToken[model],
   token_limit: number,
 ): MessageInterface[] => {
   const limitedMessages: MessageInterface[] = [];
@@ -103,7 +104,7 @@ export const limitMessageTokens = (
 };
 
 export const updateTotalTokenUsed = (
-  model: ModelOptions,
+  model: ModelChoice,
   promptMessages: MessageInterface[],
   completionMessage: MessageInterface,
 ) => {

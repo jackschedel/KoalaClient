@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { ChatInterface, ConfigInterface, ModelOptions } from "@type/chat";
+import { ChatInterface, ConfigInterface, ModelChoice } from "@type/chat";
 import useStore from "@store/store";
 
 const date = new Date();
@@ -16,7 +16,7 @@ export const _defaultSystemMessage =
 Carefully heed the user's instructions. 
 Respond using Markdown.`;
 
-export const modelOptions: ModelOptions[] = [
+export const modelOptions: ModelChoice[] = [
   "gpt-3.5-turbo",
   "gpt-3.5-turbo-16k",
   "gpt-4",

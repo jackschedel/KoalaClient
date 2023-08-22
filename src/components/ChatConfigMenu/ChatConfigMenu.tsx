@@ -8,13 +8,14 @@ import {
   FrequencyPenaltySlider,
   MaxContextSlider,
   MaxTokenSlider,
-  ModelSelector,
   PresencePenaltySlider,
   TemperatureSlider,
   TopPSlider,
-} from "@components/ConfigMenu/ConfigMenu";
+} from "@components/ConfigMenu/SettingsSliders";
 
-import { ModelOptions } from "@type/chat";
+import { ModelSelect } from "@components/ConfigMenu/ModelSelect";
+
+import { ModelChoice } from "@type/chat";
 import { _defaultChatConfig, _defaultSystemMessage } from "@constants/chat";
 
 const ChatConfigMenu = () => {
@@ -48,7 +49,7 @@ const ChatConfigPopup = ({
   const [_systemMessage, _setSystemMessage] = useState<string>(
     useStore.getState().defaultSystemMessage,
   );
-  const [_model, _setModel] = useState<ModelOptions>(config.model);
+  const [_model, _setModel] = useState<ModelChoice>(config.model);
   const [_maxToken, _setMaxToken] = useState<number>(config.max_tokens);
   const [_maxContext, _setMaxContext] = useState<number>(config.max_context);
   const [_temperature, _setTemperature] = useState<number>(config.temperature);
@@ -97,7 +98,7 @@ const ChatConfigPopup = ({
         <label className="block text-sm font-medium text-custom-white pb-2">
           {t("model")}:
         </label>
-        <ModelSelector _model={_model} _setModel={_setModel} />
+        <ModelSelect _model={_model} _setModel={_setModel} />
         <DefaultSystemChat
           _systemMessage={_systemMessage}
           _setSystemMessage={_setSystemMessage}

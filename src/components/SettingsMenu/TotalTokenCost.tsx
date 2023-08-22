@@ -6,15 +6,15 @@ import useStore from "@store/store";
 import { modelCost } from "@constants/chat";
 import Toggle from "@components/Toggle/Toggle";
 
-import { ModelOptions, TotalTokenUsed } from "@type/chat";
+import { ModelChoice, TotalTokenUsed } from "@type/chat";
 
 import CalculatorIcon from "@icon/CalculatorIcon";
 
 type CostMapping = { model: string; cost: number }[];
 
 const tokenCostToCost = (
-  tokenCost: TotalTokenUsed[ModelOptions],
-  model: ModelOptions,
+  tokenCost: TotalTokenUsed[ModelChoice],
+  model: ModelChoice,
 ) => {
   if (!tokenCost) return 0;
   const { prompt, completion } = modelCost[model as keyof typeof modelCost];
@@ -40,7 +40,7 @@ const TotalTokenCost = () => {
   useEffect(() => {
     const updatedCostMapping: CostMapping = [];
     Object.entries(totalTokenUsed).forEach(([model, tokenCost]) => {
-      const cost = tokenCostToCost(tokenCost, model as ModelOptions);
+      const cost = tokenCostToCost(tokenCost, model as ModelChoice);
       updatedCostMapping.push({ model, cost });
     });
 
@@ -119,7 +119,7 @@ export const TotalTokenCostDisplay = () => {
     let updatedTotalCost = 0;
 
     Object.entries(totalTokenUsed).forEach(([model, tokenCost]) => {
-      updatedTotalCost += tokenCostToCost(tokenCost, model as ModelOptions);
+      updatedTotalCost += tokenCostToCost(tokenCost, model as ModelChoice);
     });
 
     setTotalCost(updatedTotalCost);

@@ -19,7 +19,7 @@ export interface ChatInterface {
 }
 
 export interface ConfigInterface {
-  model: ModelOptions;
+  model: ModelChoice;
   max_tokens: number;
   max_context: number;
   temperature: number;
@@ -50,7 +50,7 @@ export interface Folder {
   color?: string;
 }
 
-export type ModelOptions =
+export type ModelChoice =
   | "gpt-4"
   | "gpt-4-32k"
   | "gpt-3.5-turbo"
@@ -60,7 +60,7 @@ export type ModelOptions =
 // | 'gpt-4-32k-0314'
 
 export type TotalTokenUsed = {
-  [model in ModelOptions]?: {
+  [model in ModelChoice]?: {
     promptTokens: number;
     completionTokens: number;
   };
