@@ -114,18 +114,22 @@ const EditView = ({
       textareaRef.current.style.height =
         `${textareaRef.current.scrollHeight}px`;
 
-      try { textareaRef.current.focus() }
-      catch (err) { }
+      try {
+        const textarea = textareaRef.current;
+        textarea.focus();
+        textarea.selectionStart = textarea.value.length;
+      } catch (err) {}
     }
   }, [textareaRef]);
 
   return (
     <>
       <div
-        className={`w-full ${sticky
-          ? "py-2 md:py-3 px-2 md:px-4 border border-custom-black/10  bg-custom-black/20 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)][0_0_15px_rgba(0,0,0,0.10)]"
-          : ""
-          }`}
+        className={`w-full ${
+          sticky
+            ? "py-2 md:py-3 px-2 md:px-4 border border-custom-black/10  bg-custom-black/20 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)][0_0_15px_rgba(0,0,0,0.10)]"
+            : ""
+        }`}
       >
         <textarea
           ref={textareaRef}
@@ -210,8 +214,9 @@ const EditViewButtons = memo(
         <div className="flex-3 text-center mt-2">
           {sticky && (
             <button
-              className={`btn relative mr-2 btn-primary ${generating ? "cursor-not-allowed opacity-40" : ""
-                }`}
+              className={`btn relative mr-2 btn-primary ${
+                generating ? "cursor-not-allowed opacity-40" : ""
+              }`}
               onClick={handleGenerate}
               aria-label={t("generate") as string}
             >
@@ -235,11 +240,13 @@ const EditViewButtons = memo(
           )}
 
           <button
-            className={`btn relative mr-2 ${messageIndex % 2 ? "btn-neutral" : "btn-neutral-dark"
-              } ${sticky
+            className={`btn relative mr-2 ${
+              messageIndex % 2 ? "btn-neutral" : "btn-neutral-dark"
+            } ${
+              sticky
                 ? `${generating ? "cursor-not-allowed opacity-40" : ""}`
                 : ""
-              }`}
+            }`}
             onClick={handleSave}
             aria-label={t("save") as string}
           >
@@ -250,8 +257,9 @@ const EditViewButtons = memo(
 
           {sticky || (
             <button
-              className={`btn relative ${messageIndex % 2 ? "btn-neutral" : "btn-neutral-dark"
-                }`}
+              className={`btn relative ${
+                messageIndex % 2 ? "btn-neutral" : "btn-neutral-dark"
+              }`}
               onClick={() => setIsEdit(false)}
               aria-label={t("cancel") as string}
             >
