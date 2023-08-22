@@ -160,7 +160,7 @@ const ImportChat = () => {
       </button>
       {alert && (
         <div
-          className={`relative py-2 px-3 w-full mt-3 border rounded-md text-neutral-base text-sm whitespace-pre-wrap ${
+          className={`relative py-2 px-3 w-full mt-3 border rounded-md text-custom-white text-sm whitespace-pre-wrap ${
             alert.success
               ? "border-green-500 bg-green-500/10"
               : "border-red-500 bg-red-500/10"
