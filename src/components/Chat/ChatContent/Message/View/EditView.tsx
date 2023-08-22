@@ -30,6 +30,7 @@ const EditView = ({
   const [_content, _setContent] = useState<string>(content);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const textareaRef = React.createRef<HTMLTextAreaElement>();
+  const [initialFocus, setinitialFocus] = useState<boolean>(true);
 
   const { t } = useTranslation();
 
@@ -114,13 +115,24 @@ const EditView = ({
       textareaRef.current.style.height =
         `${textareaRef.current.scrollHeight}px`;
 
-      try {
-        const textarea = textareaRef.current;
-        textarea.focus();
-        textarea.selectionStart = textarea.value.length;
-      } catch (err) {}
+      textareaRef.current.focus();
+      setinitialFocus(false);
     }
   }, [textareaRef]);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      setCursorPosition(textareaRef.current.value.length);
+      textareaRef.current.selectionStart = textareaRef.current.value.length;
+
+      // const rect = textareaRef.current.getBoundingClientRect();
+      // const bottomPos = rect.top + rect.height;
+      //
+      // if (bottomPos > window.innerHeight) {
+      //   textareaRef.current.scrollIntoView({ block: "end", inline: "nearest" });
+      // }
+    }
+  }, [initialFocus]);
 
   return (
     <>
