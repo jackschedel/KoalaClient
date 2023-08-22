@@ -53,7 +53,7 @@ const CommandPrompt = ({
     <div className="relative max-wd-sm" ref={dropDownRef}>
       <button
         className={`btn ${
-          messageIndex%2 ? 'btn-neutral' : 'btn-neutral-dark'
+          messageIndex % 2 ? "btn-neutral" : "btn-neutral-dark"
         } btn-small inline-flex h-8 w-8 items-center justify-center`}
         aria-label="prompt library"
         onClick={() => setDropDown(!dropDown)}
@@ -64,7 +64,8 @@ const CommandPrompt = ({
         className={`${dropDown ? "" : "hidden"} absolute ${
           isAbove ? "bottom-full" : "top-100 bottom-100"
         } border border-neutral-base right-0 z-10 bg-neutral-light rounded-lg shadow-xl text-custom-white group `}
-      >        <input
+      >
+        <input
           ref={inputRef}
           type="text"
           className="text-custom-white p-3 text-sm bg-neutral-base m-0 w-full mr-0 h-8 rounded-t-lg bg-custom-black/25 focus:outline-none border-b border-neutral-dark"
