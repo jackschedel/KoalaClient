@@ -1,22 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import CopyIcon from '@icon/CopyIcon';
-import TickIcon from '@icon/TickIcon';
 import CodeBar from './CodeBar';
 
-import mermaid from 'mermaid';
 import useStore from '@store/store';
 import PannableDiv from './PannableDiv';
-import { fontStyle } from 'html2canvas/dist/types/css/property-descriptors/font-style';
+import Mermaid, { RenderResult, } from 'mermaid';
 
 
 const MermaidBlock = ({
-   chartDefinition,
+   children,
 }: {
-   chartDefinition: string
+   children: React.ReactNode & React.ReactNode[]
 }) => {
 
+   console.log(Mermaid)
 
+
+   const chartDefinition = children.toString()
 
    const chartId = `mermaidChart_${hashWith(chartDefinition)}`
    const forcedFontSize = 16;
@@ -43,7 +43,7 @@ const MermaidBlock = ({
    useEffect(() => {
       if (mermaidContainerRef.current) {
 
-         mermaid.initialize({
+         Mermaid.mermaidAPI.initialize({
             startOnLoad: true,
             securityLevel: 'loose',
             theme: 'dark',
@@ -56,8 +56,8 @@ const MermaidBlock = ({
 
 
 
-         mermaid.parse(chartDefinition, { suppressErrors: true })
-            .then(isSyntaxValid => {
+         Mermaid.mermaidAPI.parse(chartDefinition, { suppressErrors: true })
+            .then((isSyntaxValid: boolean | void) => {
                try {
 
                   if (!mermaidContainerRef.current)
@@ -83,7 +83,7 @@ const MermaidBlock = ({
 
                   } else
                      // syntax valid (try render):
-                     mermaid.render(chartId, chartDefinition).then(resultSvg => {
+                     Mermaid.mermaidAPI.render(chartId, chartDefinition).then((resultSvg: RenderResult) => {
                         if (mermaidContainerRef.current) {
                            mermaidContainerRef.current.innerHTML = resultSvg.svg
                            setIsPannable(true)

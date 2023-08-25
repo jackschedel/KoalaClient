@@ -33,7 +33,6 @@ import DeleteButton from './Button/DeleteButton';
 import MarkdownModeButton from './Button/MarkdownModeButton';
 
 import CodeBlock from '../CodeBlock/CodeBlock';
-import { Mermaid } from 'mermaid'
 import MermaidBlock from '../CodeBlock/MermaidBlock';
 
 
@@ -191,7 +190,7 @@ const code = memo((props: CodeProps) => {
    if (inline) {
       return <code className={className}>{children}</code>;
    } else if (lang === 'mermaid') {
-      return <MermaidBlock chartDefinition={children.toString()} />
+      return <MermaidBlock children={children} />
    } else {
       return <CodeBlock lang={lang || 'text'} codeChildren={children} />;
    }
