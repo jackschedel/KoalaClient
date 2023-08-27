@@ -4,7 +4,7 @@ import CodeBar from './CodeBar';
 
 import useStore from '@store/store';
 import PannableDiv from './PannableDiv';
-import Mermaid, { RenderResult, } from 'mermaid';
+import Mermaid from 'mermaid';
 
 
 const MermaidBlock = ({
@@ -12,9 +12,6 @@ const MermaidBlock = ({
 }: {
    children: React.ReactNode & React.ReactNode[]
 }) => {
-
-   console.log(Mermaid)
-
 
    const chartDefinition = children.toString()
 
@@ -47,16 +44,17 @@ const MermaidBlock = ({
             startOnLoad: true,
             securityLevel: 'loose',
             theme: 'dark',
-            logLevel: 'fatal',
+            logLevel: 0,
             arrowMarkerAbsolute: false,
             fontSize: forcedFontSize,
-            htmlLabels: false
+
+            //htmlLabels: false
 
          });
 
 
 
-         Mermaid.mermaidAPI.parse(chartDefinition, { suppressErrors: true })
+         Mermaid.mermaidAPI.parseAsync(chartDefinition)
             .then((isSyntaxValid: boolean | void) => {
                try {
 
@@ -83,9 +81,9 @@ const MermaidBlock = ({
 
                   } else
                      // syntax valid (try render):
-                     Mermaid.mermaidAPI.render(chartId, chartDefinition).then((resultSvg: RenderResult) => {
+                     Mermaid.mermaidAPI.renderAsync(chartId, chartDefinition).then((resultSvg) => {
                         if (mermaidContainerRef.current) {
-                           mermaidContainerRef.current.innerHTML = resultSvg.svg
+                           mermaidContainerRef.current.innerHTML = resultSvg
                            setIsPannable(true)
                         }
                      })
