@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import useStore from "@store/store";
+import useStore from '@store/store';
 
-import { modelCost } from "@constants/chat";
-import Toggle from "@components/Toggle/Toggle";
+import { modelCost } from '@constants/chat';
+import Toggle from '@components/Toggle/Toggle';
 
-import { ModelChoice, TotalTokenUsed } from "@type/chat";
+import { ModelChoice, TotalTokenUsed } from '@type/chat';
 
-import CalculatorIcon from "@icon/CalculatorIcon";
+import CalculatorIcon from '@icon/CalculatorIcon';
 
 type CostMapping = { model: string; cost: number }[];
 
 const tokenCostToCost = (
   tokenCost: TotalTokenUsed[ModelChoice],
-  model: ModelChoice,
+  model: ModelChoice
 ) => {
   if (!tokenCost) return 0;
   const { prompt, completion } = modelCost[model as keyof typeof modelCost];
-  const completionCost = (completion.price / completion.unit) *
-    tokenCost.completionTokens;
+  const completionCost =
+    (completion.price / completion.unit) * tokenCost.completionTokens;
   const promptCost = (prompt.price / prompt.unit) * tokenCost.promptTokens;
   return completionCost + promptCost;
 };
 
 const TotalTokenCost = () => {
-  const { t } = useTranslation(["main", "model"]);
+  const { t } = useTranslation(['main', 'model']);
 
   const totalTokenUsed = useStore((state) => state.totalTokenUsed);
   const setTotalTokenUsed = useStore((state) => state.setTotalTokenUsed);
@@ -47,53 +47,53 @@ const TotalTokenCost = () => {
     setCostMapping(updatedCostMapping);
   }, [totalTokenUsed]);
 
-  return countTotalTokens
-    ? (
-      <div className="flex flex-col items-center gap-2 pt-2">
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="w-full text-sm text-left">
-            <thead className="text-xs text-custom-white uppercase bg-neutral-dark">
-              <tr>
-                <th className="px-4 py-2">{t("model", { ns: "model" })}</th>
-                <th className="px-4 py-2">USD</th>
+  return countTotalTokens ? (
+    <div className='flex flex-col items-center gap-2 pt-2'>
+      <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
+        <table className='w-full text-sm text-left'>
+          <thead className='text-xs text-custom-white uppercase bg-neutral-dark'>
+            <tr>
+              <th className='px-4 py-2'>{t('model', { ns: 'model' })}</th>
+              <th className='px-4 py-2'>USD</th>
+            </tr>
+          </thead>
+          <tbody>
+            {costMapping.map(({ model, cost }) => (
+              <tr
+                key={model}
+                className='bg-neutral-light text-custom-white border-b-2 border-neutral-base'
+              >
+                <td className='px-4 py-2'>{model}</td>
+                <td className='px-4 py-2'>{cost.toPrecision(3)}</td>
               </tr>
-            </thead>
-            <tbody>
-              {costMapping.map(({ model, cost }) => (
-                <tr
-                  key={model}
-                  className="bg-neutral-light text-custom-white border-b-2 border-neutral-base"
-                >
-                  <td className="px-4 py-2">{model}</td>
-                  <td className="px-4 py-2">{cost.toPrecision(3)}</td>
-                </tr>
-              ))}
-              <tr className="bg-neutral-light text-custom-white font-bold">
-                <td className="px-4 py-2">{t("total", { ns: "main" })}</td>
-                <td className="px-4 py-2">
-                  {costMapping
-                    .reduce((prev, curr) => prev + curr.cost, 0)
-                    .toPrecision(3)}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className="btn btn-neutral cursor-pointer" onClick={resetCost}>
-          {t("resetCost", { ns: "main" })}
-        </div>
+            ))}
+            <tr className='bg-neutral-light text-custom-white font-bold'>
+              <td className='px-4 py-2'>{t('total', { ns: 'main' })}</td>
+              <td className='px-4 py-2'>
+                {costMapping
+                  .reduce((prev, curr) => prev + curr.cost, 0)
+                  .toPrecision(3)}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    )
-    : <></>;
+      <div className='btn btn-neutral cursor-pointer' onClick={resetCost}>
+        {t('resetCost', { ns: 'main' })}
+      </div>
+    </div>
+  ) : (
+    <></>
+  );
 };
 
 export const TotalTokenCostToggle = () => {
-  const { t } = useTranslation("main");
+  const { t } = useTranslation('main');
 
   const setCountTotalTokens = useStore((state) => state.setCountTotalTokens);
 
   const [isChecked, setIsChecked] = useState<boolean>(
-    useStore.getState().countTotalTokens,
+    useStore.getState().countTotalTokens
   );
 
   useEffect(() => {
@@ -102,7 +102,7 @@ export const TotalTokenCostToggle = () => {
 
   return (
     <Toggle
-      label={t("countTotalTokens") as string}
+      label={t('countTotalTokens') as string}
       isChecked={isChecked}
       setIsChecked={setIsChecked}
     />
@@ -126,7 +126,7 @@ export const TotalTokenCostDisplay = () => {
   }, [totalTokenUsed]);
 
   return (
-    <a className="flex py-2 px-2 items-center gap-3 rounded-md hover:bg-neutral-base/10 transition-colors duration-200 text-custom-white text-sm">
+    <a className='flex py-2 px-2 items-center gap-3 rounded-md hover:bg-neutral-base/10 transition-colors duration-200 text-custom-white text-sm'>
       <CalculatorIcon />
       {`USD ${totalCost.toPrecision(3)}`}
     </a>

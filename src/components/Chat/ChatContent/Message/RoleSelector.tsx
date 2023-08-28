@@ -28,7 +28,7 @@ const RoleSelector = React.memo(
       <div className='prose relative'>
         <button
           className={`btn ${
-            messageIndex%2 ? 'btn-neutral' : 'btn-neutral-dark'
+            messageIndex % 2 ? 'btn-neutral' : 'btn-neutral-dark'
           } btn-small flex gap-1`}
           aria-label={t(role) as string}
           type='button'
@@ -43,14 +43,14 @@ const RoleSelector = React.memo(
           className={`${
             dropDown ? '' : 'hidden'
           } absolute top-100 bottom-100 z-10 bg-neutral-light shadow-xl rounded-lg border border-neutral-base group w-36`}
-          >
+        >
           <ul
-          className='text-sm p-0 m-0 max-h-72 overflow-auto'
-          aria-labelledby='dropdownDefaultButton'
+            className='text-sm p-0 m-0 max-h-72 overflow-auto'
+            aria-labelledby='dropdownDefaultButton'
           >
             {roles.map((r) => (
               <li
-              className='px-4 py-2 hover:bg-neutral-dark cursor-pointer text-custom-white'
+                className='px-4 py-2 hover:bg-neutral-dark cursor-pointer text-custom-white'
                 onClick={() => {
                   if (!sticky) {
                     const updatedChats: ChatInterface[] = JSON.parse(

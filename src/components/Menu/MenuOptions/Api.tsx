@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useTranslation } from "react-i18next";
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import PersonIcon from "@icon/PersonIcon";
-import ApiMenu from "@components/ApiMenu";
+import PersonIcon from '@icon/PersonIcon';
+import ApiMenu from '@components/ApiMenu';
 
 const Config = () => {
   const { t } = useTranslation();
@@ -11,12 +11,12 @@ const Config = () => {
   return (
     <>
       <button
-        className="btn btn-neutral gap-3 bg-neutral-light"
-        id="api-menu"
+        className='btn btn-neutral gap-3 bg-neutral-light'
+        id='api-menu'
         onClick={() => setIsModalOpen(true)}
       >
         <PersonIcon />
-        {t("api")}
+        {t('api')}
       </button>
       {isModalOpen && <ApiMenu setIsModalOpen={setIsModalOpen} />}
     </>

@@ -14,12 +14,13 @@ const ImportExportChat = () => {
 
   return (
     <>
-      <button className='btn btn-neutral gap-3 bg-neutral-light'
+      <button
+        className='btn btn-neutral gap-3 bg-neutral-light'
         onClick={() => {
           setIsModalOpen(true);
         }}
       >
-      <ExportIcon className='w-4 h-4' />
+        <ExportIcon className='w-4 h-4' />
         {t('import')} / {t('export')} {t('data')}
       </button>
       {isModalOpen && (

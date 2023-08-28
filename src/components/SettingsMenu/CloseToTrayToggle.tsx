@@ -15,7 +15,7 @@ const CloseToTrayToggle = () => {
 
   useEffect(() => {
     setCloseToTray(isChecked);
-    window.electronAPI.setCloseToTray(isChecked)
+    window.electronAPI.setCloseToTray(isChecked);
   }, [isChecked]);
 
   return (

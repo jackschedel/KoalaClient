@@ -19,8 +19,8 @@
     <img src="https://img.shields.io/github/issues-pr/jackschedel/KoalaClient?style=flat-square" alt="pull-requests"/>
 </a>
 
-<a href="https://github.com/denoland/deno" target="_blank">
-    <img src="https://img.shields.io/badge/code%20style-deno-ff69b4?style=flat-square" alt="deno"/>
+<a href="https://github.com/prettier/prettier" target="_blank">
+    <img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="prettier"/>
 </a>
 </p>
 

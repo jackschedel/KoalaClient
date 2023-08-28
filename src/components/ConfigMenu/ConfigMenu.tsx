@@ -1,11 +1,18 @@
-import React, { useEffect, useRef, useState } from "react";
-import useStore from "@store/store";
-import { useTranslation } from "react-i18next";
-import PopupModal from "@components/PopupModal";
-import { ConfigInterface, ModelChoice } from "@type/chat";
-import { modelMaxToken } from "@constants/chat";
-import { ModelSelect } from "./ModelSelect";
-import { FrequencyPenaltySlider, MaxContextSlider, MaxTokenSlider, PresencePenaltySlider, TemperatureSlider, TopPSlider } from "./SettingsSliders";
+import React, { useEffect, useRef, useState } from 'react';
+import useStore from '@store/store';
+import { useTranslation } from 'react-i18next';
+import PopupModal from '@components/PopupModal';
+import { ConfigInterface, ModelChoice } from '@type/chat';
+import { modelMaxToken } from '@constants/chat';
+import { ModelSelect } from './ModelSelect';
+import {
+  FrequencyPenaltySlider,
+  MaxContextSlider,
+  MaxTokenSlider,
+  PresencePenaltySlider,
+  TemperatureSlider,
+  TopPSlider,
+} from './SettingsSliders';
 
 const ConfigMenu = ({
   setIsModalOpen,
@@ -21,13 +28,13 @@ const ConfigMenu = ({
   const [_model, _setModel] = useState<ModelChoice>(config.model);
   const [_temperature, _setTemperature] = useState<number>(config.temperature);
   const [_presencePenalty, _setPresencePenalty] = useState<number>(
-    config.presence_penalty,
+    config.presence_penalty
   );
   const [_topP, _setTopP] = useState<number>(config.top_p);
   const [_frequencyPenalty, _setFrequencyPenalty] = useState<number>(
-    config.frequency_penalty,
+    config.frequency_penalty
   );
-  const { t } = useTranslation("model");
+  const { t } = useTranslation('model');
 
   const handleConfirm = () => {
     setConfig({
@@ -44,14 +51,14 @@ const ConfigMenu = ({
 
   return (
     <PopupModal
-      title={t("configuration") as string}
+      title={t('configuration') as string}
       setIsModalOpen={setIsModalOpen}
       handleConfirm={handleConfirm}
       handleClickBackdrop={handleConfirm}
     >
-      <div className="p-6 border-b bg-neutral-base">
-        <label className="block text-sm font-medium text-custom-white pb-2">
-          {t("model")}:
+      <div className='p-6 border-b bg-neutral-base'>
+        <label className='block text-sm font-medium text-custom-white pb-2'>
+          {t('model')}:
         </label>
         <ModelSelect _model={_model} _setModel={_setModel} />
         <MaxTokenSlider
@@ -81,6 +88,5 @@ const ConfigMenu = ({
     </PopupModal>
   );
 };
-
 
 export default ConfigMenu;
