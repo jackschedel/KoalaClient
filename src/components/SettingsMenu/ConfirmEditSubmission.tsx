@@ -4,26 +4,27 @@ import useStore from '@store/store';
 import Toggle from '@components/Toggle';
 
 const ConfirmEditSubmissionToggle = () => {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
 
-    const setConfirmEditSubmission = useStore((state) => state.setConfirmEditSubmission);
+  const setConfirmEditSubmission = useStore(
+    (state) => state.setConfirmEditSubmission
+  );
 
-    const [isChecked, setIsChecked] = useState<boolean>(
-        useStore.getState().confirmEditSubmission
-    );
+  const [isChecked, setIsChecked] = useState<boolean>(
+    useStore.getState().confirmEditSubmission
+  );
 
-    useEffect(() => {
-        setConfirmEditSubmission(isChecked);
+  useEffect(() => {
+    setConfirmEditSubmission(isChecked);
+  }, [isChecked]);
 
-    }, [isChecked]);
-
-    return (
-        <Toggle
-            label={t('confirmEditSubmission') as string}
-            isChecked={isChecked}
-            setIsChecked={setIsChecked}
-        />
-    );
+  return (
+    <Toggle
+      label={t('confirmEditSubmission') as string}
+      isChecked={isChecked}
+      setIsChecked={setIsChecked}
+    />
+  );
 };
 
 export default ConfirmEditSubmissionToggle;

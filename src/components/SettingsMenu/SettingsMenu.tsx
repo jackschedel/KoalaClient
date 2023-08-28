@@ -21,7 +21,6 @@ import ImportExportChat from '@components/ImportExportChat/ImportExportChat';
 import Api from '@components/Menu/MenuOptions/Api';
 import ConfirmEditSubmissionToggle from './ConfirmEditSubmission';
 
-
 const SettingsMenu = () => {
   const { t } = useTranslation();
 
@@ -68,7 +67,9 @@ const SettingsMenu = () => {
               href='https://github.com/ztjhz/BetterChatGPT'
               target='_blank'
             >
-              <div className='opacity-20'><HeartIcon /></div>
+              <div className='opacity-20'>
+                <HeartIcon />
+              </div>
               {t('originalRepo')}
             </a>
           </div>

@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import useStore from "@store/store";
-import { useTranslation } from "react-i18next";
-import PopupModal from "@components/PopupModal";
-import { ConfigInterface, ModelChoice } from "@type/chat";
-import { modelMaxToken } from "@constants/chat";
-import { ModelSelect } from "./ModelSelect";
+import React, { useEffect, useRef, useState } from 'react';
+import useStore from '@store/store';
+import { useTranslation } from 'react-i18next';
+import PopupModal from '@components/PopupModal';
+import { ConfigInterface, ModelChoice } from '@type/chat';
+import { modelMaxToken } from '@constants/chat';
+import { ModelSelect } from './ModelSelect';
 
 export const MaxTokenSlider = ({
   _maxToken,
@@ -15,7 +15,7 @@ export const MaxTokenSlider = ({
   _setMaxToken: React.Dispatch<React.SetStateAction<number>>;
   _model: ModelChoice;
 }) => {
-  const { t } = useTranslation("model");
+  const { t } = useTranslation('model');
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -26,11 +26,11 @@ export const MaxTokenSlider = ({
 
   return (
     <div>
-      <label className="block text-sm font-medium text-custom-white">
-        {t("token.label")}: {_maxToken}
+      <label className='block text-sm font-medium text-custom-white'>
+        {t('token.label')}: {_maxToken}
       </label>
       <input
-        type="range"
+        type='range'
         ref={inputRef}
         value={_maxToken}
         onChange={(e) => {
@@ -39,10 +39,10 @@ export const MaxTokenSlider = ({
         min={0}
         max={modelMaxToken[_model]}
         step={1}
-        className="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer"
+        className='w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer'
       />
-      <div className="min-w-fit text-custom-white text-sm mt-2">
-        {t("token.description")}
+      <div className='min-w-fit text-custom-white text-sm mt-2'>
+        {t('token.description')}
       </div>
     </div>
   );
@@ -57,7 +57,7 @@ export const MaxContextSlider = ({
   _setMaxContext: React.Dispatch<React.SetStateAction<number>>;
   _model: ModelChoice;
 }) => {
-  const { t } = useTranslation("model");
+  const { t } = useTranslation('model');
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -67,12 +67,12 @@ export const MaxContextSlider = ({
   }, [_model]);
 
   return (
-    <div className="mt-5 pt-5 border-t border-neutral-base">
-      <label className="block text-sm font-medium text-custom-white">
-        {t("context.label")}: {_maxContext}
+    <div className='mt-5 pt-5 border-t border-neutral-base'>
+      <label className='block text-sm font-medium text-custom-white'>
+        {t('context.label')}: {_maxContext}
       </label>
       <input
-        type="range"
+        type='range'
         ref={inputRef}
         value={_maxContext}
         onChange={(e) => {
@@ -81,10 +81,10 @@ export const MaxContextSlider = ({
         min={0}
         max={modelMaxToken[_model]}
         step={1}
-        className="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer"
+        className='w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer'
       />
-      <div className="min-w-fit text-custom-white text-sm mt-2">
-        {t("context.description")}
+      <div className='min-w-fit text-custom-white text-sm mt-2'>
+        {t('context.description')}
       </div>
     </div>
   );
@@ -97,16 +97,16 @@ export const TemperatureSlider = ({
   _temperature: number;
   _setTemperature: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const { t } = useTranslation("model");
+  const { t } = useTranslation('model');
 
   return (
-    <div className="mt-5 pt-5 border-t border-neutral-base">
-      <label className="block text-sm font-medium text-custom-white">
-        {t("temperature.label")}: {_temperature}
+    <div className='mt-5 pt-5 border-t border-neutral-base'>
+      <label className='block text-sm font-medium text-custom-white'>
+        {t('temperature.label')}: {_temperature}
       </label>
       <input
-        id="default-range"
-        type="range"
+        id='default-range'
+        type='range'
         value={_temperature}
         onChange={(e) => {
           _setTemperature(Number(e.target.value));
@@ -114,10 +114,10 @@ export const TemperatureSlider = ({
         min={0}
         max={2}
         step={0.1}
-        className="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer"
+        className='w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer'
       />
-      <div className="min-w-fit text-custom-white text-sm mt-2">
-        {t("temperature.description")}
+      <div className='min-w-fit text-custom-white text-sm mt-2'>
+        {t('temperature.description')}
       </div>
     </div>
   );
@@ -130,16 +130,16 @@ export const TopPSlider = ({
   _topP: number;
   _setTopP: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const { t } = useTranslation("model");
+  const { t } = useTranslation('model');
 
   return (
-    <div className="mt-5 pt-5 border-t border-neutral-base">
-      <label className="block text-sm font-medium text-custom-white">
-        {t("topP.label")}: {_topP}
+    <div className='mt-5 pt-5 border-t border-neutral-base'>
+      <label className='block text-sm font-medium text-custom-white'>
+        {t('topP.label')}: {_topP}
       </label>
       <input
-        id="default-range"
-        type="range"
+        id='default-range'
+        type='range'
         value={_topP}
         onChange={(e) => {
           _setTopP(Number(e.target.value));
@@ -147,10 +147,10 @@ export const TopPSlider = ({
         min={0}
         max={1}
         step={0.05}
-        className="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer"
+        className='w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer'
       />
-      <div className="min-w-fit text-custom-white text-sm mt-2">
-        {t("topP.description")}
+      <div className='min-w-fit text-custom-white text-sm mt-2'>
+        {t('topP.description')}
       </div>
     </div>
   );
@@ -163,16 +163,16 @@ export const PresencePenaltySlider = ({
   _presencePenalty: number;
   _setPresencePenalty: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const { t } = useTranslation("model");
+  const { t } = useTranslation('model');
 
   return (
-    <div className="mt-5 pt-5 border-t border-neutral-base">
-      <label className="block text-sm font-medium text-custom-white">
-        {t("presencePenalty.label")}: {_presencePenalty}
+    <div className='mt-5 pt-5 border-t border-neutral-base'>
+      <label className='block text-sm font-medium text-custom-white'>
+        {t('presencePenalty.label')}: {_presencePenalty}
       </label>
       <input
-        id="default-range"
-        type="range"
+        id='default-range'
+        type='range'
         value={_presencePenalty}
         onChange={(e) => {
           _setPresencePenalty(Number(e.target.value));
@@ -180,10 +180,10 @@ export const PresencePenaltySlider = ({
         min={-2}
         max={2}
         step={0.1}
-        className="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer"
+        className='w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer'
       />
-      <div className="min-w-fit text-custom-white text-sm mt-2">
-        {t("presencePenalty.description")}
+      <div className='min-w-fit text-custom-white text-sm mt-2'>
+        {t('presencePenalty.description')}
       </div>
     </div>
   );
@@ -196,16 +196,16 @@ export const FrequencyPenaltySlider = ({
   _frequencyPenalty: number;
   _setFrequencyPenalty: React.Dispatch<React.SetStateAction<number>>;
 }) => {
-  const { t } = useTranslation("model");
+  const { t } = useTranslation('model');
 
   return (
-    <div className="mt-5 pt-5 border-t border-neutral-base">
-      <label className="block text-sm font-medium text-custom-white">
-        {t("frequencyPenalty.label")}: {_frequencyPenalty}
+    <div className='mt-5 pt-5 border-t border-neutral-base'>
+      <label className='block text-sm font-medium text-custom-white'>
+        {t('frequencyPenalty.label')}: {_frequencyPenalty}
       </label>
       <input
-        id="default-range"
-        type="range"
+        id='default-range'
+        type='range'
         value={_frequencyPenalty}
         onChange={(e) => {
           _setFrequencyPenalty(Number(e.target.value));
@@ -213,10 +213,10 @@ export const FrequencyPenaltySlider = ({
         min={-2}
         max={2}
         step={0.1}
-        className="w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer"
+        className='w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer'
       />
-      <div className="min-w-fit text-custom-white text-sm mt-2">
-        {t("frequencyPenalty.description")}
+      <div className='min-w-fit text-custom-white text-sm mt-2'>
+        {t('frequencyPenalty.description')}
       </div>
     </div>
   );

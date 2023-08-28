@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   Folder,
@@ -12,15 +12,15 @@ import {
   LocalStorageInterfaceV6ToV7,
   LocalStorageInterfaceV7ToV8,
   LocalStorageInterfaceV8ToV9,
-} from "@type/chat";
+} from '@type/chat';
 import {
   _defaultChatConfig,
   defaultModel,
   defaultUserMaxContext,
   defaultUserMaxToken,
-} from "@constants/chat";
-import { officialAPIEndpoint } from "@constants/auth";
-import defaultPrompts from "@constants/prompt";
+} from '@constants/chat';
+import { officialAPIEndpoint } from '@constants/auth';
+import defaultPrompts from '@constants/prompt';
 
 export const migrateV0 = (persistedState: LocalStorageInterfaceV0ToV1) => {
   persistedState.chats.forEach((chat) => {
@@ -73,12 +73,12 @@ export const migrateV5 = (persistedState: LocalStorageInterfaceV5ToV6) => {
 export const migrateV6 = (persistedState: LocalStorageInterfaceV6ToV7) => {
   if (
     persistedState.apiEndpoint ===
-      "https://sharegpt.churchless.tech/share/v1/chat"
+    'https://sharegpt.churchless.tech/share/v1/chat'
   ) {
-    persistedState.apiEndpoint = "https://chatgpt-api.shn.hk/v1/";
+    persistedState.apiEndpoint = 'https://chatgpt-api.shn.hk/v1/';
   }
   if (!persistedState.apiKey || persistedState.apiKey.length === 0) {
-    persistedState.apiKey = "";
+    persistedState.apiKey = '';
   }
 };
 

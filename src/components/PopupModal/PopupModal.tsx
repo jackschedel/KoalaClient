@@ -66,28 +66,29 @@ const PopupModal = ({
 
             {children}
             {(handleConfirm || cancelButton) && (
-            <div className='flex items-center justify-center p-4 gap-4'>
-              {handleConfirm && (
-                <button
-                  type='button'
-                  className='btn btn-primary'
-                  onClick={handleConfirm}
-                  aria-label='confirm'
-                >
-                  {t('confirm')}
-                </button>
-              )}
-              {cancelButton && (
-                <button
-                  type='button'
-                  className='btn btn-neutral'
-                  onClick={_handleClose}
-                  aria-label='cancel'
-                >
-                  {t('cancel')}
-                </button>
-              )}
-            </div>)}
+              <div className='flex items-center justify-center p-4 gap-4'>
+                {handleConfirm && (
+                  <button
+                    type='button'
+                    className='btn btn-primary'
+                    onClick={handleConfirm}
+                    aria-label='confirm'
+                  >
+                    {t('confirm')}
+                  </button>
+                )}
+                {cancelButton && (
+                  <button
+                    type='button'
+                    className='btn btn-neutral'
+                    onClick={_handleClose}
+                    aria-label='cancel'
+                  >
+                    {t('cancel')}
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </div>
         <div

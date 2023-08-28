@@ -1,16 +1,16 @@
-import React, { memo, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import useStore from "@store/store";
-import isElectron from "@utils/electron";
-import useSubmit from "@hooks/useSubmit";
+import React, { memo, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import useStore from '@store/store';
+import isElectron from '@utils/electron';
+import useSubmit from '@hooks/useSubmit';
 
-import { ChatInterface } from "@type/chat";
+import { ChatInterface } from '@type/chat';
 
-import PopupModal from "@components/PopupModal";
-import TokenCount from "@components/TokenCount";
-import CommandPrompt from "../CommandPrompt";
+import PopupModal from '@components/PopupModal';
+import TokenCount from '@components/TokenCount';
+import CommandPrompt from '../CommandPrompt';
 
-import WhisperRecord from "../WhisperRecord";
+import WhisperRecord from '../WhisperRecord';
 
 const EditView = ({
   content,
@@ -34,22 +34,19 @@ const EditView = ({
   const { t } = useTranslation();
 
   const resetTextAreaHeight = () => {
-    if (textareaRef.current) textareaRef.current.style.height = "auto";
+    if (textareaRef.current) textareaRef.current.style.height = 'auto';
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const isMobile =
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|playbook|silk/i
-        .test(
-          navigator.userAgent,
-        );
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|playbook|silk/i.test(
+        navigator.userAgent
+      );
 
-    if (e.key === "Enter" && !isMobile && !e.nativeEvent.isComposing) {
+    if (e.key === 'Enter' && !isMobile && !e.nativeEvent.isComposing) {
       const enterToSubmit = useStore.getState().enterToSubmit;
       if (sticky) {
-        if (
-          (enterToSubmit && !e.shiftKey)
-        ) {
+        if (enterToSubmit && !e.shiftKey) {
           e.preventDefault();
           handleGenerate();
           resetTextAreaHeight();
@@ -59,14 +56,14 @@ const EditView = ({
   };
 
   const handleSave = () => {
-    if (sticky && (_content === "" || useStore.getState().generating)) return;
+    if (sticky && (_content === '' || useStore.getState().generating)) return;
     const updatedChats: ChatInterface[] = JSON.parse(
-      JSON.stringify(useStore.getState().chats),
+      JSON.stringify(useStore.getState().chats)
     );
     const updatedMessages = updatedChats[currentChatIndex].messages;
     if (sticky) {
       updatedMessages.push({ role: inputRole, content: _content });
-      _setContent("");
+      _setContent('');
       resetTextAreaHeight();
     } else {
       updatedMessages[messageIndex].content = _content;
@@ -79,20 +76,20 @@ const EditView = ({
   const handleGenerate = () => {
     if (useStore.getState().generating) return;
     const updatedChats: ChatInterface[] = JSON.parse(
-      JSON.stringify(useStore.getState().chats),
+      JSON.stringify(useStore.getState().chats)
     );
     const updatedMessages = updatedChats[currentChatIndex].messages;
     if (sticky) {
-      if (_content !== "") {
+      if (_content !== '') {
         updatedMessages.push({ role: inputRole, content: _content });
       }
-      _setContent("");
+      _setContent('');
       resetTextAreaHeight();
     } else {
       updatedMessages[messageIndex].content = _content;
       updatedChats[currentChatIndex].messages = updatedMessages.slice(
         0,
-        messageIndex + 1,
+        messageIndex + 1
       );
       setIsEdit(false);
     }
@@ -102,17 +99,15 @@ const EditView = ({
 
   useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height =
-        `${textareaRef.current.scrollHeight}px`;
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, [_content]);
 
   useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height =
-        `${textareaRef.current.scrollHeight}px`;
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
     }
   }, []);
 
@@ -121,13 +116,13 @@ const EditView = ({
       <div
         className={`w-full ${
           sticky
-            ? "py-2 md:py-3 px-2 md:px-4 border border-custom-black/10  bg-custom-black/20 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)][0_0_15px_rgba(0,0,0,0.10)]"
-            : ""
+            ? 'py-2 md:py-3 px-2 md:px-4 border border-custom-black/10  bg-custom-black/20 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)][0_0_15px_rgba(0,0,0,0.10)]'
+            : ''
         }`}
       >
         <textarea
           ref={textareaRef}
-          className="m-0 resize-none rounded-lg bg-transparent overflow-y-hidden focus:ring-0 focus-visible:ring-0 leading-7 w-full text-custom-white placeholder:text-custom-white/10"
+          className='m-0 resize-none rounded-lg bg-transparent overflow-y-hidden focus:ring-0 focus-visible:ring-0 leading-7 w-full text-custom-white placeholder:text-custom-white/10'
           onChange={(e) => {
             _setContent(e.target.value);
           }}
@@ -136,11 +131,10 @@ const EditView = ({
             setCursorPosition(target.selectionStart || 0);
           }}
           value={_content}
-          placeholder={t("submitPlaceholder") as string}
+          placeholder={t('submitPlaceholder') as string}
           onKeyDown={handleKeyDown}
           rows={1}
-        >
-        </textarea>
+        ></textarea>
       </div>
       <EditViewButtons
         sticky={sticky}
@@ -155,8 +149,8 @@ const EditView = ({
       {isModalOpen && (
         <PopupModal
           setIsModalOpen={setIsModalOpen}
-          title={t("warning") as string}
-          message={t("clearMessageWarning") as string}
+          title={t('warning') as string}
+          message={t('clearMessageWarning') as string}
           handleConfirm={handleGenerate}
         />
       )}
@@ -186,8 +180,8 @@ const EditViewButtons = memo(
   }) => {
     const { t } = useTranslation();
     const generating = useStore.getState().generating;
-    const confirmEditSubmission = useStore((state) =>
-      state.confirmEditSubmission
+    const confirmEditSubmission = useStore(
+      (state) => state.confirmEditSubmission
     );
 
     const handleEditGenerate = () => {
@@ -203,67 +197,67 @@ const EditViewButtons = memo(
     };
 
     return (
-      <div className="flex">
-        <div className="flex-1" />
-        <div className="flex-3 text-center mt-2">
+      <div className='flex'>
+        <div className='flex-1' />
+        <div className='flex-3 text-center mt-2'>
           {sticky && (
             <button
               className={`btn relative mr-2 btn-primary ${
-                generating ? "cursor-not-allowed opacity-40" : ""
+                generating ? 'cursor-not-allowed opacity-40' : ''
               }`}
               onClick={handleGenerate}
-              aria-label={t("generate") as string}
+              aria-label={t('generate') as string}
             >
-              <div className="flex items-center justify-center gap-2">
-                {t("generate")}
+              <div className='flex items-center justify-center gap-2'>
+                {t('generate')}
               </div>
             </button>
           )}
 
           {sticky || (
             <button
-              className="btn relative mr-2 btn-primary"
+              className='btn relative mr-2 btn-primary'
               onClick={() => {
                 handleEditGenerate();
               }}
             >
-              <div className="flex items-center justify-center gap-2">
-                {t("generate")}
+              <div className='flex items-center justify-center gap-2'>
+                {t('generate')}
               </div>
             </button>
           )}
 
           <button
             className={`btn relative mr-2 ${
-              messageIndex % 2 ? "btn-neutral" : "btn-neutral-dark"
+              messageIndex % 2 ? 'btn-neutral' : 'btn-neutral-dark'
             } ${
               sticky
-                ? `${generating ? "cursor-not-allowed opacity-40" : ""}`
-                : ""
+                ? `${generating ? 'cursor-not-allowed opacity-40' : ''}`
+                : ''
             }`}
             onClick={handleSave}
-            aria-label={t("save") as string}
+            aria-label={t('save') as string}
           >
-            <div className="flex items-center justify-center gap-2">
-              {t("save")}
+            <div className='flex items-center justify-center gap-2'>
+              {t('save')}
             </div>
           </button>
 
           {sticky || (
             <button
               className={`btn relative ${
-                messageIndex % 2 ? "btn-neutral" : "btn-neutral-dark"
+                messageIndex % 2 ? 'btn-neutral' : 'btn-neutral-dark'
               }`}
               onClick={() => setIsEdit(false)}
-              aria-label={t("cancel") as string}
+              aria-label={t('cancel') as string}
             >
-              <div className="flex items-center justify-center gap-2">
-                {t("cancel")}
+              <div className='flex items-center justify-center gap-2'>
+                {t('cancel')}
               </div>
             </button>
           )}
         </div>
-        <div className="flex-1 flex items-center justify-end">
+        <div className='flex-1 flex items-center justify-end'>
           {sticky && <TokenCount />}
           {isElectron() && (
             <WhisperRecord
@@ -280,7 +274,7 @@ const EditViewButtons = memo(
         </div>
       </div>
     );
-  },
+  }
 );
 
 export default EditView;

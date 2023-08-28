@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import useStore from "@store/store";
-import i18n from "./i18n";
+import React, { useEffect } from 'react';
+import useStore from '@store/store';
+import i18n from './i18n';
 
-import Chat from "@components/Chat";
-import Menu from "@components/Menu";
+import Chat from '@components/Chat';
+import Menu from '@components/Menu';
 
-import useInitialiseNewChat from "@hooks/useInitialiseNewChat";
-import { ChatInterface } from "@type/chat";
-import { Theme } from "@type/theme";
-import ApiPopup from "@components/ApiPopup";
-import Toast from "@components/Toast";
-import isElectron from "@utils/electron";
+import useInitialiseNewChat from '@hooks/useInitialiseNewChat';
+import { ChatInterface } from '@type/chat';
+import { Theme } from '@type/theme';
+import ApiPopup from '@components/ApiPopup';
+import Toast from '@components/Toast';
+import isElectron from '@utils/electron';
 
 function App() {
   const initialiseNewChat = useInitialiseNewChat();
@@ -23,7 +23,7 @@ function App() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     // put any general app-wide keybinds here
-    if (e.ctrlKey && e.key === "e") {
+    if (e.ctrlKey && e.key === 'e') {
       e.preventDefault();
       setHideSideMenu(!hideSideMenu);
     }
@@ -35,27 +35,27 @@ function App() {
 
   useEffect(() => {
     document.documentElement.lang = i18n.language;
-    i18n.on("languageChanged", (lng) => {
+    i18n.on('languageChanged', (lng) => {
       document.documentElement.lang = lng;
     });
   }, []);
 
   useEffect(() => {
     // legacy local storage
-    const oldChats = localStorage.getItem("chats");
-    const apiKey = localStorage.getItem("apiKey");
-    const theme = localStorage.getItem("theme");
+    const oldChats = localStorage.getItem('chats');
+    const apiKey = localStorage.getItem('apiKey');
+    const theme = localStorage.getItem('theme');
 
     if (apiKey) {
       // legacy local storage
       setApiKey(apiKey);
-      localStorage.removeItem("apiKey");
+      localStorage.removeItem('apiKey');
     }
 
     if (theme) {
       // legacy local storage
       setTheme(theme as Theme);
-      localStorage.removeItem("theme");
+      localStorage.removeItem('theme');
     }
 
     if (oldChats) {
@@ -72,7 +72,7 @@ function App() {
         console.log(e);
         initialiseNewChat();
       }
-      localStorage.removeItem("chats");
+      localStorage.removeItem('chats');
     } else {
       // existing local storage
       const chats = useStore.getState().chats;
@@ -92,7 +92,7 @@ function App() {
   return (
     <div
       tabIndex={0}
-      className="overflow-hidden w-full h-full relative"
+      className='overflow-hidden w-full h-full relative'
       onKeyDown={handleKeyDown}
     >
       <Menu />

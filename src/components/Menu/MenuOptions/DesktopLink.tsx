@@ -16,5 +16,4 @@ const DesktopLink = () => {
   );
 };
 
-
 export default DesktopLink;
