@@ -39,7 +39,7 @@ const MermaidBlock = ({
         startOnLoad: true,
         securityLevel: 'loose',
         theme: 'dark',
-        logLevel: 0,
+        logLevel: 3,
         arrowMarkerAbsolute: false,
         fontSize: forcedFontSize,
 
