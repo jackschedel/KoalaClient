@@ -1,28 +1,34 @@
-const { dialog, app, ipcMain, BrowserWindow, Tray, Menu, shell } = require(
-  "electron",
-);
-const contextMenu = require("electron-context-menu");
+const {
+  dialog,
+  app,
+  ipcMain,
+  BrowserWindow,
+  Tray,
+  Menu,
+  shell,
+} = require('electron');
+const contextMenu = require('electron-context-menu');
 
-process.on("uncaughtException", (error) => {
+process.on('uncaughtException', (error) => {
   // Perform any necessary cleanup tasks here
-  dialog.showErrorBox("An error occurred", error.stack);
+  dialog.showErrorBox('An error occurred', error.stack);
 
   // Exit the app
   process.exit(1);
 });
 
-const path = require("path");
-const isDev = require("electron-is-dev");
-const { autoUpdater } = require("electron-updater");
+const path = require('path');
+const isDev = require('electron-is-dev');
+const { autoUpdater } = require('electron-updater');
 let win = null;
 let closeToTray = false;
 let winTray = null;
 let trayExists = false;
 const instanceLock = app.requestSingleInstanceLock();
 
-if (require("electron-squirrel-startup")) app.quit();
+if (require('electron-squirrel-startup')) app.quit();
 
-const PORT = isDev ? "5174" : "51736";
+const PORT = isDev ? '5174' : '51736';
 
 contextMenu({
   prepend: (defaultActions, parameters, browserWindow) => [],
@@ -43,11 +49,11 @@ function handleSetCloseToTray(event, setting) {
 }
 
 function createWindow() {
-  let iconPath = "";
+  let iconPath = '';
   if (isDev) {
-    iconPath = path.join(__dirname, "../public/icon-rounded.png");
+    iconPath = path.join(__dirname, '../public/icon-rounded.png');
   } else {
-    iconPath = path.join(__dirname, "../dist/icon-rounded.png");
+    iconPath = path.join(__dirname, '../dist/icon-rounded.png');
   }
   autoUpdater.checkForUpdatesAndNotify();
 
@@ -55,7 +61,7 @@ function createWindow() {
     autoHideMenuBar: true,
     show: false,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
+      preload: path.join(__dirname, 'preload.js'),
       spellcheck: true,
     },
   });
@@ -68,10 +74,10 @@ function createWindow() {
   win.loadURL(`http://localhost:${PORT}`);
 
   if (isDev) {
-    win.webContents.openDevTools({ mode: "detach" });
+    win.webContents.openDevTools({ mode: 'detach' });
   }
 
-  win.on("close", function (event) {
+  win.on('close', function (event) {
     if (closeToTray && !app.isQuiting) {
       event.preventDefault();
       win.hide();
@@ -83,10 +89,10 @@ function createWindow() {
     shell.openExternal(url);
 
     // Return an object indicating that the window opening request has been handled.
-    return { action: "deny" };
+    return { action: 'deny' };
   });
 
-  win.on("show", function (event) {
+  win.on('show', function (event) {
     win.maximize();
     win.focus();
   });
@@ -98,12 +104,12 @@ const createTray = (window) => {
   winTray = Tray(
     path.join(
       __dirname,
-      isDev ? "../public/icon-rounded.png" : "../dist/icon-rounded.png",
-    ),
+      isDev ? '../public/icon-rounded.png' : '../dist/icon-rounded.png'
+    )
   );
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: "Show",
+      label: 'Show',
       click: () => {
         if (win) {
           if (!win.isVisible()) win.show();
@@ -115,7 +121,7 @@ const createTray = (window) => {
       },
     },
     {
-      label: "Exit",
+      label: 'Exit',
       click: () => {
         app.isQuiting = true;
         app.quit();
@@ -123,7 +129,7 @@ const createTray = (window) => {
     },
   ]);
 
-  winTray.on("click", () => {
+  winTray.on('click', () => {
     if (win) {
       if (!win.isVisible()) win.show();
 
@@ -132,14 +138,14 @@ const createTray = (window) => {
       win.focus();
     }
   });
-  winTray.setToolTip("KoalaClient");
+  winTray.setToolTip('KoalaClient');
   winTray.setContextMenu(contextMenu);
 
   return winTray;
 };
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
     app.quit();
   }
 });
@@ -147,7 +153,7 @@ app.on("window-all-closed", () => {
 if (!instanceLock) {
   app.quit();
 } else {
-  app.on("second-instance", (event, commandLine, workingDirectory) => {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
     if (win) {
       if (!win.isVisible()) win.show();
 
@@ -158,7 +164,7 @@ if (!instanceLock) {
   });
 
   app.whenReady().then(() => {
-    ipcMain.on("set-close-to-tray", handleSetCloseToTray);
+    ipcMain.on('set-close-to-tray', handleSetCloseToTray);
 
     win = createWindow();
   });
@@ -166,36 +172,37 @@ if (!instanceLock) {
 
 const createServer = () => {
   // Dependencies
-  const http = require("http");
-  const fs = require("fs");
-  const path = require("path");
+  const http = require('http');
+  const fs = require('fs');
+  const path = require('path');
 
   // MIME types for different file extensions
   const mimeTypes = {
-    ".html": "text/html",
-    ".css": "text/css",
-    ".js": "text/javascript",
-    ".wasm": "application/wasm",
-    ".jpg": "image/jpeg",
-    ".jpeg": "image/jpeg",
-    ".png": "image/png",
-    ".gif": "image/gif",
-    ".svg": "image/svg+xml",
-    ".json": "application/json",
+    '.html': 'text/html',
+    '.css': 'text/css',
+    '.js': 'text/javascript',
+    '.wasm': 'application/wasm',
+    '.jpg': 'image/jpeg',
+    '.jpeg': 'image/jpeg',
+    '.png': 'image/png',
+    '.gif': 'image/gif',
+    '.svg': 'image/svg+xml',
+    '.json': 'application/json',
   };
 
   // Create a http server
   const server = http.createServer((request, response) => {
     // Get the file path from the URL
-    let filePath = request.url === "/"
-      ? `${path.join(__dirname, "../dist/index.html")}`
-      : `${path.join(__dirname, `../dist/${request.url}`)}`;
+    let filePath =
+      request.url === '/'
+        ? `${path.join(__dirname, '../dist/index.html')}`
+        : `${path.join(__dirname, `../dist/${request.url}`)}`;
 
     // Get the file extension from the filePath
     let extname = path.extname(filePath);
 
     // Set the default MIME type to text/plain
-    let contentType = "text/plain";
+    let contentType = 'text/plain';
 
     // Check if the file extension is in the MIME types object
     if (extname in mimeTypes) {
@@ -206,10 +213,10 @@ const createServer = () => {
     fs.readFile(filePath, (error, content) => {
       if (error) {
         // If file read error occurs
-        if (error.code === "ENOENT") {
+        if (error.code === 'ENOENT') {
           // File not found error
           response.writeHead(404);
-          response.end("File Not Found");
+          response.end('File Not Found');
         } else {
           // Server error
           response.writeHead(500);
@@ -217,8 +224,8 @@ const createServer = () => {
         }
       } else {
         // File read successful
-        response.writeHead(200, { "Content-Type": contentType });
-        response.end(content, "utf-8");
+        response.writeHead(200, { 'Content-Type': contentType });
+        response.end(content, 'utf-8');
       }
     });
   });

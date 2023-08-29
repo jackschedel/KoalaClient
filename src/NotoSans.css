@@ -1,7 +1,8 @@
 /* Noto Sans Thin */
 @font-face {
   font-family: 'Noto Sans';
-  src: local('Noto Sans Thin'),
+  src:
+    local('Noto Sans Thin'),
     url('./fonts/NotoSans-Thin.woff2') format('woff2'),
     url('./fonts/NotoSans-Thin.ttf') format('truetype');
   font-weight: 100;
@@ -11,7 +12,8 @@
 /* Noto Sans Thin Italic */
 @font-face {
   font-family: 'Noto Sans';
-  src: local('Noto Sans Thin Italic'),
+  src:
+    local('Noto Sans Thin Italic'),
     url('./fonts/NotoSans-ThinItalic.woff2') format('woff2'),
     url('./fonts/NotoSans-ThinItalic.ttf') format('truetype');
   font-weight: 100;
@@ -21,7 +23,8 @@
 /* Noto Sans Light */
 @font-face {
   font-family: 'Noto Sans';
-  src: local('Noto Sans Light'),
+  src:
+    local('Noto Sans Light'),
     url('./fonts/NotoSans-Light.woff2') format('woff2'),
     url('./fonts/NotoSans-Light.ttf') format('truetype');
   font-weight: 300;
@@ -31,7 +34,8 @@
 /* Noto Sans Light Italic */
 @font-face {
   font-family: 'Noto Sans';
-  src: local('Noto Sans Light Italic'),
+  src:
+    local('Noto Sans Light Italic'),
     url('./fonts/NotoSans-LightItalic.woff2') format('woff2'),
     url('./fonts/NotoSans-LightItalic.ttf') format('truetype');
   font-weight: 300;
@@ -41,7 +45,8 @@
 /* Noto Sans Regular */
 @font-face {
   font-family: 'Noto Sans';
-  src: local('Noto Sans'),
+  src:
+    local('Noto Sans'),
     url('./fonts/NotoSans-Regular.woff2') format('woff2'),
     url('./fonts/NotoSans-Regular.ttf') format('truetype');
   font-weight: 400;
@@ -51,7 +56,8 @@
 /* Noto Sans Italic */
 @font-face {
   font-family: 'Noto Sans';
-  src: local('Noto Sans Italic'),
+  src:
+    local('Noto Sans Italic'),
     url('./fonts/NotoSans-Italic.woff2') format('woff2'),
     url('./fonts/NotoSans-Italic.ttf') format('truetype');
   font-weight: 400;
@@ -61,7 +67,8 @@
 /* Noto Sans Medium */
 @font-face {
   font-family: 'Noto Sans';
-  src: local('Noto Sans Medium'),
+  src:
+    local('Noto Sans Medium'),
     url('./fonts/NotoSans-Medium.woff2') format('woff2'),
     url('./fonts/NotoSans-Medium.ttf') format('truetype');
   font-weight: 500;
@@ -71,7 +78,8 @@
 /* Noto Sans Medium Italic */
 @font-face {
   font-family: 'Noto Sans';
-  src: local('Noto Sans Medium Italic'),
+  src:
+    local('Noto Sans Medium Italic'),
     url('./fonts/NotoSans-MediumItalic.woff2') format('woff2'),
     url('./fonts/NotoSans-MediumItalic.ttf') format('truetype');
   font-weight: 500;
@@ -81,7 +89,8 @@
 /* Noto Sans Bold */
 @font-face {
   font-family: 'Noto Sans';
-  src: local('Noto Sans Bold'),
+  src:
+    local('Noto Sans Bold'),
     url('./fonts/NotoSans-Bold.woff2') format('woff2'),
     url('./fonts/NotoSans-Bold.ttf') format('truetype');
   font-weight: 700;
@@ -91,7 +100,8 @@
 /* Noto Sans Bold Italic */
 @font-face {
   font-family: 'Noto Sans';
-  src: local('Noto Sans Bold Italic'),
+  src:
+    local('Noto Sans Bold Italic'),
     url('./fonts/NotoSans-BoldItalic.woff2') format('woff2'),
     url('./fonts/NotoSans-BoldItalic.ttf') format('truetype');
   font-weight: 700;
@@ -101,7 +111,8 @@
 /* Noto Sans Black */
 @font-face {
   font-family: 'Noto Sans';
-  src: local('Noto Sans Black'),
+  src:
+    local('Noto Sans Black'),
     url('./fonts/NotoSans-Black.woff2') format('woff2'),
     url('./fonts/NotoSans-Black.ttf') format('truetype');
   font-weight: 900;
@@ -111,7 +122,8 @@
 /* Noto Sans Black Italic */
 @font-face {
   font-family: 'Noto Sans';
-  src: local('Noto Sans Black Italic'),
+  src:
+    local('Noto Sans Black Italic'),
     url('./fonts/NotoSans-BlackItalic.woff2') format('woff2'),
     url('./fonts/NotoSans-BlackItalic.ttf') format('truetype');
   font-weight: 900;

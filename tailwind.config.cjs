@@ -72,7 +72,7 @@ module.exports = {
           black: '#000000',
         },
         role: {
-          system:'#594e50',
+          system: '#594e50',
           assistant: '#7a4f99',
           user: '#36999b',
         },

@@ -7,7 +7,7 @@
 :root {
   height: 100%;
   /* NOTE: ALSO NEEDS TO BE CHANGED ON TAILWIND CONFIG FILE */
-  
+
   /* 10% darker/lighter using https://www.colors.tools/lighten-and-darken/ */
   --accent-light: 121, 154, 214;
   --accent-base: 55, 98, 178;
@@ -44,19 +44,19 @@
   }
 
   .markdown * {
-    color: rgba(var(--custom-white), 1.0);
+    color: rgba(var(--custom-white), 1);
   }
 
   .markdown h1 {
-    color: rgba(var(--custom-white), 1.0);
+    color: rgba(var(--custom-white), 1);
   }
 
   .markdown h2 {
-    color: rgba(var(--custom-white), 1.0);
+    color: rgba(var(--custom-white), 1);
   }
 
   .markdown code {
-    color: rgba(var(--custom-white), 1.0);
+    color: rgba(var(--custom-white), 1);
   }
 
   .markdown table {
@@ -67,7 +67,7 @@
     width: 100%;
   }
   .markdown th {
-    background-color: rgba(var(--neutral-dark), 1.0);
+    background-color: rgba(var(--neutral-dark), 1);
     color: rgba(var(--custom-white), 0.9);
     border-bottom-width: 1px;
     border-left-width: 1px;
@@ -86,7 +86,7 @@
     border-bottom-width: 1px;
     border-left-width: 1px;
     padding: 0.25rem 0.75rem;
-    background-color: rgba(var(--neutral-light), 1.0);
+    background-color: rgba(var(--neutral-light), 1);
     color: rgba(var(--custom-white), 0.7);
   }
   .markdown td:last-child {
@@ -175,7 +175,7 @@
   }
 
   .btn-neutral {
-    --tw-bg-opacity: 1.0;
+    --tw-bg-opacity: 1;
     --tw-text-opacity: 1;
     background-color: rgba(var(--neutral-light), var(--tw-bg-opacity));
     color: rgba(var(--custom-white), var(--tw-text-opacity));
@@ -189,7 +189,7 @@
   }
 
   .btn-neutral-dark {
-    --tw-bg-opacity: 1.0;
+    --tw-bg-opacity: 1;
     --tw-text-opacity: 1;
     background-color: rgba(var(--neutral-base), var(--tw-bg-opacity));
     border-width: 1px;
@@ -224,7 +224,7 @@
   }
 
   .markdown * {
-    color: rgba(var(--custom-white), 1.0);
+    color: rgba(var(--custom-white), 1);
   }
 
   .markdown ol,
