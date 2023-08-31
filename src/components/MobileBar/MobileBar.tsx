@@ -13,6 +13,8 @@ const MobileBar = () => {
   const generating = useStore((state) => state.generating);
   const setHideSideMenu = useStore((state) => state.setHideSideMenu);
   const hideSideMenu = useStore((state) => state.hideSideMenu);
+  const currentChatIndex = useStore((state) => state.currentChatIndex);
+  const chats = useStore((state) => state.chats);
 
   const cloudSync = useGStore((state) => state.cloudSync);
   const syncStatus = useGStore((state) => state.syncStatus);
@@ -57,7 +59,9 @@ const MobileBar = () => {
             : 'cursor-pointer opacity-100'
         }`}
         onClick={() => {
-          if (!generating) addChat();
+          if (!generating) {
+            addChat(chats?.[currentChatIndex]?.folder);
+          }
         }}
       >
         <div className='-ml-0.5 -mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light'>
