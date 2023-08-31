@@ -14,6 +14,7 @@ const MobileBar = () => {
   const setHideSideMenu = useStore((state) => state.setHideSideMenu);
   const hideSideMenu = useStore((state) => state.hideSideMenu);
   const currentChatIndex = useStore((state) => state.currentChatIndex);
+  const setCurrentChatIndex = useStore((state) => state.setCurrentChatIndex);
   const chats = useStore((state) => state.chats);
 
   const cloudSync = useGStore((state) => state.cloudSync);
@@ -48,6 +49,28 @@ const MobileBar = () => {
           cloudSync &&
           syncStatus === 'unauthenticated' && <SyncIcon status={syncStatus} />}
       </div>
+      <button
+        type='button'
+        className='-ml-0.5 -mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light'
+        onClick={() => {
+          if (currentChatIndex < (chats?.length ?? 0) - 1)
+            setCurrentChatIndex(currentChatIndex + 1);
+        }}
+      >
+        <span className='sr-only'>Open sidebar</span>
+        {'<'}
+      </button>
+      <button
+        type='button'
+        className='-ml-0.5 -mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light'
+        onClick={() => {
+          if (currentChatIndex > 0)
+            setCurrentChatIndex(currentChatIndex - 1);
+        }}
+      >
+        <span className='sr-only'>Open sidebar</span>
+        {'>'}
+      </button>
       <h1 className='flex-1 text-center text-base font-normal px-2 py-0 max-h-20 overflow-y-auto'>
         {chatTitle}
       </h1>
