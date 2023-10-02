@@ -44,6 +44,8 @@ export const ModelSelect = ({
                   case 'gpt-4-32k':
                   case 'gpt-3.5-turbo':
                   case 'gpt-3.5-turbo-16k':
+                  case 'claude-2':
+                  case 'claude-instant-1':
                     break;
                 }
                 _setModel(m);

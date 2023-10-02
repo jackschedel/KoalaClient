@@ -22,6 +22,8 @@ export const modelOptions: ModelChoice[] = [
   'gpt-3.5-turbo-16k',
   'gpt-4',
   'gpt-4-32k',
+  'claude-2',
+  'claude-instant-1',
   // 'gpt-3.5-turbo-0301',
   // 'gpt-4-0314',
   // 'gpt-4-32k-0314',
@@ -41,6 +43,8 @@ export const modelMaxToken = {
   'gpt-4-32k': 32768,
   'gpt-4-32k-0314': 32768,
   'gpt-4-32k-0613': 32768,
+  'claude-2': 100000,
+  'claude-instant-1': 100000,
 };
 
 export const modelCost = {
@@ -88,6 +92,14 @@ export const modelCost = {
     prompt: { price: 0.06, unit: 1000 },
     completion: { price: 0.12, unit: 1000 },
   },
+  'claude-2': {
+    prompt: { price: 0.01102, unit: 1000 },
+    completion: { price: 0.03268, unit: 1000 },
+  },
+  'claude-instant-1': {
+    prompt: { price: 0.00163, unit: 1000 },
+    completion: { price: 0.00551, unit: 1000},
+  }
 };
 
 export const defaultUserMaxToken = 4000;
