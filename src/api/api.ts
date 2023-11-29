@@ -2,7 +2,7 @@ import { modelMaxToken } from '@constants/chat';
 import countTokens from '@utils/messageUtils';
 import { ShareGPTSubmitBodyInterface } from '@type/api';
 import { ConfigInterface, MessageInterface } from '@type/chat';
-import { isAzureEndpoint } from '@utils/api';
+import { isAzureEndpoint, uuidv4 } from '@utils/api';
 
 export const getChatCompletion = async (
   endpoint: string,
@@ -46,6 +46,9 @@ export const getChatCompletion = async (
   if (isTitleGen) {
     restConfig.model = 'gpt-3.5-turbo';
   }
+
+  // todo: option in config
+  restConfig.user = uuidv4();
 
   const response = await fetch(endpoint, {
     method: 'POST',
@@ -97,6 +100,9 @@ export const getChatCompletionStream = async (
   }
 
   const { max_context, ...restConfig } = config;
+
+  // todo: option in config
+  restConfig.user = uuidv4();
 
   const response = await fetch(endpoint, {
     method: 'POST',
