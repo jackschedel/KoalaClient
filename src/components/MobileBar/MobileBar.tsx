@@ -6,6 +6,7 @@ import MenuIcon from '@icon/MenuIcon';
 import useAddChat from '@hooks/useAddChat';
 import { SyncIcon } from '@components/GoogleSync/GoogleSync';
 import isElectron from '@utils/electron';
+import CloneChat from '@components/Chat/ChatContent/CloneChat';
 
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || undefined;
 
@@ -49,6 +50,7 @@ const MobileBar = () => {
       <h1 className='flex-1 text-center text-base font-normal px-2 py-0 max-h-20 overflow-y-auto'>
         {chatTitle}
       </h1>
+      <CloneChat />
       <button
         type='button'
         className={`px-3 text-custom-white transition-opacity ${

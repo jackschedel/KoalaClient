@@ -49,7 +49,6 @@ const ChatContent = () => {
   return (
     <div className='flex-1 overflow-hidden bg-neutral-dark'>
       <ScrollToBottom className='h-full' followButtonClassName='hidden'>
-        <ScrollToBottomButton />
         <div className='flex flex-col items-center text-sm'>
           <div
             className='flex flex-col items-center text-sm w-full'
@@ -89,21 +88,6 @@ const ChatContent = () => {
               </div>
             </div>
           )}
-          <div
-            className={`mt-4 w-full m-auto  ${
-              hideSideMenu
-                ? 'md:max-w-5xl lg:max-w-5xl xl:max-w-6xl'
-                : 'md:max-w-3xl lg:max-w-3xl xl:max-w-4xl'
-            }`}
-          >
-            {useStore.getState().generating || (
-              <div className='md:w-[calc(100%)] flex gap-4 flex-wrap justify-center'>
-                <DownloadChat saveRef={saveRef} />
-                <CloneChat />
-              </div>
-            )}
-          </div>
-          <div className='w-full h-3'></div>
         </div>
       </ScrollToBottom>
     </div>
