@@ -84,7 +84,7 @@ export const modelCost = {
   },
   'gpt-4-1106-preview': {
     prompt: { price: 0.01, unit: 1000 },
-    completion: { price: 0.03, unit: 1000 }
+    completion: { price: 0.03, unit: 1000 },
   },
   'gpt-4-32k': {
     prompt: { price: 0.06, unit: 1000 },
@@ -104,8 +104,8 @@ export const modelCost = {
   },
   'claude-instant-1': {
     prompt: { price: 0.00163, unit: 1000 },
-    completion: { price: 0.00551, unit: 1000},
-  }
+    completion: { price: 0.00551, unit: 1000 },
+  },
 };
 
 export const defaultUserMaxToken = 4000;

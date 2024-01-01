@@ -31,12 +31,8 @@ const Message = React.memo(
         }`}
       >
         <div
-          className={`text-base gap-3 md:gap-5 p-3 md:py-6 flex transition-all ease-in-out 
-                 ${
-                   hideSideMenu
-                     ? 'md:mx-5 lg:mx-40 xl:mx-80'
-                     : 'md:mx-5 lg:mx-20 xl:mx-40'
-                 }`}
+          className='text-base gap-3 md:gap-5 p-3 md:py-6 flex transition-all ease-in-out 
+                     md:mx-1 lg:mx-2'
         >
           <Avatar role={role} />
           <div className='w-[calc(100%-50px)] '>

@@ -15,7 +15,8 @@
     "pack": "yarn build && electron-builder --dir",
     "wslbuild": "yarn build && electron-builder --dir --win && cp -r release/win-unpacked/* /mnt/c/Programs/KoalaClient",
     "wslcopy": "cp -r release/win-unpacked/* /mnt/c/Programs/KoalaClient",
-    "make": "yarn build && electron-builder"
+    "make": "yarn build && electron-builder",
+    "format": "prettier --write ./"
   },
   "build": {
     "appId": "koala-client",
