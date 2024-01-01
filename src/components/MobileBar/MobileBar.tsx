@@ -59,18 +59,17 @@ const MobileBar = () => {
         }}
       >
         <span className='sr-only'>Open sidebar</span>
-        {'<'}
+        <strong>{'<'}</strong>
       </button>
       <button
         type='button'
         className='-ml-0.5 -mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light'
         onClick={() => {
-          if (currentChatIndex > 0)
-            setCurrentChatIndex(currentChatIndex - 1);
+          if (currentChatIndex > 0) setCurrentChatIndex(currentChatIndex - 1);
         }}
       >
         <span className='sr-only'>Open sidebar</span>
-        {'>'}
+        <strong>{'>'}</strong>
       </button>
       <h1 className='flex-1 text-center text-base font-normal px-2 py-0 max-h-20 overflow-y-auto'>
         {chatTitle}
