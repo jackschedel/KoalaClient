@@ -17,11 +17,13 @@ const EditView = ({
   setIsEdit,
   messageIndex,
   sticky,
+  role,
 }: {
   content: string;
   setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
   messageIndex: number;
   sticky?: boolean;
+  role: string;
 }) => {
   const inputRole = useStore((state) => state.inputRole);
   const setChats = useStore((state) => state.setChats);
@@ -145,6 +147,8 @@ const EditView = ({
         cursorPosition={cursorPosition}
         _setContent={_setContent}
         messageIndex={messageIndex}
+        role={role}
+        content={content}
       />
       {isModalOpen && (
         <PopupModal
@@ -168,6 +172,8 @@ const EditViewButtons = memo(
     cursorPosition,
     _setContent,
     messageIndex,
+    role,
+    content,
   }: {
     sticky?: boolean;
     handleGenerate: () => void;
@@ -177,6 +183,8 @@ const EditViewButtons = memo(
     cursorPosition: number;
     _setContent: React.Dispatch<React.SetStateAction<string>>;
     messageIndex: number;
+    role: string;
+    content: string;
   }) => {
     const { t } = useTranslation();
     const generating = useStore.getState().generating;
@@ -214,7 +222,7 @@ const EditViewButtons = memo(
             </button>
           )}
 
-          {sticky || (
+          {!sticky && role === 'user' && content != '' && (
             <button
               className='btn relative mr-2 btn-primary'
               onClick={() => {
