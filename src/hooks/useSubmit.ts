@@ -177,10 +177,12 @@ const useSubmit = () => {
         !currChats[currentChatIndex]?.titleSet
       ) {
         const messages_length = currChats[currentChatIndex].messages.length;
+
+        // only first 800 chars of each message
         const assistant_message =
-          currChats[currentChatIndex].messages[messages_length - 1].content;
+          currChats[currentChatIndex].messages[messages_length - 1].content.slice(0, 800);
         const user_message =
-          currChats[currentChatIndex].messages[messages_length - 2].content;
+          currChats[currentChatIndex].messages[messages_length - 2].content.slice(0, 800);
 
         const message: MessageInterface = {
           role: 'user',
