@@ -5,11 +5,7 @@ import useStore from '@store/store';
 import ConfigMenu from '@components/ConfigMenu';
 import { ChatInterface, ConfigInterface } from '@type/chat';
 import { ModelChoice } from '@type/chat';
-import {
-  _defaultChatConfig,
-  modelMaxToken,
-  modelOptions,
-} from '@constants/chat';
+import { _defaultChatConfig, modelMaxToken } from '@constants/chat';
 import { ModelSelect } from '@components/ConfigMenu/ModelSelect';
 
 const ModelConfigBar = React.memo(() => {
