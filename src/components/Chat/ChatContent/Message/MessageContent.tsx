@@ -8,15 +8,17 @@ const MessageContent = ({
   role,
   content,
   messageIndex,
-  sticky = false,
+  sticky,
+  isEdit,
+  setIsEdit,
 }: {
   role: string;
   content: string;
   messageIndex: number;
-  sticky?: boolean;
+  sticky: boolean;
+  isEdit: boolean;
+  setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [isEdit, setIsEdit] = useState<boolean>(sticky);
-
   return (
     <div className='relative flex flex-col gap-2 md:gap-3 lg:w-[calc(100%-5px)]'>
       <div className='flex flex-grow flex-col gap-3'></div>

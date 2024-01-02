@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useStore from '@store/store';
 
 import Avatar from './Avatar';
 import MessageContent from './MessageContent';
 
-import { Role } from '@type/chat';
+import { ChatInterface, Role } from '@type/chat';
 import RoleSelector from './RoleSelector';
+import CommandPrompt from './CommandPrompt';
 
 const backgroundStyle = ['bg-neutral-light', 'bg-neutral-base'];
 
@@ -21,8 +22,21 @@ const Message = React.memo(
     messageIndex: number;
     sticky?: boolean;
   }) => {
-    const hideSideMenu = useStore((state) => state.hideSideMenu);
-    //const advancedMode = useStore((state) => state.advancedMode);
+    const [_content, _setContent] = useState<string>('');
+    const currentChatIndex = useStore((state) => state.currentChatIndex);
+    const setChats = useStore((state) => state.setChats);
+    const [isEdit, setIsEdit] = useState<boolean>(sticky);
+
+    useEffect(() => {
+      if (_content === '' || useStore.getState().generating) return;
+      const updatedChats: ChatInterface[] = JSON.parse(
+        JSON.stringify(useStore.getState().chats)
+      );
+      const updatedMessages = updatedChats[currentChatIndex].messages;
+      updatedMessages[messageIndex].content = _content;
+      _setContent('');
+      setChats(updatedChats);
+    }, [_content]);
 
     return (
       <div
@@ -36,16 +50,33 @@ const Message = React.memo(
         >
           <Avatar role={role} />
           <div className='w-[calc(100%-50px)] '>
-            <RoleSelector
-              role={role}
-              messageIndex={messageIndex}
-              sticky={sticky}
-            />
+            <div className='flex justify-between'>
+              <div className='flex-grow-0'>
+                <RoleSelector
+                  role={role}
+                  messageIndex={messageIndex}
+                  sticky={sticky}
+                />
+              </div>
+
+              {role === 'system' && !sticky && !isEdit && (
+                <div className='flex-grow-0'>
+                  <CommandPrompt
+                    cursorPosition={0}
+                    _setContent={_setContent}
+                    messageIndex={messageIndex}
+                  />
+                </div>
+              )}
+            </div>
+
             <MessageContent
               role={role}
               content={content}
               messageIndex={messageIndex}
               sticky={sticky}
+              isEdit={isEdit}
+              setIsEdit={setIsEdit}
             />
           </div>
         </div>
