@@ -92,11 +92,6 @@ function createWindow() {
     return { action: 'deny' };
   });
 
-  win.on('show', function (event) {
-    win.maximize();
-    win.focus();
-  });
-
   return win;
 }
 
