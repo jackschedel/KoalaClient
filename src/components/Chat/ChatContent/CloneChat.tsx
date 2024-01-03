@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import useStore from '@store/store';
 
 import { ChatInterface } from '@type/chat';
@@ -8,8 +7,6 @@ import TickIcon from '@icon/TickIcon';
 import CloneIcon from '@icon/CloneIcon';
 
 const CloneChat = React.memo(() => {
-  const { t } = useTranslation();
-
   const setChats = useStore((state) => state.setChats);
   const setCurrentChatIndex = useStore((state) => state.setCurrentChatIndex);
 
@@ -47,7 +44,7 @@ const CloneChat = React.memo(() => {
   return (
     <button
       type='button'
-      className={`px-3 text-custom-white transition-opacity cursor-pointer opacity-100`}
+      className={`text-custom-white transition-opacity cursor-pointer opacity-100`}
       onClick={cloneChat}
     >
       <div className='-ml-0.5 -mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light'>

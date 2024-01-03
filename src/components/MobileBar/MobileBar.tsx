@@ -7,6 +7,8 @@ import useAddChat from '@hooks/useAddChat';
 import { SyncIcon } from '@components/GoogleSync/GoogleSync';
 import isElectron from '@utils/electron';
 import CloneChat from '@components/Chat/ChatContent/CloneChat';
+import BackIcon from '@icon/BackIcon';
+import ForwardIcon from '@icon/ForwardIcon';
 
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || undefined;
 
@@ -33,10 +35,10 @@ const MobileBar = () => {
   const addChat = useAddChat();
 
   return (
-    <div className='sticky top-0 left-0 w-full z-50 flex items-center border-b-2 border-neutral-base bg-neutral-dark pl-1 pt-1.5 pb-1 text-custom-white sm:pl-3'>
+    <div className='sticky top-0 left-0 w-full z-50 flex items-center border-b-2 border-neutral-base bg-neutral-dark px-2 pt-1.5 pb-1 text-custom-white sm:pl-3'>
       <button
         type='button'
-        className='-ml-0.5 -mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light'
+        className='-mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light mr-4'
         onClick={() => {
           setHideSideMenu(!hideSideMenu);
         }}
@@ -52,32 +54,34 @@ const MobileBar = () => {
       </div>
       <button
         type='button'
-        className='-ml-0.5 -mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light'
+        className='-mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light'
         onClick={() => {
           if (currentChatIndex < (chats?.length ?? 0) - 1)
             setCurrentChatIndex(currentChatIndex + 1);
         }}
       >
         <span className='sr-only'>Open sidebar</span>
-        <strong>{'<'}</strong>
+        <BackIcon height='1em' />
       </button>
       <button
         type='button'
-        className='-ml-0.5 -mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light'
+        className='-mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light mr-4'
         onClick={() => {
           if (currentChatIndex > 0) setCurrentChatIndex(currentChatIndex - 1);
         }}
       >
         <span className='sr-only'>Open sidebar</span>
-        <strong>{'>'}</strong>
+        <ForwardIcon height='1em' />
       </button>
       <h1 className='flex-1 text-center text-base font-normal px-2 py-0 max-h-20 overflow-y-auto'>
         {chatTitle}
       </h1>
-      <CloneChat />
+      <div className='ml-14'>
+        <CloneChat />
+      </div>
       <button
         type='button'
-        className={`px-3 text-custom-white transition-opacity ${
+        className={`ml-4 text-custom-white transition-opacity ${
           generating
             ? 'cursor-not-allowed opacity-40'
             : 'cursor-pointer opacity-100'
