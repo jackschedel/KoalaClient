@@ -5,6 +5,7 @@ import i18n from './i18n';
 import Chat from '@components/Chat';
 import Menu from '@components/Menu';
 
+import useAddChat from '@hooks/useAddChat';
 import useInitialiseNewChat from '@hooks/useInitialiseNewChat';
 import { ChatInterface } from '@type/chat';
 import { Theme } from '@type/theme';
@@ -20,12 +21,18 @@ function App() {
   const setCurrentChatIndex = useStore((state) => state.setCurrentChatIndex);
   const setHideSideMenu = useStore((state) => state.setHideSideMenu);
   const hideSideMenu = useStore((state) => state.hideSideMenu);
+  const addChat = useAddChat();
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     // put any general app-wide keybinds here
     if (e.ctrlKey && e.key === 'e') {
       e.preventDefault();
       setHideSideMenu(!hideSideMenu);
+    }
+
+    if (e.ctrlKey && e.key === 'n') {
+      e.preventDefault();
+      addChat();
     }
   };
 
