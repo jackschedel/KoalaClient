@@ -4,8 +4,8 @@ export const parseEventSource = (
   data: string
 ): '[DONE]' | EventSourceData[] => {
   const result = data
-        .split('\n')
-    .filter(line => line.startsWith('data: ') || line === '[DONE]')
+    .split('\n')
+    .filter((line) => line.startsWith('data: ') || line === '[DONE]')
     .map((line) => {
       if (line === '[DONE]') return line;
       const jsonString = line.replace(/^data: /, '');

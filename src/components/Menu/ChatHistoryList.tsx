@@ -172,15 +172,24 @@ const ChatHistoryList = () => {
               folderChats={chatFolders[folderId]}
               folderId={folderId}
               key={folderId}
+              filter={filter}
             />
           ))}
-          {noChatFolders.map(({ title, index, id }) => (
-            <ChatHistory
-              title={title}
-              key={`${title}-${id}`}
-              chatIndex={index}
-            />
-          ))}
+          {noChatFolders.map(
+            ({ title, index, id }) =>
+              (index == currentChatIndex ||
+                !(
+                  chatsRef.current[index].messages.length == 0 ||
+                  (chatsRef.current[index].messages.length == 1 &&
+                    chatsRef.current[index].messages[0].role == 'system')
+                )) && (
+                <ChatHistory
+                  title={title}
+                  key={`${title}-${id}`}
+                  chatIndex={index}
+                />
+              )
+          )}
         </div>
         <div className='w-full h-2' />
       </div>

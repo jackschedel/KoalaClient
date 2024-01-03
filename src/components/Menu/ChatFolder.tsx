@@ -25,9 +25,11 @@ import useHideOnOutsideClick from '@hooks/useHideOnOutsideClick';
 const ChatFolder = ({
   folderChats,
   folderId,
+  filter,
 }: {
   folderChats: ChatHistoryInterface[];
   folderId: string;
+  filter: string;
 }) => {
   const folderName = useStore((state) => state.folders[folderId]?.name);
   const isExpanded = useStore((state) => state.folders[folderId]?.expanded);
@@ -43,7 +45,6 @@ const ChatFolder = ({
   const [_folderName, _setFolderName] = useState<string>(folderName);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [isDelete, setIsDelete] = useState<boolean>(false);
-  const [isHover, setIsHover] = useState<boolean>(false);
 
   const [showPalette, setShowPalette, paletteRef] = useHideOnOutsideClick();
 
@@ -105,7 +106,6 @@ const ChatFolder = ({
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     if (e.dataTransfer) {
       e.stopPropagation();
-      setIsHover(false);
 
       // expand folder on drop
       const updatedFolders: FolderCollection = JSON.parse(
@@ -127,19 +127,18 @@ const ChatFolder = ({
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsHover(true);
   };
 
-  const handleDragLeave = () => {
-    setIsHover(false);
-  };
+  const handleDragLeave = () => {};
 
   const toggleExpanded = () => {
-    const updatedFolders: FolderCollection = JSON.parse(
-      JSON.stringify(useStore.getState().folders)
-    );
-    updatedFolders[folderId].expanded = !updatedFolders[folderId].expanded;
-    setFolders(updatedFolders);
+    if (filter === '') {
+      const updatedFolders: FolderCollection = JSON.parse(
+        JSON.stringify(useStore.getState().folders)
+      );
+      updatedFolders[folderId].expanded = !updatedFolders[folderId].expanded;
+      setFolders(updatedFolders);
+    }
   };
 
   useEffect(() => {
@@ -187,7 +186,7 @@ const ChatFolder = ({
               onChange={(e) => {
                 _setFolderName(e.target.value);
               }}
-              onBlur={(e) => {
+              onBlur={() => {
                 setIsEdit(false);
               }}
               onClick={(e) => e.stopPropagation()}
@@ -211,7 +210,7 @@ const ChatFolder = ({
             />
           )}
         </div>
-        {!isExpanded && (
+        {!isExpanded && filter === '' && (
           <div className='flex text-custom-white/60'>
             <button
               className='pr-3 hover:text-custom-white'
@@ -221,7 +220,7 @@ const ChatFolder = ({
             </button>
           </div>
         )}
-        {isExpanded && (
+        {isExpanded && filter === '' && (
           <div
             className='flex text-custom-white/60'
             onClick={(e) => e.stopPropagation()}
@@ -311,12 +310,12 @@ const ChatFolder = ({
         )}
       </div>
       <div className='ml-3 pl-1 border-l-2 border-neutral-base flex flex-col gap-1 parent'>
-        {isExpanded && (
+        {isExpanded && filter === '' && (
           <div className='pt-1'>
             <NewChat folder={folderId} />
           </div>
         )}
-        {isExpanded &&
+        {(isExpanded || filter !== '') &&
           folderChats.map((chat) => (
             <ChatHistory
               title={chat.title}

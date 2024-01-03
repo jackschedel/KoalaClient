@@ -28,7 +28,7 @@ const instanceLock = app.requestSingleInstanceLock();
 
 if (require('electron-squirrel-startup')) app.quit();
 
-const PORT = isDev ? '5174' : '51736';
+const PORT = isDev ? '5173' : '51736';
 
 contextMenu({
   prepend: (defaultActions, parameters, browserWindow) => [],
@@ -90,11 +90,6 @@ function createWindow() {
 
     // Return an object indicating that the window opening request has been handled.
     return { action: 'deny' };
-  });
-
-  win.on('show', function (event) {
-    win.maximize();
-    win.focus();
   });
 
   return win;

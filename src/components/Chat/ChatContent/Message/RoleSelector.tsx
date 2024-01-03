@@ -25,7 +25,7 @@ const RoleSelector = React.memo(
     const [dropDown, setDropDown, dropDownRef] = useHideOnOutsideClick();
 
     return (
-      <div className='prose relative'>
+      <>
         <button
           className={`btn ${
             messageIndex % 2 ? 'btn-neutral' : 'btn-neutral-dark'
@@ -71,7 +71,7 @@ const RoleSelector = React.memo(
             ))}
           </ul>
         </div>
-      </div>
+      </>
     );
   }
 );
