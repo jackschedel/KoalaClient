@@ -9,7 +9,7 @@ permissions:
 
 concurrency:
   group: build_test
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
