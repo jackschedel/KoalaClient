@@ -12,16 +12,6 @@ import ApiPopup from '@components/ApiPopup';
 import Toast from '@components/Toast';
 import isElectron from '@utils/electron';
 
-
-
-
-
-
-
-
-
-
-
 function App() {
   const initialiseNewChat = useInitialiseNewChat();
   const setChats = useStore((state) => state.setChats);
