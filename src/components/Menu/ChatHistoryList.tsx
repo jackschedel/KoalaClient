@@ -172,6 +172,7 @@ const ChatHistoryList = () => {
               folderChats={chatFolders[folderId]}
               folderId={folderId}
               key={folderId}
+              filter={filter}
             />
           ))}
           {noChatFolders.map(
