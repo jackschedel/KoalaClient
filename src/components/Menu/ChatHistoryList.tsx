@@ -177,7 +177,11 @@ const ChatHistoryList = () => {
           {noChatFolders.map(
             ({ title, index, id }) =>
               (index == currentChatIndex ||
-                chatsRef.current[index].messages.length != 0) && (
+                !(
+                  chatsRef.current[index].messages.length == 0 ||
+                  (chatsRef.current[index].messages.length == 1 &&
+                    chatsRef.current[index].messages[0].role == 'system')
+                )) && (
                 <ChatHistory
                   title={title}
                   key={`${title}-${id}`}
