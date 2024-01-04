@@ -40,7 +40,7 @@
 - **Many** minor style and QoL changes
 
 <p align="center">
-    <img src="https://cdn.discordapp.com/attachments/446426925209092098/1139789550428893255/image.png" alt="landing" width=500 />
+    <img src="https://cdn.discordapp.com/attachments/446426925209092098/1192293382920351744/Screenshot_2024-01-03_at_9.27.06_PM.png?ex=65a88cbe&is=659617be&hm=5d60622b900e4c834ef11a62423045edca40075655cc5597ee1bbda7b2eb2bb4&" alt="landing" width=800 />
 </p>
 
 ## 🖥️ Electron-focused development philosophy
