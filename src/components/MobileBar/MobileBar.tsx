@@ -10,6 +10,9 @@ import CloneChat from '@components/Chat/ChatContent/CloneChat';
 import BackIcon from '@icon/BackIcon';
 import ForwardIcon from '@icon/ForwardIcon';
 
+import useGoBack from '@hooks/useGoBack';
+import useGoForward from '@hooks/useGoForward';
+
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || undefined;
 
 const MobileBar = () => {
@@ -33,6 +36,8 @@ const MobileBar = () => {
   );
 
   const addChat = useAddChat();
+  const goBack = useGoBack();
+  const goForward = useGoForward();
 
   return (
     <div className='sticky top-0 left-0 w-full z-50 flex items-center border-b-2 border-neutral-base bg-neutral-dark px-2 pt-1.5 pb-1 text-custom-white sm:pl-3'>
@@ -55,10 +60,7 @@ const MobileBar = () => {
       <button
         type='button'
         className='-mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light'
-        onClick={() => {
-          if (currentChatIndex < (chats?.length ?? 0) - 1)
-            setCurrentChatIndex(currentChatIndex + 1);
-        }}
+        onClick={goBack}
       >
         <span className='sr-only'>Open sidebar</span>
         <BackIcon height='1em' />
@@ -66,9 +68,7 @@ const MobileBar = () => {
       <button
         type='button'
         className='-mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light mr-4'
-        onClick={() => {
-          if (currentChatIndex > 0) setCurrentChatIndex(currentChatIndex - 1);
-        }}
+        onClick={goForward}
       >
         <span className='sr-only'>Open sidebar</span>
         <ForwardIcon height='1em' />

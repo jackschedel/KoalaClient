@@ -6,6 +6,8 @@ import Chat from '@components/Chat';
 import Menu from '@components/Menu';
 
 import useAddChat from '@hooks/useAddChat';
+import useGoBack from '@hooks/useGoBack';
+import useGoForward from '@hooks/useGoForward';
 import useInitialiseNewChat from '@hooks/useInitialiseNewChat';
 import { ChatInterface } from '@type/chat';
 import { Theme } from '@type/theme';
@@ -22,6 +24,8 @@ function App() {
   const setHideSideMenu = useStore((state) => state.setHideSideMenu);
   const hideSideMenu = useStore((state) => state.hideSideMenu);
   const addChat = useAddChat();
+  const goBack = useGoBack();
+  const goForward = useGoForward();
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     // put any general app-wide keybinds here
@@ -33,6 +37,16 @@ function App() {
     if (e.ctrlKey && e.key === 'n') {
       e.preventDefault();
       addChat();
+    }
+
+    if (e.ctrlKey && e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goBack();
+    }
+
+    if (e.ctrlKey && e.key === 'ArrowRight') {
+      e.preventDefault();
+      goForward();
     }
   };
 
