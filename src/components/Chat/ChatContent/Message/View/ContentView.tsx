@@ -194,7 +194,7 @@ const code = memo((props: CodeProps) => {
   if (inline) {
     return <code className={className}>{children}</code>;
   } else if (lang === 'mermaid') {
-    return <MermaidBlock children={children} />;
+    return <MermaidBlock>{children}</MermaidBlock>;
   } else {
     return <CodeBlock lang={lang || 'text'} codeChildren={children} />;
   }

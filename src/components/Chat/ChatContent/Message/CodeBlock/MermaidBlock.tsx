@@ -31,8 +31,6 @@ const MermaidBlock = ({
   const isGenerating = useStore.getState().generating;
   const [isPannable, setIsPannable] = useState(false);
 
-  const lang = 'mermaid';
-
   useEffect(() => {
     if (mermaidContainerRef.current) {
       Mermaid.mermaidAPI.initialize({
@@ -42,8 +40,6 @@ const MermaidBlock = ({
         logLevel: 3,
         arrowMarkerAbsolute: false,
         fontSize: forcedFontSize,
-
-        //htmlLabels: false
       });
 
       Mermaid.mermaidAPI
@@ -76,7 +72,7 @@ const MermaidBlock = ({
                     setIsPannable(true);
                   }
                 });
-          } catch (err: any) {
+          } catch (err) {
             if (!mermaidContainerRef.current) throw err;
             mermaidContainerRef.current.innerHTML = chartDefinition ?? ''; // error rendering (fallback to raw)
             throw err;

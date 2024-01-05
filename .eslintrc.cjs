@@ -31,7 +31,9 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'react'],
   rules: {
-    // 'no-unused-vars': 'warn',
-    // '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-this-alias': 'warn',
+    '@typescript-eslint/no-unused-vars': 'warn',
+    'no-useless-escape': 'warn',
+    'react/display-name': 'warn',
   },
 };

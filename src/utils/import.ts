@@ -14,7 +14,9 @@ import {
 } from '@constants/chat';
 import { ExportV1, OpenAIChat } from '@type/export';
 
-export const validateAndFixChats = (chats: any): chats is ChatInterface[] => {
+export const validateAndFixChats = (
+  chats: ChatInterface[]
+): chats is ChatInterface[] => {
   if (!Array.isArray(chats)) return false;
 
   for (const chat of chats) {
@@ -67,7 +69,7 @@ const validateAndFixChatConfig = (config: ConfigInterface) => {
   return true;
 };
 
-export const isLegacyImport = (importedData: any) => {
+export const isLegacyImport = (importedData: unknown) => {
   if (Array.isArray(importedData)) return true;
   return false;
 };

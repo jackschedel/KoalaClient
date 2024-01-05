@@ -1,3 +1,4 @@
+import React from 'react';
 import ArrowBottom from '@icon/ArrowBottom';
 import useStore from '@store/store';
 

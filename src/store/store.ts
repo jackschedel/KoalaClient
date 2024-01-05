@@ -83,20 +83,28 @@ const useStore = create<StoreState>()(
         switch (version) {
           case 0:
             migrateV0(persistedState as LocalStorageInterfaceV0ToV1);
+          // falls through
           case 1:
             migrateV1(persistedState as LocalStorageInterfaceV1ToV2);
+          // falls through
           case 2:
             migrateV2(persistedState as LocalStorageInterfaceV2ToV3);
+          // falls through
           case 3:
             migrateV3(persistedState as LocalStorageInterfaceV3ToV4);
+          // falls through
           case 4:
             migrateV4(persistedState as LocalStorageInterfaceV4ToV5);
+          // falls through
           case 5:
             migrateV5(persistedState as LocalStorageInterfaceV5ToV6);
+          // falls through
           case 6:
             migrateV6(persistedState as LocalStorageInterfaceV6ToV7);
+          // falls through
           case 7:
             migrateV7(persistedState as LocalStorageInterfaceV7ToV8);
+          // falls through
           case 8:
             migrateV8(persistedState as LocalStorageInterfaceV8ToV9);
             break;

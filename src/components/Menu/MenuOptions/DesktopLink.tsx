@@ -8,7 +8,8 @@ const DesktopLink = () => {
     <a
       className='flex py-2 px-1.5 items-center gap-2.5 rounded-md hover:bg-custom-white/20 transition-colors duration-200 text-custom-white cursor-pointer text-sm'
       href='https://github.com/jackschedel/KoalaClient/releases'
-      target='_blank' rel="noreferrer"
+      target='_blank'
+      rel='noreferrer'
     >
       <DownloadIcon />
       {t('desktop')}

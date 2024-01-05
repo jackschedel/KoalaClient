@@ -61,9 +61,11 @@ const ApiPopup = () => {
             ns='api'
             components={[
               <a
+                key={null}
                 href='https://platform.openai.com/account/api-keys'
                 className='link'
-                target='_blank' rel="noreferrer"
+                target='_blank'
+                rel='noreferrer'
               />,
             ]}
           />
@@ -74,6 +76,7 @@ const ApiPopup = () => {
             ns='api'
             components={[
               <a
+                key={null}
                 className='link cursor-pointer'
                 onClick={() => {
                   setIsModalOpen(false);
