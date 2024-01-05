@@ -18,12 +18,14 @@ const EditView = ({
   messageIndex,
   sticky,
   role,
+  setEditingMessageIndex,
 }: {
   content: string;
   setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
   messageIndex: number;
   sticky?: boolean;
   role: string;
+  setEditingMessageIndex: (index: number | null) => void;
 }) => {
   const inputRole = useStore((state) => state.inputRole);
   const setChats = useStore((state) => state.setChats);
@@ -72,6 +74,7 @@ const EditView = ({
       setIsEdit(false);
     }
     setChats(updatedChats);
+    setEditingMessageIndex(null);
   };
 
   const { handleSubmit } = useSubmit();
@@ -96,6 +99,7 @@ const EditView = ({
       setIsEdit(false);
     }
     setChats(updatedChats);
+    setEditingMessageIndex(null);
     handleSubmit();
   };
 

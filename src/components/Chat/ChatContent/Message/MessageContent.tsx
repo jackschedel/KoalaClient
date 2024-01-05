@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import useStore from '@store/store';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import ContentView from './View/ContentView';
 import EditView from './View/EditView';
@@ -9,16 +8,28 @@ const MessageContent = ({
   content,
   messageIndex,
   sticky,
-  isEdit,
-  setIsEdit,
+  editingMessageIndex,
+  setEditingMessageIndex,
 }: {
   role: string;
   content: string;
   messageIndex: number;
   sticky: boolean;
-  isEdit: boolean;
-  setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  editingMessageIndex: number | null;
+  setEditingMessageIndex: Dispatch<SetStateAction<number | null>>;
 }) => {
+  const [isEdit, setIsEdit] = useState<boolean>(sticky);
+
+  useEffect(() => {
+    if (messageIndex !== editingMessageIndex) {
+      setIsEdit(false);
+    }
+  }, [editingMessageIndex]);
+
+  if (isEdit) {
+    setEditingMessageIndex(messageIndex);
+  }
+
   return (
     <div className='relative flex flex-col gap-2 md:gap-3 lg:w-[calc(100%-5px)]'>
       <div className='flex flex-grow flex-col gap-3'></div>
@@ -29,6 +40,7 @@ const MessageContent = ({
           messageIndex={messageIndex}
           sticky={sticky}
           role={role}
+          setEditingMessageIndex={setEditingMessageIndex}
         />
       ) : (
         <ContentView

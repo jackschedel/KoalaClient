@@ -1,17 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import useStore from '@store/store';
 
-import ScrollToBottomButton from './ScrollToBottomButton';
-import ModelConfigBar from './ModelConfigBar';
 import Message from './Message';
 import NewMessageButton from './Message/NewMessageButton';
 import CrossIcon from '@icon/CrossIcon';
 
 import useSubmit from '@hooks/useSubmit';
-import DownloadChat from './DownloadChat';
-import CloneChat from './CloneChat';
-import ShareGPT from '@components/ShareGPT';
 
 const ChatContent = () => {
   const inputRole = useStore((state) => state.inputRole);
@@ -33,7 +28,9 @@ const ChatContent = () => {
       : 0
   );
   const generating = useStore.getState().generating;
-  const hideSideMenu = useStore((state) => state.hideSideMenu);
+  const [editingMessageIndex, setEditingMessageIndex] = useState<number | null>(
+    null
+  );
 
   const saveRef = useRef<HTMLDivElement>(null);
 
@@ -61,6 +58,9 @@ const ChatContent = () => {
                   role={message.role}
                   content={message.content}
                   messageIndex={index}
+                  sticky={false}
+                  editingMessageIndex={editingMessageIndex}
+                  setEditingMessageIndex={setEditingMessageIndex}
                 />
                 {!generating && <NewMessageButton messageIndex={index} />}
               </React.Fragment>
@@ -71,7 +71,9 @@ const ChatContent = () => {
             role={inputRole}
             content=''
             messageIndex={stickyIndex}
-            sticky
+            sticky={true}
+            editingMessageIndex={editingMessageIndex}
+            setEditingMessageIndex={setEditingMessageIndex}
           />
           {error !== '' && (
             <div className='relative py-2 px-3 w-3/5 mt-3 max-md:w-11/12 border rounded-md border-red-500 bg-red-500/10'>
