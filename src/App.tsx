@@ -27,6 +27,8 @@ function App() {
   const goBack = useGoBack();
   const goForward = useGoForward();
 
+  let test = 'eslint find this';
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     // put any general app-wide keybinds here
     if (e.ctrlKey && e.key === 'e') {
