@@ -6,7 +6,7 @@ export interface InputSlice {
   setInputRole: (inputRole: Role) => void;
 }
 
-export const createInputSlice: StoreSlice<InputSlice> = (set, get) => ({
+export const createInputSlice: StoreSlice<InputSlice> = (set) => ({
   inputRole: 'user',
   setInputRole: (inputRole: Role) => {
     set((prev: InputSlice) => ({

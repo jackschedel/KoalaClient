@@ -34,6 +34,6 @@ module.exports = {
     '@typescript-eslint/no-this-alias': 'warn',
     '@typescript-eslint/no-unused-vars': 'warn',
     'no-useless-escape': 'warn',
-    'react/display-name': 'warn',
+    'react/display-name': 'off',
   },
 };

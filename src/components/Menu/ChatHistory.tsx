@@ -108,7 +108,7 @@ const ChatHistory = React.memo(
               onChange={(e) => {
                 _setTitle(e.target.value);
               }}
-              onBlur={(e) => {
+              onBlur={() => {
                 setIsEdit(false);
               }}
               onKeyDown={handleKeyDown}

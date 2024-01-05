@@ -10,7 +10,7 @@ export interface ToastSlice {
   setToastStatus: (toastStatus: ToastStatus) => void;
 }
 
-export const createToastSlice: StoreSlice<ToastSlice> = (set, get) => ({
+export const createToastSlice: StoreSlice<ToastSlice> = (set) => ({
   toastShow: false,
   toastMessage: '',
   toastStatus: 'success',

@@ -20,7 +20,6 @@ const MobileBar = () => {
   const setHideSideMenu = useStore((state) => state.setHideSideMenu);
   const hideSideMenu = useStore((state) => state.hideSideMenu);
   const currentChatIndex = useStore((state) => state.currentChatIndex);
-  const setCurrentChatIndex = useStore((state) => state.setCurrentChatIndex);
   const chats = useStore((state) => state.chats);
 
   const cloudSync = useGStore((state) => state.cloudSync);

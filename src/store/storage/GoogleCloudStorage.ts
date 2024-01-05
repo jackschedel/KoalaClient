@@ -1,4 +1,4 @@
-import { PersistStorage, StorageValue, StateStorage } from 'zustand/middleware';
+import { PersistStorage, StorageValue } from 'zustand/middleware';
 import useCloudAuthStore from '@store/cloud-auth-store';
 import useStore from '@store/store';
 import {
@@ -21,7 +21,7 @@ const createGoogleCloudStorage = <S>(): PersistStorage<S> | undefined => {
     return;
   }
   const persistStorage: PersistStorage<S> = {
-    getItem: async (name) => {
+    getItem: async () => {
       useCloudAuthStore.getState().setSyncStatus('syncing');
       try {
         const accessToken = useCloudAuthStore.getState().googleAccessToken;
@@ -39,7 +39,7 @@ const createGoogleCloudStorage = <S>(): PersistStorage<S> | undefined => {
         return null;
       }
     },
-    setItem: async (name, newValue): Promise<void> => {
+    setItem: async (newValue): Promise<void> => {
       const accessToken = useCloudAuthStore.getState().googleAccessToken;
       const fileId = useCloudAuthStore.getState().fileId;
       if (!accessToken || !fileId) return;
@@ -58,7 +58,7 @@ const createGoogleCloudStorage = <S>(): PersistStorage<S> | undefined => {
       }
     },
 
-    removeItem: async (name): Promise<void> => {
+    removeItem: async (): Promise<void> => {
       const accessToken = useCloudAuthStore.getState().googleAccessToken;
       const fileId = useCloudAuthStore.getState().fileId;
       if (!accessToken || !fileId) return;

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import useStore from '@store/store';
 import { useTranslation } from 'react-i18next';
-import ChatIcon from '@icon/ChatIcon';
 
 import PopupModal from '@components/PopupModal';
 import {

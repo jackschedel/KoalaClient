@@ -14,7 +14,7 @@ export interface CloudAuthSlice {
   setSyncStatus: (syncStatus: SyncStatus) => void;
 }
 
-export const createCloudAuthSlice: StoreSlice<CloudAuthSlice> = (set, get) => ({
+export const createCloudAuthSlice: StoreSlice<CloudAuthSlice> = (set) => ({
   cloudSync: false,
   syncStatus: 'unauthenticated',
   setGoogleAccessToken: (googleAccessToken?: string) => {

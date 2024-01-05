@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import useStore from '@store/store';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PopupModal from '@components/PopupModal';
 import { ConfigInterface, ModelChoice } from '@type/chat';
-import { modelMaxToken } from '@constants/chat';
 import { ModelSelect } from './ModelSelect';
 import {
   FrequencyPenaltySlider,

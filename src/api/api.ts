@@ -1,5 +1,3 @@
-import { modelMaxToken } from '@constants/chat';
-import countTokens from '@utils/messageUtils';
 import { ShareGPTSubmitBodyInterface } from '@type/api';
 import { ConfigInterface, MessageInterface } from '@type/chat';
 import { isAzureEndpoint, uuidv4 } from '@utils/api';
@@ -41,21 +39,22 @@ export const getChatCompletion = async (
     }
   }
 
-  const { max_context, ...restConfig } = config;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  delete config.max_context;
 
   if (isTitleGen) {
-    restConfig.model = 'gpt-3.5-turbo';
+    config.model = 'gpt-3.5-turbo';
   }
 
   // todo: option in config
-  restConfig.user = uuidv4();
+  config.user = uuidv4();
 
   const response = await fetch(endpoint, {
     method: 'POST',
     headers,
     body: JSON.stringify({
       messages,
-      ...restConfig,
+      ...config,
     }),
   });
   if (!response.ok) throw new Error(await response.text());
@@ -99,17 +98,17 @@ export const getChatCompletionStream = async (
     }
   }
 
-  const { max_context, ...restConfig } = config;
+  delete config.max_context;
 
   // todo: option in config
-  restConfig.user = uuidv4();
+  config.user = uuidv4();
 
   const response = await fetch(endpoint, {
     method: 'POST',
     headers,
     body: JSON.stringify({
       messages,
-      ...restConfig,
+      ...config,
       stream: true,
     }),
   });

@@ -9,7 +9,6 @@ import CrossIcon from '@icon/CrossIcon';
 import { v4 as uuidv4 } from 'uuid';
 import ImportPrompt from './ImportPrompt';
 import ExportPrompt from './ExportPrompt';
-import EditIcon from '@icon/EditIcon';
 
 const PromptLibraryMenu = () => {
   const { t } = useTranslation();
