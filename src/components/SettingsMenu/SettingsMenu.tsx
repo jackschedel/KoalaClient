@@ -65,7 +65,7 @@ const SettingsMenu = () => {
             <a
               className='flex p-2 mb-2 items-center gap-2 rounded-md hover:bg-neutral-dark transition-colors duration-200 text-custom-white/20 cursor-pointer text-sm'
               href='https://github.com/ztjhz/BetterChatGPT'
-              target='_blank'
+              target='_blank' rel="noreferrer"
             >
               <div className='opacity-20'>
                 <HeartIcon />

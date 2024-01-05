@@ -24,7 +24,7 @@ const useSubmit = () => {
   ): Promise<string> => {
     let data;
 
-    let config = _defaultChatConfig;
+    const config = _defaultChatConfig;
 
     config.max_tokens = 100;
 

@@ -176,7 +176,7 @@ const PromptLibraryMenuPopUp = ({
           <a
             href='https://github.com/f/awesome-chatgpt-prompts'
             target='_blank'
-            className='link'
+            className='link' rel="noreferrer"
           >
             awesome-chatgpt-prompts
           </a>

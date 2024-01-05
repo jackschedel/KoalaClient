@@ -37,16 +37,16 @@ const WhisperRecord = ({
       stopRecording();
     } else {
       _setContent((prev) => {
-        let startContent = prev.slice(0, cursorPosition);
-        let endContent = prev.slice(cursorPosition);
+        const startContent = prev.slice(0, cursorPosition);
+        const endContent = prev.slice(cursorPosition);
 
-        let paddedStart =
+        const paddedStart =
           !startContent.endsWith(' ') &&
           !startContent.endsWith('\n') &&
           startContent.length > 0
             ? ' '
             : '';
-        let paddedEnd =
+        const paddedEnd =
           !endContent.startsWith(' ') && !endContent.startsWith('\n')
             ? ' '
             : '';
