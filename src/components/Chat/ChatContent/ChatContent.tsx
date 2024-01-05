@@ -19,14 +19,6 @@ const ChatContent = () => {
       ? state.chats[state.currentChatIndex].messages
       : []
   );
-  const stickyIndex = useStore((state) =>
-    state.chats &&
-    state.chats.length > 0 &&
-    state.currentChatIndex >= 0 &&
-    state.currentChatIndex < state.chats.length
-      ? state.chats[state.currentChatIndex].messages.length
-      : 0
-  );
   const generating = useStore.getState().generating;
   const [editingMessageIndex, setEditingMessageIndex] = useState<number | null>(
     null
@@ -58,7 +50,7 @@ const ChatContent = () => {
                   role={message.role}
                   content={message.content}
                   messageIndex={index}
-                  sticky={false}
+                  isBottomChat={false}
                   editingMessageIndex={editingMessageIndex}
                   setEditingMessageIndex={setEditingMessageIndex}
                 />
@@ -70,8 +62,8 @@ const ChatContent = () => {
           <Message
             role={inputRole}
             content=''
-            messageIndex={stickyIndex}
-            sticky={true}
+            messageIndex={messages.length}
+            isBottomChat={true}
             editingMessageIndex={editingMessageIndex}
             setEditingMessageIndex={setEditingMessageIndex}
           />

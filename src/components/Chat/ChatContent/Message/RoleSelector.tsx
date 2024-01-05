@@ -11,11 +11,11 @@ const RoleSelector = React.memo(
   ({
     role,
     messageIndex,
-    sticky,
+    isEdit,
   }: {
     role: Role;
     messageIndex: number;
-    sticky?: boolean;
+    isEdit: boolean;
   }) => {
     const { t } = useTranslation();
     const setInputRole = useStore((state) => state.setInputRole);
@@ -52,7 +52,7 @@ const RoleSelector = React.memo(
               <li
                 className='px-4 py-2 hover:bg-neutral-dark cursor-pointer text-custom-white'
                 onClick={() => {
-                  if (!sticky) {
+                  if (!isEdit) {
                     const updatedChats: ChatInterface[] = JSON.parse(
                       JSON.stringify(useStore.getState().chats)
                     );

@@ -15,20 +15,23 @@ const Message = React.memo(
     role,
     content,
     messageIndex,
-    sticky,
+    isBottomChat,
     editingMessageIndex,
     setEditingMessageIndex,
   }: {
     role: Role;
     content: string;
     messageIndex: number;
-    sticky: boolean;
+    isBottomChat: boolean;
     editingMessageIndex: number | null;
     setEditingMessageIndex: Dispatch<SetStateAction<number | null>>;
   }) => {
     const [_content, _setContent] = useState<string>('');
     const currentChatIndex = useStore((state) => state.currentChatIndex);
     const setChats = useStore((state) => state.setChats);
+    const [isEdit, setIsEdit] = useState<boolean>(
+      isBottomChat || editingMessageIndex == messageIndex
+    );
 
     useEffect(() => {
       if (_content === '' || useStore.getState().generating) return;
@@ -41,11 +44,11 @@ const Message = React.memo(
       setChats(updatedChats);
     }, [_content]);
 
-    let isEdit = sticky;
-
     useEffect(() => {
       if (editingMessageIndex == messageIndex) {
-        isEdit = true;
+        setIsEdit(true);
+      } else if (!isBottomChat) {
+        setIsEdit(false);
       }
     }, [editingMessageIndex]);
 
@@ -66,7 +69,7 @@ const Message = React.memo(
                 <RoleSelector
                   role={role}
                   messageIndex={messageIndex}
-                  sticky={isEdit}
+                  isEdit={isEdit}
                 />
               </div>
 
@@ -85,7 +88,7 @@ const Message = React.memo(
               role={role.toString()}
               content={content}
               messageIndex={messageIndex}
-              sticky={sticky}
+              isBottomChat={isBottomChat}
               editingMessageIndex={editingMessageIndex}
               setEditingMessageIndex={setEditingMessageIndex}
             />

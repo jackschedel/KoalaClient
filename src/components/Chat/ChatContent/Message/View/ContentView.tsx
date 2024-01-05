@@ -1,7 +1,9 @@
 import React, {
   DetailedHTMLProps,
+  Dispatch,
   HTMLAttributes,
   memo,
+  SetStateAction,
   useState,
 } from 'react';
 
@@ -38,12 +40,12 @@ const ContentView = memo(
   ({
     role,
     content,
-    setIsEdit,
+    setEditingMessageIndex,
     messageIndex,
   }: {
     role: string;
     content: string;
-    setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
+    setEditingMessageIndex: Dispatch<SetStateAction<number | null>>;
     messageIndex: number;
   }) => {
     const { handleSubmit } = useSubmit();
@@ -153,7 +155,10 @@ const ContentView = memo(
 
               <MarkdownModeButton />
               <CopyButton onClick={handleCopy} />
-              <EditButton setIsEdit={setIsEdit} />
+              <EditButton
+                setEditingMessageIndex={setEditingMessageIndex}
+                messageIndex={messageIndex}
+              />
               <DeleteButton setIsDelete={setIsDelete} />
             </>
           )}

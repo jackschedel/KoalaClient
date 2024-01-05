@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { Dispatch, memo, SetStateAction } from 'react';
 
 import EditIcon2 from '@icon/EditIcon2';
 
@@ -6,15 +6,17 @@ import BaseButton from './BaseButton';
 
 const EditButton = memo(
   ({
-    setIsEdit,
+    setEditingMessageIndex,
+    messageIndex,
   }: {
-    setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
+    setEditingMessageIndex: Dispatch<SetStateAction<number | null>>;
+    messageIndex: number;
   }) => {
     return (
       <BaseButton
         icon={<EditIcon2 />}
         buttonProps={{ 'aria-label': 'edit message' }}
-        onClick={() => setIsEdit(true)}
+        onClick={() => setEditingMessageIndex(messageIndex)}
       />
     );
   }
