@@ -98,6 +98,7 @@ function App() {
     if (e.ctrlKey && e.key === 'n') {
       e.preventDefault();
       addChat();
+      sharedTextareaRef?.current?.focus();
     }
 
     // ctrl+o - Copy code block

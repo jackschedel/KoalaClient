@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import useGStore from '@store/cloud-auth-store';
 import useStore from '@store/store';
 import PlusIcon from '@icon/PlusIcon';
@@ -12,6 +12,7 @@ import ForwardIcon from '@icon/ForwardIcon';
 
 import useGoBack from '@hooks/useGoBack';
 import useGoForward from '@hooks/useGoForward';
+import GlobalContext from '@hooks/GlobalContext';
 
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || undefined;
 
@@ -21,7 +22,7 @@ const MobileBar = () => {
   const hideSideMenu = useStore((state) => state.hideSideMenu);
   const currentChatIndex = useStore((state) => state.currentChatIndex);
   const chats = useStore((state) => state.chats);
-
+  const { ref } = useContext(GlobalContext);
   const cloudSync = useGStore((state) => state.cloudSync);
   const syncStatus = useGStore((state) => state.syncStatus);
 
@@ -88,6 +89,7 @@ const MobileBar = () => {
         onClick={() => {
           if (!generating) {
             addChat(chats?.[currentChatIndex]?.folder);
+            ref?.current?.focus();
           }
         }}
       >
