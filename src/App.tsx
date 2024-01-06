@@ -8,6 +8,7 @@ import Menu from '@components/Menu';
 import useAddChat from '@hooks/useAddChat';
 import useGoBack from '@hooks/useGoBack';
 import useGoForward from '@hooks/useGoForward';
+import useCopyCodeBlock from '@hooks/useCopyCodeBlock';
 import useInitialiseNewChat from '@hooks/useInitialiseNewChat';
 import { ChatInterface } from '@type/chat';
 import { Theme } from '@type/theme';
@@ -26,24 +27,36 @@ function App() {
   const addChat = useAddChat();
   const goBack = useGoBack();
   const goForward = useGoForward();
+  const copyCodeBlock = useCopyCodeBlock();
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    // put any general app-wide keybinds here
+    // Put any general app-wide keybinds here:
+
+    // ctrl+e - Toggle side menu
     if (e.ctrlKey && e.key === 'e') {
       e.preventDefault();
       setHideSideMenu(!hideSideMenu);
     }
 
+    // ctrl+n - New chat
     if (e.ctrlKey && e.key === 'n') {
       e.preventDefault();
       addChat();
     }
 
+    // ctrl+o - Copy code block
+    if (e.ctrlKey && e.key === 'o') {
+      e.preventDefault();
+      copyCodeBlock();
+    }
+
+    // ctrl+left - Previous chat
     if (e.ctrlKey && e.key === 'ArrowLeft') {
       e.preventDefault();
       goBack();
     }
 
+    // ctrl+left - Next chat
     if (e.ctrlKey && e.key === 'ArrowRight') {
       e.preventDefault();
       goForward();
