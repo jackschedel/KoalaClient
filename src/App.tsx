@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import useStore from '@store/store';
 import i18n from './i18n';
 
@@ -15,6 +15,7 @@ import { Theme } from '@type/theme';
 import ApiPopup from '@components/ApiPopup';
 import Toast from '@components/Toast';
 import isElectron from '@utils/electron';
+import GlobalContext from '@hooks/GlobalContext';
 
 function App() {
   const initialiseNewChat = useInitialiseNewChat();
@@ -28,6 +29,13 @@ function App() {
   const goBack = useGoBack();
   const goForward = useGoForward();
   const copyCodeBlock = useCopyCodeBlock();
+
+  const [sharedTextareaRef, setSharedTextareaRef] =
+    useState<React.RefObject<HTMLTextAreaElement> | null>(null);
+
+  const setRef = (newRef: React.RefObject<HTMLTextAreaElement> | null) => {
+    setSharedTextareaRef(newRef);
+  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     // Put any general app-wide keybinds here:
@@ -48,6 +56,13 @@ function App() {
     if (e.ctrlKey && e.key === 'o') {
       e.preventDefault();
       copyCodeBlock();
+    }
+
+    // ctrl+g - Focus textarea
+    if (e.ctrlKey && e.key === 'g') {
+      e.preventDefault();
+      console.log(sharedTextareaRef);
+      sharedTextareaRef?.current?.focus();
     }
 
     // ctrl+left - Previous chat
@@ -124,16 +139,18 @@ function App() {
   }, []);
 
   return (
-    <div
-      tabIndex={0}
-      className='overflow-hidden w-full h-full relative'
-      onKeyDown={handleKeyDown}
-    >
-      <Menu />
-      <Chat />
-      <ApiPopup />
-      <Toast />
-    </div>
+    <GlobalContext.Provider value={{ ref: sharedTextareaRef, setRef }}>
+      <div
+        tabIndex={0}
+        className='overflow-hidden w-full h-full relative'
+        onKeyDown={handleKeyDown}
+      >
+        <Menu />
+        <Chat />
+        <ApiPopup />
+        <Toast />
+      </div>
+    </GlobalContext.Provider>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useStore from '@store/store';
 import isElectron from '@utils/electron';
@@ -11,6 +11,7 @@ import TokenCount from '@components/TokenCount';
 import CommandPrompt from '../CommandPrompt';
 
 import WhisperRecord from '../WhisperRecord';
+import GlobalContext from '@hooks/GlobalContext';
 
 const EditView = ({
   content,
@@ -33,9 +34,15 @@ const EditView = ({
   const [cursorPosition, setCursorPosition] = useState<number>(0);
   const [_content, _setContent] = useState<string>(content);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const textareaRef = React.createRef<HTMLTextAreaElement>();
-
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { setRef } = useContext(GlobalContext);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (sticky) {
+      setRef(textareaRef);
+    }
+  }, [textareaRef]);
 
   const resetTextAreaHeight = () => {
     if (textareaRef.current) textareaRef.current.style.height = 'auto';
