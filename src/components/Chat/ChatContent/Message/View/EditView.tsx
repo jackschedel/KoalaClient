@@ -160,6 +160,7 @@ const EditView = ({
         messageIndex={messageIndex}
         role={role}
         content={content}
+        setEditingMessageIndex={setEditingMessageIndex}
       />
       {isModalOpen && (
         <PopupModal
@@ -185,6 +186,7 @@ const EditViewButtons = memo(
     messageIndex,
     role,
     content,
+    setEditingMessageIndex,
   }: {
     sticky?: boolean;
     handleGenerate: () => void;
@@ -196,12 +198,18 @@ const EditViewButtons = memo(
     messageIndex: number;
     role: string;
     content: string;
+    setEditingMessageIndex: (index: number | null) => void;
   }) => {
     const { t } = useTranslation();
     const generating = useStore.getState().generating;
     const confirmEditSubmission = useStore(
       (state) => state.confirmEditSubmission
     );
+
+    const handleCancel = () => {
+      setIsEdit(false);
+      setEditingMessageIndex(null);
+    };
 
     const handleEditGenerate = () => {
       if (generating) {
@@ -267,7 +275,7 @@ const EditViewButtons = memo(
               className={`btn relative ${
                 messageIndex % 2 ? 'btn-neutral' : 'btn-neutral-dark'
               }`}
-              onClick={() => setIsEdit(false)}
+              onClick={() => handleCancel()}
               aria-label={t('cancel') as string}
             >
               <div className='flex items-center justify-center gap-2'>

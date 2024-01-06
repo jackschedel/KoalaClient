@@ -10,6 +10,7 @@ import useGoBack from '@hooks/useGoBack';
 import useGoForward from '@hooks/useGoForward';
 import useCopyCodeBlock from '@hooks/useCopyCodeBlock';
 import useInitialiseNewChat from '@hooks/useInitialiseNewChat';
+import useSubmit from '@hooks/useSubmit';
 import { ChatInterface } from '@type/chat';
 import { Theme } from '@type/theme';
 import ApiPopup from '@components/ApiPopup';
@@ -22,6 +23,7 @@ function App() {
   const setChats = useStore((state) => state.setChats);
   const setTheme = useStore((state) => state.setTheme);
   const setApiKey = useStore((state) => state.setApiKey);
+  const currentChatIndex = useStore((state) => state.currentChatIndex);
   const setCurrentChatIndex = useStore((state) => state.setCurrentChatIndex);
   const setHideSideMenu = useStore((state) => state.setHideSideMenu);
   const hideSideMenu = useStore((state) => state.hideSideMenu);
@@ -29,12 +31,33 @@ function App() {
   const goBack = useGoBack();
   const goForward = useGoForward();
   const copyCodeBlock = useCopyCodeBlock();
+  const { handleSubmit } = useSubmit();
 
   const [sharedTextareaRef, setSharedTextareaRef] =
     useState<React.RefObject<HTMLTextAreaElement> | null>(null);
 
   const setRef = (newRef: React.RefObject<HTMLTextAreaElement> | null) => {
     setSharedTextareaRef(newRef);
+  };
+
+  const handleGenerate = () => {
+    if (useStore.getState().generating) return;
+    const updatedChats: ChatInterface[] = JSON.parse(
+      JSON.stringify(useStore.getState().chats)
+    );
+    const content = sharedTextareaRef?.current?.value;
+    const updatedMessages = updatedChats[currentChatIndex].messages;
+    if (!content) {
+      return;
+    }
+
+    updatedMessages.push({ role: 'user', content: content });
+    if (sharedTextareaRef && sharedTextareaRef.current) {
+      sharedTextareaRef.current.value = '';
+    }
+
+    setChats(updatedChats);
+    handleSubmit();
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -63,6 +86,12 @@ function App() {
       e.preventDefault();
       console.log(sharedTextareaRef);
       sharedTextareaRef?.current?.focus();
+    }
+
+    // ctrl+s - Save bottom message + generate
+    if (e.ctrlKey && e.key === 's') {
+      e.preventDefault();
+      handleGenerate();
     }
 
     // ctrl+left - Previous chat
