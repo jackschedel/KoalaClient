@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useStore from '@store/store';
 import i18n from './i18n';
 
@@ -78,6 +78,20 @@ function App() {
     }
   };
 
+  const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Mouse button 3 (back)
+    if (e.button === 3) {
+      e.preventDefault();
+      goBack();
+    }
+
+    // Mouse button 4 (forward)
+    if (e.button === 4) {
+      e.preventDefault();
+      goForward();
+    }
+  };
+
   if (isElectron()) {
     window.electronAPI.setCloseToTray(useStore((state) => state.closeToTray));
   }
@@ -138,12 +152,27 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    const handleGlobalMouseUp = (e: MouseEvent) => {
+      if (e.button === 3 || e.button === 4) {
+        handleMouseUp(e as unknown as React.MouseEvent<HTMLDivElement>);
+      }
+    };
+
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+
+    return () => {
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, []);
+
   return (
     <GlobalContext.Provider value={{ ref: sharedTextareaRef, setRef }}>
       <div
         tabIndex={0}
         className='overflow-hidden w-full h-full relative'
         onKeyDown={handleKeyDown}
+        onMouseUp={handleMouseUp}
       >
         <Menu />
         <Chat />
