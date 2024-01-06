@@ -60,6 +60,31 @@ function App() {
     handleSubmit();
   };
 
+  const pasteSubmit = async () => {
+    try {
+      if (useStore.getState().generating) return;
+      const updatedChats: ChatInterface[] = JSON.parse(
+        JSON.stringify(useStore.getState().chats)
+      );
+      const updatedMessages = updatedChats[currentChatIndex].messages;
+
+      const text = await navigator.clipboard.readText();
+      if (!text) {
+        return;
+      }
+
+      updatedMessages.push({ role: 'user', content: text });
+      if (sharedTextareaRef && sharedTextareaRef.current) {
+        sharedTextareaRef.current.value = '';
+      }
+
+      setChats(updatedChats);
+      handleSubmit();
+    } catch (err) {
+      console.error('Failed to read clipboard contents:', err);
+    }
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     // Put any general app-wide keybinds here:
 
@@ -84,7 +109,6 @@ function App() {
     // ctrl+g - Focus textarea
     if (e.ctrlKey && e.key === 'g') {
       e.preventDefault();
-      console.log(sharedTextareaRef);
       sharedTextareaRef?.current?.focus();
     }
 
@@ -92,6 +116,14 @@ function App() {
     if (e.ctrlKey && e.key === 's') {
       e.preventDefault();
       handleGenerate();
+    }
+
+    // ctrl+p - New chat from clipboard (insta-generate)
+    if (e.ctrlKey && e.key === 'p') {
+      e.preventDefault();
+      console.log('test');
+      addChat();
+      pasteSubmit();
     }
 
     // ctrl+left - Previous chat
