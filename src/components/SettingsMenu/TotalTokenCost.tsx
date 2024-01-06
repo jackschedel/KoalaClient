@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import useStore from '@store/store';
 
@@ -24,6 +25,8 @@ const tokenCostToCost = (
 };
 
 const TotalTokenCost = () => {
+  const { t } = useTranslation(['main', 'model']);
+
   const totalTokenUsed = useStore((state) => state.totalTokenUsed);
   const setTotalTokenUsed = useStore((state) => state.setTotalTokenUsed);
   const countTotalTokens = useStore((state) => state.countTotalTokens);

@@ -22,7 +22,9 @@ const ConfigMenu = ({
   setConfig: (config: ConfigInterface) => void;
 }) => {
   const [_maxToken, _setMaxToken] = useState<number>(config.max_tokens);
-  const [_maxContext, _setMaxContext] = useState<number>(config.max_context);
+  const [_maxContext, _setMaxContext] = useState<number>(
+    config.max_context ?? 0
+  );
   const [_model, _setModel] = useState<ModelChoice>(config.model);
   const [_temperature, _setTemperature] = useState<number>(config.temperature);
   const [_presencePenalty, _setPresencePenalty] = useState<number>(
