@@ -23,10 +23,6 @@ const ModelConfigBar = React.memo(() => {
   const setChats = useStore((state) => state.setChats);
   const currentChatIndex = useStore((state) => state.currentChatIndex);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [_model, _setModel] = useState<ModelChoice>(
-    config?.model || 'gpt-3.5-turbo'
-  );
-
   const setConfig = (config: ConfigInterface) => {
     const updatedChats: ChatInterface[] = JSON.parse(
       JSON.stringify(useStore.getState().chats)

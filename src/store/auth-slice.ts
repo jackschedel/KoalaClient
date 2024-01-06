@@ -10,7 +10,7 @@ export interface AuthSlice {
   setFirstVisit: (firstVisit: boolean) => void;
 }
 
-export const createAuthSlice: StoreSlice<AuthSlice> = (set, get) => ({
+export const createAuthSlice: StoreSlice<AuthSlice> = (set) => ({
   apiKey: import.meta.env.VITE_OPENAI_API_KEY || undefined,
   apiEndpoint: defaultAPIEndpoint,
   firstVisit: true,

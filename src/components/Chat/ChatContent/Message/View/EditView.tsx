@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useStore from '@store/store';
 import isElectron from '@utils/electron';
@@ -11,6 +11,7 @@ import TokenCount from '@components/TokenCount';
 import CommandPrompt from '../CommandPrompt';
 
 import WhisperRecord from '../WhisperRecord';
+import GlobalContext from '@hooks/GlobalContext';
 
 const EditView = ({
   content,
@@ -18,12 +19,14 @@ const EditView = ({
   messageIndex,
   sticky,
   role,
+  setEditingMessageIndex,
 }: {
   content: string;
   setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
   messageIndex: number;
   sticky?: boolean;
   role: string;
+  setEditingMessageIndex: (index: number | null) => void;
 }) => {
   const inputRole = useStore((state) => state.inputRole);
   const setChats = useStore((state) => state.setChats);
@@ -31,9 +34,15 @@ const EditView = ({
   const [cursorPosition, setCursorPosition] = useState<number>(0);
   const [_content, _setContent] = useState<string>(content);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const textareaRef = React.createRef<HTMLTextAreaElement>();
-
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { setRef } = useContext(GlobalContext);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (sticky) {
+      setRef(textareaRef);
+    }
+  }, [textareaRef]);
 
   const resetTextAreaHeight = () => {
     if (textareaRef.current) textareaRef.current.style.height = 'auto';
@@ -72,6 +81,7 @@ const EditView = ({
       setIsEdit(false);
     }
     setChats(updatedChats);
+    setEditingMessageIndex(null);
   };
 
   const { handleSubmit } = useSubmit();
@@ -96,6 +106,7 @@ const EditView = ({
       setIsEdit(false);
     }
     setChats(updatedChats);
+    setEditingMessageIndex(null);
     handleSubmit();
   };
 
@@ -149,6 +160,7 @@ const EditView = ({
         messageIndex={messageIndex}
         role={role}
         content={content}
+        setEditingMessageIndex={setEditingMessageIndex}
       />
       {isModalOpen && (
         <PopupModal
@@ -174,6 +186,7 @@ const EditViewButtons = memo(
     messageIndex,
     role,
     content,
+    setEditingMessageIndex,
   }: {
     sticky?: boolean;
     handleGenerate: () => void;
@@ -185,12 +198,18 @@ const EditViewButtons = memo(
     messageIndex: number;
     role: string;
     content: string;
+    setEditingMessageIndex: (index: number | null) => void;
   }) => {
     const { t } = useTranslation();
     const generating = useStore.getState().generating;
     const confirmEditSubmission = useStore(
       (state) => state.confirmEditSubmission
     );
+
+    const handleCancel = () => {
+      setIsEdit(false);
+      setEditingMessageIndex(null);
+    };
 
     const handleEditGenerate = () => {
       if (generating) {
@@ -256,7 +275,7 @@ const EditViewButtons = memo(
               className={`btn relative ${
                 messageIndex % 2 ? 'btn-neutral' : 'btn-neutral-dark'
               }`}
-              onClick={() => setIsEdit(false)}
+              onClick={() => handleCancel()}
               aria-label={t('cancel') as string}
             >
               <div className='flex items-center justify-center gap-2'>

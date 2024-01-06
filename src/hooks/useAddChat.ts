@@ -1,4 +1,3 @@
-import React from 'react';
 import useStore from '@store/store';
 import { generateDefaultChat } from '@constants/chat';
 import { ChatInterface } from '@type/chat';

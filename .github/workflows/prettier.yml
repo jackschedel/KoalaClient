@@ -8,6 +8,9 @@ on:
 
 jobs:
   prettier:
+    permissions:
+      contents: write
+      actions: write
     runs-on: ubuntu-latest
 
     steps:

@@ -1,7 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 
-import CopyIcon from '@icon/CopyIcon';
-import TickIcon from '@icon/TickIcon';
 import CodeBar from './CodeBar';
 
 const CodeBlock = ({

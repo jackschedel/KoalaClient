@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useStore from '@store/store';
-import useCloudAuthStore from '@store/cloud-auth-store';
 import isElectron from '@utils/electron';
 import PopupModal from '@components/PopupModal';
 import SettingIcon from '@icon/SettingIcon';
-import ThemeSwitcher from '@components/Menu/MenuOptions/ThemeSwitcher';
 import LanguageSelector from '@components/LanguageSelector';
 import AutoTitleToggle from './AutoTitleToggle';
 import CloseToTrayToggle from './CloseToTrayToggle';
-//import AdvancedModeToggle from './AdvencedModeToggle';
 import InlineLatexToggle from './InlineLatexToggle';
 import HeartIcon from '@icon/HeartIcon';
 import PromptLibraryMenu from '@components/PromptLibraryMenu';
@@ -66,6 +63,7 @@ const SettingsMenu = () => {
               className='flex p-2 mb-2 items-center gap-2 rounded-md hover:bg-neutral-dark transition-colors duration-200 text-custom-white/20 cursor-pointer text-sm'
               href='https://github.com/ztjhz/BetterChatGPT'
               target='_blank'
+              rel='noreferrer'
             >
               <div className='opacity-20'>
                 <HeartIcon />

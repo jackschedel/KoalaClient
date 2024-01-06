@@ -1,4 +1,3 @@
-import React from 'react';
 import useStore from '@store/store';
 import { useTranslation } from 'react-i18next';
 import { ChatInterface, MessageInterface } from '@type/chat';
@@ -24,7 +23,7 @@ const useSubmit = () => {
   ): Promise<string> => {
     let data;
 
-    let config = _defaultChatConfig;
+    const config = _defaultChatConfig;
 
     config.max_tokens = 100;
 

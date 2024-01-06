@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import useStore from '@store/store';
 
@@ -7,7 +6,6 @@ import NewFolderIcon from '@icon/NewFolderIcon';
 import { Folder, FolderCollection } from '@type/chat';
 
 const NewFolder = () => {
-  const { t } = useTranslation();
   const generating = useStore((state) => state.generating);
   const setFolders = useStore((state) => state.setFolders);
 
@@ -43,7 +41,7 @@ const NewFolder = () => {
 
   return (
     <a
-      className={`flex py-3 px-3 items-center gap-3 rounded-md hover:bg-neutral-light transition-colors duration-200 text-custom-white text-sm mb-2 flex-shrink-0 border border-custom-white/20 transition-opacity ${
+      className={`flex py-3 px-3 items-center gap-3 rounded-md hover:bg-neutral-light duration-200 text-custom-white text-sm mb-2 flex-shrink-0 border border-custom-white/20 transition-opacity ${
         generating
           ? 'cursor-not-allowed opacity-40'
           : 'cursor-pointer opacity-100'

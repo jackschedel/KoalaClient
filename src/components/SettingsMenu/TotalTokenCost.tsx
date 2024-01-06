@@ -110,7 +110,6 @@ export const TotalTokenCostToggle = () => {
 };
 
 export const TotalTokenCostDisplay = () => {
-  const { t } = useTranslation();
   const totalTokenUsed = useStore((state) => state.totalTokenUsed);
 
   const [totalCost, setTotalCost] = useState<number>(0);

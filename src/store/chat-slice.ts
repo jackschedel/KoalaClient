@@ -17,7 +17,7 @@ export interface ChatSlice {
   setConfirmEditSubmission: (confirmEditSubmission: boolean) => void;
 }
 
-export const createChatSlice: StoreSlice<ChatSlice> = (set, get) => ({
+export const createChatSlice: StoreSlice<ChatSlice> = (set) => ({
   messages: [],
   currentChatIndex: -1,
   generating: false,

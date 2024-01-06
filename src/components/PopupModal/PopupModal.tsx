@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import HeartIcon from '@icon/HeartIcon';
 
 import CrossIcon2 from '@icon/CrossIcon2';
 

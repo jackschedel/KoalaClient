@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import DownChevronArrow from '@icon/DownChevronArrow';
 import { languageCodeToName, selectableLanguages } from '@constants/language';
-import FileTextIcon from '@icon/FileTextIcon';
 import LanguageIcon from '@icon/LanguageIcon';
 
 import useHideOnOutsideClick from '@hooks/useHideOnOutsideClick';

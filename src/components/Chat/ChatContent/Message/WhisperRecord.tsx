@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useWhisper } from '@chengsokdara/use-whisper';
 import useStore from '@store/store';
 import StopIcon from '@icon/StopIcon';
@@ -14,16 +14,17 @@ const WhisperRecord = ({
   messageIndex: number;
 }) => {
   let apiKey = useStore((state) => state.apiKey);
-
+  const setGenerating = useStore((state) => state.setGenerating);
   apiKey = apiKey || '0';
 
   const { transcript, startRecording, stopRecording } = useWhisper({ apiKey });
 
   useEffect(() => {
-    if (transcript.text) {
+    if (transcript.text != null) {
       _setContent((prev) => {
         return prev.replace('◯', transcript.text || '');
       });
+      setGenerating(false);
     }
   }, [transcript.text]);
 
@@ -37,16 +38,16 @@ const WhisperRecord = ({
       stopRecording();
     } else {
       _setContent((prev) => {
-        let startContent = prev.slice(0, cursorPosition);
-        let endContent = prev.slice(cursorPosition);
+        const startContent = prev.slice(0, cursorPosition);
+        const endContent = prev.slice(cursorPosition);
 
-        let paddedStart =
+        const paddedStart =
           !startContent.endsWith(' ') &&
           !startContent.endsWith('\n') &&
           startContent.length > 0
             ? ' '
             : '';
-        let paddedEnd =
+        const paddedEnd =
           !endContent.startsWith(' ') && !endContent.startsWith('\n')
             ? ' '
             : '';
@@ -54,6 +55,7 @@ const WhisperRecord = ({
         return startContent + paddedStart + '◉' + paddedEnd + endContent;
       });
       startRecording();
+      setGenerating(true);
     }
     setIsRecording(!isRecording);
   };

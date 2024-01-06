@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import useStore from '@store/store';
 
@@ -99,9 +99,11 @@ const ApiMenu = ({
               ns='api'
               components={[
                 <a
+                  key={null}
                   href='https://platform.openai.com/account/api-keys'
                   className='link'
                   target='_blank'
+                  rel='noreferrer'
                 />,
               ]}
             />
