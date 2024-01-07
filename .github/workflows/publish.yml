@@ -73,12 +73,11 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Commit substring
-        uses: bhowell2/github-substring-action@1.0.2
-        id: committag
+      - name: Get version from package.json
+        id: packageJson
+        uses: RadovanPelka/github-action-json@main
         with:
-          value: ${{ github.sha }}
-          length_from_start: 7
+          path: 'package.json'
 
       - name: Create Release
         id: create_release
@@ -87,7 +86,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
         with:
           tag_name: ${{ github.sha }}-${{ github.run_id }}
-          release_name: Automated Release for ${{ steps.committag.outputs.substring }}
+          release_name: v${{steps.packageJson.outputs.version}}
           draft: false
           prerelease: false
 
