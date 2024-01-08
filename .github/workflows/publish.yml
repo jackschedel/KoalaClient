@@ -85,7 +85,7 @@ jobs:
         with:
           tag_name: ${{ github.sha }}-${{ github.run_id }}
           release_name: v${{env.PACKAGE_VERSION}}
-          draft: false
+          draft: true
           prerelease: false
 
       - name: Download all workflow run artifacts

@@ -133,7 +133,7 @@ function App() {
       goBack();
     }
 
-    // ctrl+left - Next chat
+    // ctrl+right - Next chat
     if (e.ctrlKey && e.key === 'ArrowRight') {
       e.preventDefault();
       goForward();
