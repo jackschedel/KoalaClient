@@ -3,6 +3,7 @@ import { useWhisper } from '@chengsokdara/use-whisper';
 import useStore from '@store/store';
 import StopIcon from '@icon/StopIcon';
 import MicrophoneIcon from '@icon/MicrophoneIcon';
+import { useTranslation } from 'react-i18next';
 
 const WhisperRecord = ({
   cursorPosition,
@@ -13,11 +14,15 @@ const WhisperRecord = ({
   _setContent: React.Dispatch<React.SetStateAction<string>>;
   messageIndex: number;
 }) => {
+  const { t } = useTranslation('api');
   let apiKey = useStore((state) => state.apiKey);
   const setGenerating = useStore((state) => state.setGenerating);
+  const setError = useStore((state) => state.setError);
   apiKey = apiKey || '0';
 
-  const { transcript, startRecording, stopRecording } = useWhisper({ apiKey });
+  const { transcript, startRecording, stopRecording } = useWhisper({
+    apiKey,
+  });
 
   useEffect(() => {
     if (transcript.text != null) {
@@ -31,36 +36,43 @@ const WhisperRecord = ({
   const [isRecording, setIsRecording] = useState(false);
 
   const handleRecording = () => {
-    if (isRecording) {
-      _setContent((prev) => {
-        return prev.replace('◉', '◯' || '');
-      });
-      stopRecording();
+    if (apiKey != '0') {
+      if (isRecording) {
+        _setContent((prev) => {
+          return prev.replace('◉', '◯' || '');
+        });
+        stopRecording();
+      } else {
+        _setContent((prev) => {
+          const startContent = prev.slice(0, cursorPosition);
+          const endContent = prev.slice(cursorPosition);
+
+          const paddedStart =
+            startContent &&
+            !startContent.endsWith(' ') &&
+            !startContent.endsWith('\n') &&
+            startContent.length > 0
+              ? ' '
+              : '';
+          const paddedEnd =
+            endContent &&
+            !endContent.startsWith(' ') &&
+            !endContent.startsWith('\n')
+              ? ' '
+              : '';
+
+          return startContent + paddedStart + '◉' + paddedEnd + endContent;
+        });
+        startRecording();
+        setGenerating(true);
+      }
+      setIsRecording(!isRecording);
     } else {
+      setError(t('noApiKeyWarning') as string);
       _setContent((prev) => {
-        const startContent = prev.slice(0, cursorPosition);
-        const endContent = prev.slice(cursorPosition);
-
-        const paddedStart =
-          startContent &&
-          !startContent.endsWith(' ') &&
-          !startContent.endsWith('\n') &&
-          startContent.length > 0
-            ? ' '
-            : '';
-        const paddedEnd =
-          endContent &&
-          !endContent.startsWith(' ') &&
-          !endContent.startsWith('\n')
-            ? ' '
-            : '';
-
-        return startContent + paddedStart + '◉' + paddedEnd + endContent;
+        return prev.replace('◯', transcript.text || '');
       });
-      startRecording();
-      setGenerating(true);
     }
-    setIsRecording(!isRecording);
   };
 
   return (
