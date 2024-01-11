@@ -42,13 +42,16 @@ const WhisperRecord = ({
         const endContent = prev.slice(cursorPosition);
 
         const paddedStart =
+          startContent &&
           !startContent.endsWith(' ') &&
           !startContent.endsWith('\n') &&
           startContent.length > 0
             ? ' '
             : '';
         const paddedEnd =
-          !endContent.startsWith(' ') && !endContent.startsWith('\n')
+          endContent &&
+          !endContent.startsWith(' ') &&
+          !endContent.startsWith('\n')
             ? ' '
             : '';
 
