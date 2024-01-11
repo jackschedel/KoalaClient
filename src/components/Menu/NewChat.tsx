@@ -1,16 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import useStore from '@store/store';
 
 import PlusIcon from '@icon/PlusIcon';
 
 import useAddChat from '@hooks/useAddChat';
-import GlobalContext from '@hooks/GlobalContext';
 
 const NewChat = ({ folder }: { folder?: string }) => {
   const { t } = useTranslation();
   const addChat = useAddChat();
-  const { ref } = useContext(GlobalContext);
+  const bottomMessageRef = useStore((state) => state.bottomMessageRef);
   const generating = useStore((state) => state.generating);
 
   return (
@@ -27,7 +26,7 @@ const NewChat = ({ folder }: { folder?: string }) => {
       onClick={() => {
         if (!generating) {
           addChat(folder);
-          ref?.current?.focus();
+          bottomMessageRef?.current?.focus();
         }
       }}
       title={String(t('newChat'))}

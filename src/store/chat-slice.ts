@@ -1,5 +1,6 @@
 import { StoreSlice } from './store';
 import { ChatInterface, FolderCollection, MessageInterface } from '@type/chat';
+import { RefObject } from 'react';
 
 export interface ChatSlice {
   messages: MessageInterface[];
@@ -8,6 +9,10 @@ export interface ChatSlice {
   generating: boolean;
   error: string;
   folders: FolderCollection;
+  bottomMessageRef: RefObject<HTMLTextAreaElement> | null;
+  setBottomMessageRef: (
+    bottomMessageRef: RefObject<HTMLTextAreaElement> | null
+  ) => void;
   setMessages: (messages: MessageInterface[]) => void;
   setChats: (chats: ChatInterface[]) => void;
   setCurrentChatIndex: (currentChatIndex: number) => void;
@@ -23,6 +28,15 @@ export const createChatSlice: StoreSlice<ChatSlice> = (set) => ({
   generating: false,
   error: '',
   folders: {},
+  bottomMessageRef: null,
+  setBottomMessageRef: (
+    bottomMessageRef: RefObject<HTMLTextAreaElement> | null
+  ) => {
+    set((prev: ChatSlice) => ({
+      ...prev,
+      bottomMessageRef: bottomMessageRef,
+    }));
+  },
   setMessages: (messages: MessageInterface[]) => {
     set((prev: ChatSlice) => ({
       ...prev,
