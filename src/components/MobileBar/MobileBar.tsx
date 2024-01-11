@@ -58,16 +58,32 @@ const MobileBar = () => {
       </div>
       <button
         type='button'
-        className='-mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light'
-        onClick={goBack}
+        className={`-mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light ${
+          generating
+            ? 'cursor-not-allowed opacity-40'
+            : 'cursor-pointer opacity-100'
+        }`}
+        onClick={() => {
+          if (!generating) {
+            goBack();
+          }
+        }}
       >
         <span className='sr-only'>Open sidebar</span>
         <BackIcon height='1em' />
       </button>
       <button
         type='button'
-        className='-mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light mr-4'
-        onClick={goForward}
+        className={`-mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light ${
+          generating
+            ? 'cursor-not-allowed opacity-40'
+            : 'cursor-pointer opacity-100'
+        }`}
+        onClick={() => {
+          if (!generating) {
+            goForward();
+          }
+        }}
       >
         <span className='sr-only'>Open sidebar</span>
         <ForwardIcon height='1em' />

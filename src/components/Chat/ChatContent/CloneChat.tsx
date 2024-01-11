@@ -9,10 +9,14 @@ import CloneIcon from '@icon/CloneIcon';
 const CloneChat = React.memo(() => {
   const setChats = useStore((state) => state.setChats);
   const setCurrentChatIndex = useStore((state) => state.setCurrentChatIndex);
+  const generating = useStore((state) => state.generating);
 
   const [cloned, setCloned] = useState<boolean>(false);
 
   const cloneChat = () => {
+    if (generating) {
+      return;
+    }
     const chats = useStore.getState().chats;
 
     if (chats) {
@@ -44,7 +48,11 @@ const CloneChat = React.memo(() => {
   return (
     <button
       type='button'
-      className={`text-custom-white transition-opacity cursor-pointer opacity-100`}
+      className={`text-custom-white transition-opacity ${
+        generating
+          ? 'cursor-not-allowed opacity-40'
+          : 'cursor-pointer opacity-100'
+      }`}
       onClick={cloneChat}
     >
       <div className='-ml-0.5 -mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-md hover:bg-neutral-light'>
