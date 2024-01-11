@@ -38,8 +38,8 @@
     <img src="https://cdn.discordapp.com/attachments/446426925209092098/1192293382920351744/Screenshot_2024-01-03_at_9.27.06_PM.png?ex=65a88cbe&is=659617be&hm=5d60622b900e4c834ef11a62423045edca40075655cc5597ee1bbda7b2eb2bb4&" alt="landing" width=800 />
 </p>
 
-
 ## 🌐 Website version
+
 - Access KoalaClient from the web, or via the desktop app.
 - https://client.koaladev.io/ is updated automatically with every commit
 - Enable Google Sync to sync your chats across devices
