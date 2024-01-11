@@ -59,6 +59,7 @@ const ContentView = memo(
     );
     const inlineLatex = useStore((state) => state.inlineLatex);
     const markdownMode = useStore((state) => state.markdownMode);
+    const generating = useStore((state) => state.generating);
 
     const handleDelete = () => {
       const updatedChats: ChatInterface[] = JSON.parse(
@@ -141,28 +142,11 @@ const ContentView = memo(
           )}
         </div>
         <div className='flex justify-end gap-2 w-full mt-2'>
-          {isDelete || (
-            <>
-              {!useStore.getState().generating &&
-                role === 'assistant' &&
-                messageIndex === lastMessageIndex && (
-                  <RefreshButton onClick={handleRefresh} />
-                )}
-              {messageIndex !== 0 && <UpButton onClick={handleMoveUp} />}
-              {messageIndex !== lastMessageIndex && (
-                <DownButton onClick={handleMoveDown} />
-              )}
-
-              <MarkdownModeButton />
-              <CopyButton onClick={handleCopy} />
-              <EditButton
-                setEditingMessageIndex={setEditingMessageIndex}
-                messageIndex={messageIndex}
-              />
-              <DeleteButton setIsDelete={setIsDelete} />
-            </>
-          )}
-          {isDelete && (
+          {generating ? (
+            <div className='p-1 invisible'>
+              <TickIcon />
+            </div>
+          ) : isDelete ? (
             <>
               <button
                 className='p-1 text-custom-white hover:text-neutral-dark hover:bg-custom-white/70 hover:rounded'
@@ -178,6 +162,23 @@ const ContentView = memo(
               >
                 <TickIcon />
               </button>
+            </>
+          ) : (
+            <>
+              {role === 'assistant' && messageIndex === lastMessageIndex && (
+                <RefreshButton onClick={handleRefresh} />
+              )}
+              {messageIndex !== 0 && <UpButton onClick={handleMoveUp} />}
+              {messageIndex !== lastMessageIndex && (
+                <DownButton onClick={handleMoveDown} />
+              )}
+              <MarkdownModeButton />
+              <CopyButton onClick={handleCopy} />
+              <EditButton
+                setEditingMessageIndex={setEditingMessageIndex}
+                messageIndex={messageIndex}
+              />
+              <DeleteButton setIsDelete={setIsDelete} />
             </>
           )}
         </div>

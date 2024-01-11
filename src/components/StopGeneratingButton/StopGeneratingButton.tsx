@@ -4,6 +4,7 @@ import useStore from '@store/store';
 const StopGeneratingButton = () => {
   const setGenerating = useStore((state) => state.setGenerating);
   const generating = useStore((state) => state.generating);
+  // setGenerating(true);
 
   return generating ? (
     <div className='absolute bottom-6 left-0 right-0 m-auto flex md:w-full md:m-auto gap-0 md:gap-2 justify-center'>
