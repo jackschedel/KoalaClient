@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import useStore from '@store/store';
 import i18n from './i18n';
 
@@ -16,10 +16,8 @@ import { Theme } from '@type/theme';
 import ApiPopup from '@components/ApiPopup';
 import Toast from '@components/Toast';
 import isElectron from '@utils/electron';
-import GlobalContext from '@hooks/GlobalContext';
 
 function App() {
-  const initialiseNewChat = useInitialiseNewChat();
   const setChats = useStore((state) => state.setChats);
   const setTheme = useStore((state) => state.setTheme);
   const setApiKey = useStore((state) => state.setApiKey);
@@ -27,33 +25,29 @@ function App() {
   const setCurrentChatIndex = useStore((state) => state.setCurrentChatIndex);
   const setHideSideMenu = useStore((state) => state.setHideSideMenu);
   const hideSideMenu = useStore((state) => state.hideSideMenu);
+  const bottomMessageRef = useStore((state) => state.bottomMessageRef);
+
+  const initialiseNewChat = useInitialiseNewChat();
   const addChat = useAddChat();
   const goBack = useGoBack();
   const goForward = useGoForward();
   const copyCodeBlock = useCopyCodeBlock();
   const { handleSubmit } = useSubmit();
 
-  const [sharedTextareaRef, setSharedTextareaRef] =
-    useState<React.RefObject<HTMLTextAreaElement> | null>(null);
-
-  const setRef = (newRef: React.RefObject<HTMLTextAreaElement> | null) => {
-    setSharedTextareaRef(newRef);
-  };
-
   const handleGenerate = () => {
     if (useStore.getState().generating) return;
     const updatedChats: ChatInterface[] = JSON.parse(
       JSON.stringify(useStore.getState().chats)
     );
-    const content = sharedTextareaRef?.current?.value;
+    const content = bottomMessageRef?.current?.value;
     const updatedMessages = updatedChats[currentChatIndex].messages;
     if (!content) {
       return;
     }
 
     updatedMessages.push({ role: 'user', content: content });
-    if (sharedTextareaRef && sharedTextareaRef.current) {
-      sharedTextareaRef.current.value = '';
+    if (bottomMessageRef && bottomMessageRef?.current) {
+      bottomMessageRef.current.value = '';
     }
 
     setChats(updatedChats);
@@ -74,8 +68,8 @@ function App() {
       }
 
       updatedMessages.push({ role: 'user', content: text });
-      if (sharedTextareaRef && sharedTextareaRef.current) {
-        sharedTextareaRef.current.value = '';
+      if (bottomMessageRef && bottomMessageRef.current) {
+        bottomMessageRef.current.value = '';
       }
 
       setChats(updatedChats);
@@ -98,7 +92,7 @@ function App() {
     if (e.ctrlKey && e.key === 'n') {
       e.preventDefault();
       addChat();
-      sharedTextareaRef?.current?.focus();
+      bottomMessageRef?.current?.focus();
     }
 
     // ctrl+o - Copy code block
@@ -110,7 +104,7 @@ function App() {
     // ctrl+g - Focus textarea
     if (e.ctrlKey && e.key === 'g') {
       e.preventDefault();
-      sharedTextareaRef?.current?.focus();
+      bottomMessageRef?.current?.focus();
     }
 
     // ctrl+s - Save bottom message + generate
@@ -229,19 +223,17 @@ function App() {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ ref: sharedTextareaRef, setRef }}>
-      <div
-        tabIndex={0}
-        className='overflow-hidden w-full h-full relative'
-        onKeyDown={handleKeyDown}
-        onMouseUp={handleMouseUp}
-      >
-        <Menu />
-        <Chat />
-        <ApiPopup />
-        <Toast />
-      </div>
-    </GlobalContext.Provider>
+    <div
+      tabIndex={0}
+      className='overflow-hidden w-full h-full relative'
+      onKeyDown={handleKeyDown}
+      onMouseUp={handleMouseUp}
+    >
+      <Menu />
+      <Chat />
+      <ApiPopup />
+      <Toast />
+    </div>
   );
 }
 

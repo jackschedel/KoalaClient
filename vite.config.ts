@@ -20,4 +20,7 @@ export default defineConfig({
     },
   },
   base: './',
+  optimizeDeps: {
+    include: ['@chengsokdara/use-whisper > lamejs'],
+  },
 });

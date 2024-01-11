@@ -11,17 +11,25 @@ const NewMessageButton = React.memo(
     const setChats = useStore((state) => state.setChats);
     const currentChatIndex = useStore((state) => state.currentChatIndex);
     const setCurrentChatIndex = useStore((state) => state.setCurrentChatIndex);
+    const autoTitle = useStore((state) => state.autoTitle);
 
     const addChat = () => {
       const chats = useStore.getState().chats;
       if (chats) {
         const updatedChats: ChatInterface[] = JSON.parse(JSON.stringify(chats));
         let titleIndex = 1;
-        let title = `New Chat ${titleIndex}`;
-
-        while (chats.some((chat) => chat.title === title)) {
-          titleIndex += 1;
+        let title: string;
+        if (!autoTitle) {
           title = `New Chat ${titleIndex}`;
+        } else {
+          title = `New Chat`;
+        }
+
+        if (!autoTitle) {
+          while (chats.some((chat) => chat.title === title)) {
+            titleIndex += 1;
+            title = `New Chat ${titleIndex}`;
+          }
         }
 
         updatedChats.unshift(generateDefaultChat(title));

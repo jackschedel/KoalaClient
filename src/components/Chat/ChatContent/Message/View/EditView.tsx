@@ -1,7 +1,6 @@
-import React, { memo, useContext, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useStore from '@store/store';
-import isElectron from '@utils/electron';
 import useSubmit from '@hooks/useSubmit';
 
 import { ChatInterface } from '@type/chat';
@@ -11,7 +10,6 @@ import TokenCount from '@components/TokenCount';
 import CommandPrompt from '../CommandPrompt';
 
 import WhisperRecord from '../WhisperRecord';
-import GlobalContext from '@hooks/GlobalContext';
 
 const EditView = ({
   content,
@@ -35,12 +33,12 @@ const EditView = ({
   const [_content, _setContent] = useState<string>(content);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const { setRef } = useContext(GlobalContext);
+  const setBottomMessageRef = useStore((state) => state.setBottomMessageRef);
   const { t } = useTranslation();
 
   useEffect(() => {
     if (sticky) {
-      setRef(textareaRef);
+      setBottomMessageRef(textareaRef);
     }
   }, [textareaRef]);
 
@@ -286,13 +284,11 @@ const EditViewButtons = memo(
         </div>
         <div className='flex-1 flex items-center justify-end'>
           {sticky && <TokenCount />}
-          {isElectron() && (
-            <WhisperRecord
-              cursorPosition={cursorPosition}
-              _setContent={_setContent}
-              messageIndex={messageIndex}
-            />
-          )}
+          <WhisperRecord
+            cursorPosition={cursorPosition}
+            _setContent={_setContent}
+            messageIndex={messageIndex}
+          />
           <CommandPrompt
             cursorPosition={cursorPosition}
             _setContent={_setContent}
