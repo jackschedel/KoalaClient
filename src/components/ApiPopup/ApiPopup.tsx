@@ -47,7 +47,7 @@ const ApiPopup = () => {
           </div>
           <input
             type='text'
-            className='text-custom-white p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+            className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
             value={_apiKey}
             onChange={(e) => {
               _setApiKey(e.target.value);

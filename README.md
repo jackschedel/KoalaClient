@@ -41,8 +41,9 @@
 ## 🌐 Website version
 
 - Access KoalaClient from the web, or via the desktop app.
-- https://client.koaladev.io/ is updated automatically with every commit
+- https://client.koaladev.io is updated automatically with every commit
 - Enable Google Sync to sync your chats across devices
+- Android/iOS mobile app via web-wrapper: https://median.co/share/exnwbx
 
 ## 🖥️ Desktop-focused development
 
