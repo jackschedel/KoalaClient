@@ -10,6 +10,7 @@ export interface ChatSlice {
   error: string;
   folders: FolderCollection;
   bottomMessageRef: RefObject<HTMLTextAreaElement> | null;
+  isRecording: boolean;
   setBottomMessageRef: (
     bottomMessageRef: RefObject<HTMLTextAreaElement> | null
   ) => void;
@@ -20,6 +21,7 @@ export interface ChatSlice {
   setError: (error: string) => void;
   setFolders: (folders: FolderCollection) => void;
   setConfirmEditSubmission: (confirmEditSubmission: boolean) => void;
+  setIsRecording: (isRecording: boolean) => void;
 }
 
 export const createChatSlice: StoreSlice<ChatSlice> = (set) => ({
@@ -29,6 +31,13 @@ export const createChatSlice: StoreSlice<ChatSlice> = (set) => ({
   error: '',
   folders: {},
   bottomMessageRef: null,
+  isRecording: false,
+  setIsRecording: (isRecording: boolean) => {
+    set((prev: ChatSlice) => ({
+      ...prev,
+      isRecording: isRecording,
+    }));
+  },
   setBottomMessageRef: (
     bottomMessageRef: RefObject<HTMLTextAreaElement> | null
   ) => {

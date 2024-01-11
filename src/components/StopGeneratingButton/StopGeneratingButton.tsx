@@ -4,8 +4,9 @@ import useStore from '@store/store';
 const StopGeneratingButton = () => {
   const setGenerating = useStore((state) => state.setGenerating);
   const generating = useStore((state) => state.generating);
+  const isRecording = useStore((state) => state.isRecording);
 
-  return generating ? (
+  return generating && !isRecording ? (
     <div
       className='absolute bottom-6 left-0 right-0 m-auto flex md:w-full md:m-auto gap-0 md:gap-2 justify-center'
       style={{ pointerEvents: 'none' }}

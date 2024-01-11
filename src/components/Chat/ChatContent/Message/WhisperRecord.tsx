@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useWhisper } from '@chengsokdara/use-whisper';
 import useStore from '@store/store';
 import StopIcon from '@icon/StopIcon';
@@ -17,7 +17,10 @@ const WhisperRecord = ({
   const { t } = useTranslation('api');
   let apiKey = useStore((state) => state.apiKey);
   const setGenerating = useStore((state) => state.setGenerating);
+  const generating = useStore((state) => state.generating);
   const setError = useStore((state) => state.setError);
+  const setIsRecording = useStore((state) => state.setIsRecording);
+  const isRecording = useStore((state) => state.isRecording);
   apiKey = apiKey || '0';
 
   const { transcript, startRecording, stopRecording } = useWhisper({
@@ -25,15 +28,23 @@ const WhisperRecord = ({
   });
 
   useEffect(() => {
-    if (transcript.text != null) {
-      _setContent((prev) => {
-        return prev.replace('◯', transcript.text || '');
-      });
-      setGenerating(false);
+    if (generating) {
+      if (transcript.text != null) {
+        _setContent((prev) => {
+          return prev.replace('◯', transcript.text || '');
+        });
+        setGenerating(false);
+      }
     }
   }, [transcript.text]);
 
-  const [isRecording, setIsRecording] = useState(false);
+  useEffect(() => {
+    if (!generating) {
+      _setContent((prev) => {
+        return prev.replace('◯', '');
+      });
+    }
+  }, [generating]);
 
   const handleRecording = () => {
     if (apiKey != '0') {
@@ -84,9 +95,19 @@ const WhisperRecord = ({
               ? 'btn-primary'
               : 'btn-neutral-dark'
             : 'btn-primary'
-        } btn-small inline-flex p-0 h-8 w-8 items-center justify-center mr-3`}
+        } btn-small inline-flex p-0 h-8 w-8 items-center justify-center mr-3 ${
+          generating && !isRecording
+            ? 'cursor-not-allowed opacity-40'
+            : 'cursor-pointer opacity-100'
+        }
+
+`}
         aria-label='whisper'
-        onClick={handleRecording}
+        onClick={() => {
+          if (!generating || isRecording) {
+            handleRecording();
+          }
+        }}
       >
         {isRecording ? <StopIcon /> : <MicrophoneIcon />}
       </button>
