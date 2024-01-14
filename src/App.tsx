@@ -15,7 +15,7 @@ import { ChatInterface } from '@type/chat';
 import { Theme } from '@type/theme';
 import ApiPopup from '@components/ApiPopup';
 import Toast from '@components/Toast';
-import isElectron from '@utils/electron';
+import isElectron, { isMac } from '@utils/electron';
 
 function App() {
   const setChats = useStore((state) => state.setChats);
@@ -121,16 +121,18 @@ function App() {
       pasteSubmit();
     }
 
-    // ctrl+left - Previous chat
-    if (e.ctrlKey && e.key === 'ArrowLeft') {
-      e.preventDefault();
-      goBack();
-    }
+    if (isMac()) {
+      // ctrl+left - Previous chat
+      if (e.ctrlKey && e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goBack();
+      }
 
-    // ctrl+right - Next chat
-    if (e.ctrlKey && e.key === 'ArrowRight') {
-      e.preventDefault();
-      goForward();
+      // ctrl+right - Next chat
+      if (e.ctrlKey && e.key === 'ArrowRight') {
+        e.preventDefault();
+        goForward();
+      }
     }
   };
 

@@ -26,6 +26,13 @@ export default function isElectron() {
   return false;
 }
 
+export function isMac(): boolean {
+  if (typeof navigator !== 'undefined') {
+    return /Mac|iMac|Macintosh/.test(navigator.platform);
+  }
+  return false;
+}
+
 declare global {
   interface Window {
     electronAPI: {
