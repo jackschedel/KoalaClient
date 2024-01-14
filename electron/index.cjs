@@ -37,14 +37,16 @@ contextMenu({
 function handleSetCloseToTray(event, setting) {
   closeToTray = setting;
 
-  if (closeToTray && trayExists) {
-    winTray.destroy();
-    trayExists = false;
-  }
+  if (process.platform !== 'darwin') {
+    if (closeToTray && trayExists) {
+      winTray.destroy();
+      trayExists = false;
+    }
 
-  if (closeToTray && !trayExists) {
-    createTray(win);
-    trayExists = true;
+    if (closeToTray && !trayExists) {
+      createTray(win);
+      trayExists = true;
+    }
   }
 }
 
@@ -126,10 +128,8 @@ const createTray = (window) => {
 
   winTray.on('click', () => {
     if (win) {
-      if (!win.isVisible()) win.show();
-
       if (win.isMinimized()) win.restore();
-
+      if (!win.isVisible()) win.show();
       win.focus();
     }
   });
@@ -139,8 +139,14 @@ const createTray = (window) => {
   return winTray;
 };
 
+app.on('activate', () => {
+  if (win) {
+    win.show();
+  }
+});
+
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+  if (!(process.platform === 'darwin' && closeToTray)) {
     app.quit();
   }
 });
