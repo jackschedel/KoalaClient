@@ -2,28 +2,28 @@ import { defaultAPIEndpoint } from '@constants/auth';
 import { StoreSlice } from './store';
 
 export interface AuthSlice {
-  apiKey?: string;
-  apiEndpoint: string;
+  apiKeys: string[];
+  apiEndpoints: string[];
   firstVisit: boolean;
-  setApiKey: (apiKey: string) => void;
-  setApiEndpoint: (apiEndpoint: string) => void;
+  setApiKeys: (apiKey: string[]) => void;
+  setApiEndpoints: (apiEndpoint: string[]) => void;
   setFirstVisit: (firstVisit: boolean) => void;
 }
 
 export const createAuthSlice: StoreSlice<AuthSlice> = (set) => ({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY || undefined,
-  apiEndpoint: defaultAPIEndpoint,
+  apiKeys: [import.meta.env.VITE_OPENAI_API_KEY] || [],
+  apiEndpoints: [defaultAPIEndpoint],
   firstVisit: true,
-  setApiKey: (apiKey: string) => {
+  setApiKeys: (apiKeys: string[]) => {
     set((prev: AuthSlice) => ({
       ...prev,
-      apiKey: apiKey,
+      apiKeys: apiKeys,
     }));
   },
-  setApiEndpoint: (apiEndpoint: string) => {
+  setApiEndpoints: (apiEndpoints: string[]) => {
     set((prev: AuthSlice) => ({
       ...prev,
-      apiEndpoint: apiEndpoint,
+      apiEndpoints: apiEndpoints,
     }));
   },
   setFirstVisit: (firstVisit: boolean) => {

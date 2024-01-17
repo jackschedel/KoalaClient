@@ -6,6 +6,7 @@ import ApiMenu from '@components/ApiMenu';
 
 const Config = () => {
   const { t } = useTranslation();
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   return (
