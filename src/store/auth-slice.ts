@@ -1,5 +1,6 @@
 import { defaultAPIEndpoint } from '@constants/auth';
 import { EndpointAuth } from '@type/api';
+import { ModelDefinition } from '@type/chat';
 import { StoreSlice } from './store';
 
 export interface AuthSlice {
@@ -7,10 +8,12 @@ export interface AuthSlice {
   apiEndpoint: string;
   firstVisit: boolean;
   apiAuth: EndpointAuth[];
+  modelDefs: ModelDefinition[];
   setApiKey: (apiKey: string) => void;
   setApiEndpoint: (apiEndpoint: string) => void;
   setFirstVisit: (firstVisit: boolean) => void;
   setApiAuth: (apiAuth: EndpointAuth[]) => void;
+  setModelDefs: (modelDefs: ModelDefinition[]) => void;
 }
 
 export const createAuthSlice: StoreSlice<AuthSlice> = (set) => ({
@@ -18,6 +21,7 @@ export const createAuthSlice: StoreSlice<AuthSlice> = (set) => ({
   apiEndpoint: defaultAPIEndpoint,
   firstVisit: true,
   apiAuth: [{ endpoint: defaultAPIEndpoint, apiKey: '' }],
+  modelDefs: [],
   setApiKey: (apiKey: string) => {
     set((prev: AuthSlice) => ({
       ...prev,
@@ -40,6 +44,12 @@ export const createAuthSlice: StoreSlice<AuthSlice> = (set) => ({
     set((prev: AuthSlice) => ({
       ...prev,
       apiAuth,
+    }));
+  },
+  setModelDefs: (modelDefs: ModelDefinition[]) => {
+    set((prev: AuthSlice) => ({
+      ...prev,
+      modelDefs,
     }));
   },
 });

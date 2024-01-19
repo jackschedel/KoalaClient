@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import useStore from '@store/store';
 
@@ -7,6 +7,7 @@ import PopupModal from '@components/PopupModal';
 import CrossIcon from '@icon/CrossIcon';
 import PlusIcon from '@icon/PlusIcon';
 import { EndpointAuth } from '@type/api';
+import { ModelDefinition } from '@type/chat';
 
 const ApiMenu = ({
   setIsModalOpen,
@@ -17,16 +18,17 @@ const ApiMenu = ({
 
   const apiAuth = useStore((state) => state.apiAuth);
   const setApiAuth = useStore((state) => state.setApiAuth);
+  const modelDefs = useStore((state) => state.modelDefs);
+  const setModelDefs = useStore((state) => state.setModelDefs);
 
   const [_apiAuth, _setApiAuth] = useState<EndpointAuth[]>(apiAuth);
+  const [_modelDefs, _setModelDefs] = useState<ModelDefinition[]>(modelDefs);
 
   const handleSave = () => {
     setApiAuth(_apiAuth);
     setIsModalOpen(false);
     console.log(apiAuth);
   };
-
-  const container = useRef<HTMLDivElement>(null);
 
   const addApi = () => {
     _setApiAuth((prev) => {
@@ -52,7 +54,7 @@ const ApiMenu = ({
     >
       <div className='p-6 border-b border-custom-white text-custom-white'>
         <div className='min-w-fit text-custom-white text-sm flex flex-col gap-3 leading-relaxed'>
-          <div className='flex flex-col pt-6 max-w-full' ref={container}>
+          <div className='flex flex-col pt-6 max-w-full'>
             <div className='flex items-center border-b border-neutral-base/50 mb-1 p-1'>
               <div className='w-3/4'>
                 <div className='text-center font-bold p-2'>Endpoint</div>

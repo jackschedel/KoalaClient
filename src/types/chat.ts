@@ -51,6 +51,17 @@ export interface Folder {
   color?: string;
 }
 
+export type ModelDefinition = {
+  name: string;
+  model: string;
+  endpoint: string;
+  model_max_tokens: number;
+  model_max_context: number;
+  prompt_cost_1000: number;
+  completion_cost_1000: number;
+  swap_visible: boolean;
+};
+
 export type ModelChoice =
   | 'gpt-3.5-turbo'
   | 'gpt-3.5-turbo-1106'
