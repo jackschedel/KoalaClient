@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import useStore from '@store/store';
 
-import useHideOnOutsideClick from '@hooks/useHideOnOutsideClick';
-
 import PopupModal from '@components/PopupModal';
 
-import { availableEndpoints, defaultAPIEndpoint } from '@constants/auth';
-
-import DownChevronArrow from '@icon/DownChevronArrow';
+import CrossIcon from '@icon/CrossIcon';
+import PlusIcon from '@icon/PlusIcon';
+import { EndpointAuth } from '@type/api';
 
 const ApiMenu = ({
   setIsModalOpen,
@@ -17,18 +15,33 @@ const ApiMenu = ({
 }) => {
   const { t } = useTranslation(['main', 'api']);
 
-  const apiKeys = useStore((state) => state.apiKeys);
-  const setApiKeys = useStore((state) => state.setApiKeys);
-  const apiEndpoints = useStore((state) => state.apiEndpoints);
-  const setApiEndpoints = useStore((state) => state.setApiEndpoints);
+  const apiAuth = useStore((state) => state.apiAuth);
+  const setApiAuth = useStore((state) => state.setApiAuth);
 
-  const [_apiKeys, _setApiKeys] = useState<string[]>(apiKeys);
-  const [_apiEndpoints, _setApiEndpoints] = useState<string[]>(apiEndpoints);
+  const [_apiAuth, _setApiAuth] = useState<EndpointAuth[]>(apiAuth);
 
   const handleSave = () => {
-    setApiKeys(_apiKeys);
-    setApiEndpoints(_apiEndpoints);
+    setApiAuth(_apiAuth);
     setIsModalOpen(false);
+    console.log(apiAuth);
+  };
+
+  const container = useRef<HTMLDivElement>(null);
+
+  const addApi = () => {
+    _setApiAuth((prev) => {
+      const newApiAuth = [...prev];
+      newApiAuth.push({ endpoint: '', apiKey: '' });
+      return newApiAuth;
+    });
+  };
+
+  const deleteApi = (index: number) => {
+    _setApiAuth((prev) => {
+      const newApiAuth = [...prev];
+      newApiAuth.splice(1, index);
+      return newApiAuth;
+    });
   };
 
   return (
@@ -39,6 +52,64 @@ const ApiMenu = ({
     >
       <div className='p-6 border-b border-custom-white text-custom-white'>
         <div className='min-w-fit text-custom-white text-sm flex flex-col gap-3 leading-relaxed'>
+          <div className='flex flex-col pt-6 max-w-full' ref={container}>
+            {_apiAuth.map((auth, index) => (
+              <div
+                key={index}
+                className='flex items-center border-b border-neutral-base/50 mb-1 p-1'
+              >
+                <div className='sm:w-3/4 max-sm:flex-1 pr-2'>
+                  {index == 0 && (
+                    <div className='text-center font-bold p-2'>Endpoint</div>
+                  )}
+                  <input
+                    type='text'
+                    className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+                    value={auth.endpoint}
+                    onChange={(e) => {
+                      _setApiAuth((prev) => {
+                        const newApiKeys = [...prev];
+                        newApiKeys[index].endpoint = e.target.value;
+                        return newApiKeys;
+                      });
+                    }}
+                  />
+                </div>
+                <div className='sm:w-1/4 max-sm:flex-1 pl-2'>
+                  {index == 0 && (
+                    <div className='text-center font-bold p-2'>Key</div>
+                  )}
+                  <input
+                    type='password'
+                    className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+                    value={auth.apiKey}
+                    onChange={(e) => {
+                      _setApiAuth((prev) => {
+                        const newApiKeys = [...prev];
+                        newApiKeys[index].apiKey = e.target.value;
+                        return newApiKeys;
+                      });
+                    }}
+                  />
+                </div>
+                <div className='flex-1'></div>
+                <div
+                  className='p-1 ml-2 hover:text-neutral-dark hover:bg-custom-white hover:rounded'
+                  onClick={() => deleteApi(index)}
+                >
+                  <CrossIcon />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className='flex justify-center mt-0 mb-8'>
+            <div
+              className='cursor-pointer p-2 mt-0 rounded-xl btn btn-neutral'
+              onClick={addApi}
+            >
+              <PlusIcon />
+            </div>
+          </div>
           <p>
             <Trans
               i18nKey='apiKey.howTo'
@@ -54,7 +125,6 @@ const ApiMenu = ({
               ]}
             />
           </p>
-
           <p>{t('securityMessage', { ns: 'api' })}</p>
         </div>
       </div>

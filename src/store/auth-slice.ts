@@ -1,35 +1,45 @@
 import { defaultAPIEndpoint } from '@constants/auth';
+import { EndpointAuth } from '@type/api';
 import { StoreSlice } from './store';
 
 export interface AuthSlice {
-  apiKeys: string[];
-  apiEndpoints: string[];
+  apiKey?: string;
+  apiEndpoint: string;
   firstVisit: boolean;
-  setApiKeys: (apiKey: string[]) => void;
-  setApiEndpoints: (apiEndpoint: string[]) => void;
+  apiAuth: EndpointAuth[];
+  setApiKey: (apiKey: string) => void;
+  setApiEndpoint: (apiEndpoint: string) => void;
   setFirstVisit: (firstVisit: boolean) => void;
+  setApiAuth: (apiAuth: EndpointAuth[]) => void;
 }
 
 export const createAuthSlice: StoreSlice<AuthSlice> = (set) => ({
-  apiKeys: [import.meta.env.VITE_OPENAI_API_KEY] || [],
-  apiEndpoints: [defaultAPIEndpoint],
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY || undefined,
+  apiEndpoint: defaultAPIEndpoint,
   firstVisit: true,
-  setApiKeys: (apiKeys: string[]) => {
+  apiAuth: [{ endpoint: defaultAPIEndpoint, apiKey: '' }],
+  setApiKey: (apiKey: string) => {
     set((prev: AuthSlice) => ({
       ...prev,
-      apiKeys: apiKeys,
+      apiKey: apiKey,
     }));
   },
-  setApiEndpoints: (apiEndpoints: string[]) => {
+  setApiEndpoint: (apiEndpoint: string) => {
     set((prev: AuthSlice) => ({
       ...prev,
-      apiEndpoints: apiEndpoints,
+      apiEndpoint: apiEndpoint,
     }));
   },
   setFirstVisit: (firstVisit: boolean) => {
     set((prev: AuthSlice) => ({
       ...prev,
       firstVisit: firstVisit,
+    }));
+  },
+  setApiAuth: (apiAuth: EndpointAuth[]) => {
+    set((prev: AuthSlice) => ({
+      ...prev,
+      apiAuth,
     }));
   },
 });
