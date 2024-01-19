@@ -53,15 +53,21 @@ const ApiMenu = ({
       <div className='p-6 border-b border-custom-white text-custom-white'>
         <div className='min-w-fit text-custom-white text-sm flex flex-col gap-3 leading-relaxed'>
           <div className='flex flex-col pt-6 max-w-full' ref={container}>
+            <div className='flex items-center border-b border-neutral-base/50 mb-1 p-1'>
+              <div className='w-3/4'>
+                <div className='text-center font-bold p-2'>Endpoint</div>
+              </div>
+              <div className='w-1/4'>
+                <div className='text-center font-bold p-2'>Key</div>
+              </div>
+              <div className='p-1 ml-2 h-4 w-4'></div>
+            </div>
             {_apiAuth.map((auth, index) => (
               <div
                 key={index}
                 className='flex items-center border-b border-neutral-base/50 mb-1 p-1'
               >
-                <div className='sm:w-3/4 max-sm:flex-1 pr-2'>
-                  {index == 0 && (
-                    <div className='text-center font-bold p-2'>Endpoint</div>
-                  )}
+                <div className='w-3/4  pr-2'>
                   <input
                     type='text'
                     className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
@@ -75,10 +81,7 @@ const ApiMenu = ({
                     }}
                   />
                 </div>
-                <div className='sm:w-1/4 max-sm:flex-1 pl-2'>
-                  {index == 0 && (
-                    <div className='text-center font-bold p-2'>Key</div>
-                  )}
+                <div className='w-1/4 pl-2'>
                   <input
                     type='password'
                     className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
@@ -92,7 +95,6 @@ const ApiMenu = ({
                     }}
                   />
                 </div>
-                <div className='flex-1'></div>
                 <div
                   className='p-1 ml-2 hover:text-neutral-dark hover:bg-custom-white hover:rounded'
                   onClick={() => deleteApi(index)}
