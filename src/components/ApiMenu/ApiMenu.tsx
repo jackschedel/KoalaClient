@@ -8,6 +8,7 @@ import CrossIcon from '@icon/CrossIcon';
 import PlusIcon from '@icon/PlusIcon';
 import { EndpointAuth } from '@type/api';
 import { ModelDefinition } from '@type/chat';
+import TickIcon from '@icon/TickIcon';
 
 const ApiMenu = ({
   setIsModalOpen,
@@ -26,8 +27,8 @@ const ApiMenu = ({
 
   const handleSave = () => {
     setApiAuth(_apiAuth);
+    setModelDefs(_modelDefs);
     setIsModalOpen(false);
-    console.log(apiAuth);
   };
 
   const addApi = () => {
@@ -37,12 +38,46 @@ const ApiMenu = ({
       return newApiAuth;
     });
   };
-
   const deleteApi = (index: number) => {
     _setApiAuth((prev) => {
       const newApiAuth = [...prev];
-      newApiAuth.splice(1, index);
+      newApiAuth.splice(index, 1);
       return newApiAuth;
+    });
+    const updatedModelDefs = _modelDefs.filter((modelDef) => {
+      if (modelDef.endpoint !== index) {
+        return true;
+      }
+    });
+    _modelDefs.forEach((modelDef) => {
+      if (modelDef.endpoint > index) {
+        modelDef.endpoint--;
+      }
+    });
+    _setModelDefs(updatedModelDefs);
+  };
+
+  const addModel = () => {
+    _setModelDefs((prev) => {
+      const newModelDefs = [...prev];
+      newModelDefs.push({
+        name: '',
+        model: '',
+        endpoint: 0,
+        model_max_context: 0,
+        model_max_tokens: 0,
+        prompt_cost_1000: 0,
+        completion_cost_1000: 0,
+        swap_visible: true,
+      });
+      return newModelDefs;
+    });
+  };
+  const deleteModel = (index: number) => {
+    _setModelDefs((prev) => {
+      const newModelDefs = [...prev];
+      newModelDefs.splice(index, 1);
+      return newModelDefs;
     });
   };
 
@@ -53,15 +88,11 @@ const ApiMenu = ({
       handleConfirm={handleSave}
     >
       <div className='p-6 border-b border-custom-white text-custom-white'>
-        <div className='min-w-fit text-custom-white text-sm flex flex-col gap-3 leading-relaxed'>
-          <div className='flex flex-col pt-6 max-w-full'>
+        <div className='min-w-fit text-custom-white text-sm flex flex-col gap-2 leading-relaxed'>
+          <div className='flex flex-col max-w-full'>
             <div className='flex items-center border-b border-neutral-base/50 mb-1 p-1'>
-              <div className='w-3/4'>
-                <div className='text-center font-bold p-2'>Endpoint</div>
-              </div>
-              <div className='w-1/4'>
-                <div className='text-center font-bold p-2'>Key</div>
-              </div>
+              <div className='w-3/4 text-center font-bold p-2'>Endpoint</div>
+              <div className='w-1/4 text-center font-bold p-2'>Key</div>
               <div className='p-1 ml-2 h-4 w-4'></div>
             </div>
             {_apiAuth.map((auth, index) => (
@@ -114,6 +145,162 @@ const ApiMenu = ({
               <PlusIcon />
             </div>
           </div>
+
+          <div className='flex flex-col max-w-full'>
+            <div className='text-center font-bold items-center border-b border-neutral-base/50 mb-1 p-1'>
+              Models
+            </div>
+            {_modelDefs.map((modelDef, index) => (
+              <div>
+                <div
+                  key={index}
+                  className='flex items-center border-b border-neutral-base/50 mb-1 p-1'
+                >
+                  <div className='flex-1  pr-1'>
+                    <input
+                      type='text'
+                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+                      placeholder='Nickname'
+                      value={modelDef.name}
+                      onChange={(e) => {
+                        _setModelDefs((prev) => {
+                          const newModelDefs = [...prev];
+                          newModelDefs[index].name = e.target.value;
+                          return newModelDefs;
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className='flex-1 px-1'>
+                    <input
+                      type='text'
+                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+                      placeholder='Model'
+                      value={modelDef.model}
+                      onChange={(e) => {
+                        _setModelDefs((prev) => {
+                          const newModelDefs = [...prev];
+                          newModelDefs[index].model = e.target.value;
+                          return newModelDefs;
+                        });
+                      }}
+                    />
+                  </div>
+                  <div className='flex-1 px-1'>
+                    {
+                      //dropdown
+                    }
+                  </div>
+                  <div
+                    className='p-1 ml-2 hover:text-neutral-dark hover:bg-custom-white hover:rounded'
+                    onClick={() => deleteModel(index)}
+                  >
+                    <CrossIcon />
+                  </div>
+                </div>
+                <div
+                  key={index}
+                  className='flex items-center border-b border-neutral-base/50 mb-1 p-1'
+                >
+                  <div className='flex-1  pr-1'>
+                    <input
+                      type='text'
+                      pattern='[0-9]*'
+                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+                      placeholder='Max Tokens'
+                      value={modelDef.model_max_tokens || ''}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+
+                        if (!isNaN(value)) {
+                          _setModelDefs((prev) => {
+                            const newModelDefs = [...prev];
+                            newModelDefs[index].model_max_tokens = value;
+                            return newModelDefs;
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className='flex-1  pr-1'>
+                    <input
+                      type='text'
+                      pattern='[0-9]*'
+                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+                      placeholder='Max Context'
+                      value={modelDef.model_max_context || ''}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+
+                        if (!isNaN(value)) {
+                          _setModelDefs((prev) => {
+                            const newModelDefs = [...prev];
+                            newModelDefs[index].model_max_context = value;
+                            return newModelDefs;
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className='flex-1  pr-1'>
+                    <input
+                      type='text'
+                      pattern='[0-9]*'
+                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+                      placeholder='Prompt Cost*'
+                      value={modelDef.prompt_cost_1000 || ''}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+
+                        if (!isNaN(value)) {
+                          _setModelDefs((prev) => {
+                            const newModelDefs = [...prev];
+                            newModelDefs[index].prompt_cost_1000 = value;
+                            return newModelDefs;
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className='flex-1  pr-1'>
+                    <input
+                      type='text'
+                      pattern='[0-9]*'
+                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+                      placeholder='Completion Cost*'
+                      value={modelDef.completion_cost_1000 || ''}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+
+                        if (!isNaN(value)) {
+                          _setModelDefs((prev) => {
+                            const newModelDefs = [...prev];
+                            newModelDefs[index].completion_cost_1000 = value;
+                            return newModelDefs;
+                          });
+                        }
+                      }}
+                    />
+                  </div>
+                  <div
+                    className='p-1 ml-2 hover:text-neutral-dark hover:bg-custom-white hover:rounded'
+                    onClick={() => deleteModel(index)}
+                  >
+                    <TickIcon />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className='flex justify-center mt-0 mb-8'>
+            <div
+              className='cursor-pointer p-2 mt-0 rounded-xl btn btn-neutral'
+              onClick={addModel}
+            >
+              <PlusIcon />
+            </div>
+          </div>
+          <p>* Prompt costs are in dollars per 1000 tokens.</p>
           <p>
             <Trans
               i18nKey='apiKey.howTo'
@@ -127,9 +314,9 @@ const ApiMenu = ({
                   rel='noreferrer'
                 />,
               ]}
-            />
+            />{' '}
+            {t('securityMessage', { ns: 'api' })}
           </p>
-          <p>{t('securityMessage', { ns: 'api' })}</p>
         </div>
       </div>
     </PopupModal>

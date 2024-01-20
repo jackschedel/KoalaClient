@@ -21,7 +21,18 @@ export const createAuthSlice: StoreSlice<AuthSlice> = (set) => ({
   apiEndpoint: defaultAPIEndpoint,
   firstVisit: true,
   apiAuth: [{ endpoint: defaultAPIEndpoint, apiKey: '' }],
-  modelDefs: [],
+  modelDefs: [
+    {
+      name: '',
+      model: '',
+      endpoint: 0,
+      model_max_context: 0,
+      model_max_tokens: 0,
+      prompt_cost_1000: 0,
+      completion_cost_1000: 0,
+      swap_visible: true,
+    },
+  ],
   setApiKey: (apiKey: string) => {
     set((prev: AuthSlice) => ({
       ...prev,
