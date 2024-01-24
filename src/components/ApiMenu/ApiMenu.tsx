@@ -8,7 +8,8 @@ import CrossIcon from '@icon/CrossIcon';
 import PlusIcon from '@icon/PlusIcon';
 import { EndpointAuth } from '@type/api';
 import { ModelDefinition } from '@type/chat';
-import TickIcon from '@icon/TickIcon';
+import HiddenIcon from '@icon/HiddenIcon';
+import VisibleIcon from '@icon/VisibleIcon';
 
 const ApiMenu = ({
   setIsModalOpen,
@@ -73,6 +74,15 @@ const ApiMenu = ({
       return newModelDefs;
     });
   };
+
+  const setHideModel = (index: number, value: boolean) => {
+    _setModelDefs((prev) => {
+      const newModelDefs = [...prev];
+      newModelDefs[index].swap_visible = value;
+      return newModelDefs;
+    });
+  };
+
   const deleteModel = (index: number) => {
     _setModelDefs((prev) => {
       const newModelDefs = [...prev];
@@ -97,7 +107,7 @@ const ApiMenu = ({
             </div>
             {_apiAuth.map((auth, index) => (
               <div
-                key={index}
+                key={'api' + index}
                 className='flex items-center border-b border-neutral-base/50 mb-1 p-1'
               >
                 <div className='w-3/4  pr-2'>
@@ -151,11 +161,8 @@ const ApiMenu = ({
               Models
             </div>
             {_modelDefs.map((modelDef, index) => (
-              <div>
-                <div
-                  key={index}
-                  className='flex items-center border-b border-neutral-base/50 mb-1 p-1'
-                >
+              <div key={'model' + index}>
+                <div className='flex items-center border-b border-neutral-base/50 mb-1 p-1'>
                   <div className='flex-1  pr-1'>
                     <input
                       type='text'
@@ -198,10 +205,7 @@ const ApiMenu = ({
                     <CrossIcon />
                   </div>
                 </div>
-                <div
-                  key={index}
-                  className='flex items-center border-b border-neutral-base/50 mb-1 p-1'
-                >
+                <div className='flex items-center border-b border-neutral-base/50 mb-1 p-1'>
                   <div className='flex-1  pr-1'>
                     <input
                       type='text'
@@ -282,11 +286,12 @@ const ApiMenu = ({
                       }}
                     />
                   </div>
-                  <div
-                    className='p-1 ml-2 hover:text-neutral-dark hover:bg-custom-white hover:rounded'
-                    onClick={() => deleteModel(index)}
-                  >
-                    <TickIcon />
+                  <div className='p-1 ml-2 hover:text-custom-black hover:bg-custom-white hover:rounded'>
+                    {_modelDefs[index].swap_visible ? (
+                      <VisibleIcon onClick={() => setHideModel(index, false)} />
+                    ) : (
+                      <HiddenIcon onClick={() => setHideModel(index, true)} />
+                    )}
                   </div>
                 </div>
               </div>
