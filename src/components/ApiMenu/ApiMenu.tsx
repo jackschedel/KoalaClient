@@ -11,6 +11,8 @@ import { ModelDefinition } from '@type/chat';
 import HiddenIcon from '@icon/HiddenIcon';
 import VisibleIcon from '@icon/VisibleIcon';
 
+import DownChevronArrow from '@icon/DownChevronArrow';
+
 const ApiMenu = ({
   setIsModalOpen,
 }: {
@@ -25,6 +27,8 @@ const ApiMenu = ({
 
   const [_apiAuth, _setApiAuth] = useState<EndpointAuth[]>(apiAuth);
   const [_modelDefs, _setModelDefs] = useState<ModelDefinition[]>(modelDefs);
+
+  const [activeDropdown, setActiveDropdown] = useState<null | number>(null);
 
   const handleSave = () => {
     setApiAuth(_apiAuth);
@@ -83,6 +87,14 @@ const ApiMenu = ({
     });
   };
 
+  const setModelEndpoint = (index: number, value: number) => {
+    _setModelDefs((prev) => {
+      const newModelDefs = [...prev];
+      newModelDefs[index].endpoint = value;
+      return newModelDefs;
+    });
+  };
+
   const deleteModel = (index: number) => {
     _setModelDefs((prev) => {
       const newModelDefs = [...prev];
@@ -97,12 +109,21 @@ const ApiMenu = ({
       setIsModalOpen={setIsModalOpen}
       handleConfirm={handleSave}
     >
-      <div className='p-6 border-b border-custom-white text-custom-white'>
+      <div
+        className='p-6 border-b border-custom-white text-custom-white'
+        onClick={() => {
+          if (activeDropdown != null) {
+            setActiveDropdown(null);
+          }
+        }}
+      >
         <div className='min-w-fit text-custom-white text-sm flex flex-col gap-2 leading-relaxed'>
           <div className='flex flex-col max-w-full'>
             <div className='flex items-center border-b border-neutral-base/50 mb-1 p-1'>
-              <div className='w-3/4 text-center font-bold p-2'>Endpoint</div>
-              <div className='w-1/4 text-center font-bold p-2'>Key</div>
+              <div className='w-3/4 text-center font-bold p-2'>
+                Endpoint URL
+              </div>
+              <div className='w-1/4 text-center font-bold p-2'>API Key</div>
               <div className='p-1 ml-2 h-4 w-4'></div>
             </div>
             {_apiAuth.map((auth, index) => (
@@ -161,9 +182,9 @@ const ApiMenu = ({
               Models
             </div>
             {_modelDefs.map((modelDef, index) => (
-              <div key={'model' + index}>
+              <div key={'model' + index} className='mb-4'>
                 <div className='flex items-center border-b border-neutral-base/50 mb-1 p-1'>
-                  <div className='flex-1  pr-1'>
+                  <div className='flex-1'>
                     <input
                       type='text'
                       className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
@@ -193,10 +214,54 @@ const ApiMenu = ({
                       }}
                     />
                   </div>
-                  <div className='flex-1 px-1'>
-                    {
-                      //dropdown
-                    }
+                  <div className='flex-1'>
+                    <button
+                      className='btn bg-custom-white text-custom-black btn-small overflow-clip relative pr-6 w-80'
+                      type='button'
+                      onClick={() => {
+                        if (activeDropdown === index) {
+                          setActiveDropdown(null);
+                        } else {
+                          setActiveDropdown(index);
+                        }
+                      }}
+                    >
+                      <span className='inline-block truncate max-w-full'>
+                        {_apiAuth[modelDef.endpoint].endpoint.replace(
+                          /^https?:\/\//,
+                          ''
+                        )}
+                      </span>
+
+                      <DownChevronArrow className='absolute right-0 mr-1 flex items-center' />
+                    </button>
+
+                    <div
+                      id='dropdown'
+                      className={`${
+                        activeDropdown != null && activeDropdown == index
+                          ? ''
+                          : 'hidden'
+                      } absolute top-100 bottom-100 z-10 w-80 bg-custom-white text-custom-black shadow-xl rounded-lg border border-neutral-base group`}
+                    >
+                      <ul
+                        className='text-sm p-0 m-0 max-h-72 overflow-clip'
+                        aria-labelledby='dropdownDefaultButton'
+                      >
+                        {_apiAuth.map((auth, authIndex) => (
+                          <li
+                            className='btn btn-small w-full overflow-clip hover:bg-neutral-light hover:text-custom-white cursor-pointer'
+                            onClick={() => {
+                              setModelEndpoint(index, authIndex);
+                              setActiveDropdown(null);
+                            }}
+                            key={'dropdown' + authIndex}
+                          >
+                            {auth.endpoint.replace(/^https?:\/\//, '')}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                   <div
                     className='p-1 ml-2 hover:text-neutral-dark hover:bg-custom-white hover:rounded'
@@ -205,7 +270,7 @@ const ApiMenu = ({
                     <CrossIcon />
                   </div>
                 </div>
-                <div className='flex items-center border-b border-neutral-base/50 mb-1 p-1'>
+                <div className='flex items-center border-b border-neutral-base/50 px-1'>
                   <div className='flex-1  pr-1'>
                     <input
                       type='text'
@@ -266,7 +331,7 @@ const ApiMenu = ({
                       }}
                     />
                   </div>
-                  <div className='flex-1  pr-1'>
+                  <div className='flex-1'>
                     <input
                       type='text'
                       pattern='[0-9]*'
@@ -306,6 +371,7 @@ const ApiMenu = ({
             </div>
           </div>
           <p>* Prompt costs are in dollars per 1000 tokens.</p>
+          <p>Note: deleting an endpoint will delete all asociated models.</p>
           <p>
             <Trans
               i18nKey='apiKey.howTo'
