@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import useStore from '@store/store';
 import { shallow } from 'zustand/shallow';
+import { ModelChoice } from '@type/chat';
 
 import countTokens from '@utils/messageUtils';
 import { modelCost } from '@constants/chat';
@@ -15,11 +16,16 @@ const TokenCount = React.memo(() => {
     shallow
   );
 
-  const model = useStore((state) =>
+  let model = useStore((state) =>
     state.chats
       ? state.chats[state.currentChatIndex].config.model
       : 'gpt-3.5-turbo'
   );
+
+  // stop modelcount null index if bad model value (i.e. from 2.0.9)
+  if (!model) {
+    model = 'gpt-3.5-turbo';
+  }
 
   const cost = useMemo(() => {
     const price =

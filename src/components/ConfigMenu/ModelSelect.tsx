@@ -42,6 +42,7 @@ export const ModelSelect = ({
                 switch (m) {
                   case 'gpt-4':
                   case 'gpt-4-32k':
+                  case 'gpt-4-1106-preview':
                   case 'gpt-4-turbo-preview':
                   case 'gpt-3.5-turbo':
                   case 'gpt-3.5-turbo-16k':
