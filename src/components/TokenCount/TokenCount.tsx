@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import useStore from '@store/store';
 import { shallow } from 'zustand/shallow';
-import { ModelChoice } from '@type/chat';
 
 import countTokens from '@utils/messageUtils';
 import { modelCost } from '@constants/chat';
