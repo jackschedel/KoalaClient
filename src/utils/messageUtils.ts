@@ -1,4 +1,9 @@
-import { MessageInterface, ModelChoice, TotalTokenUsed } from '@type/chat';
+import {
+  MessageInterface,
+  ModelChoice,
+  ModelDefinition,
+  TotalTokenUsed,
+} from '@type/chat';
 
 import useStore from '@store/store';
 
@@ -20,9 +25,9 @@ const encoder = new Tiktoken(
 // https://github.com/dqbd/tiktoken/issues/23#issuecomment-1483317174
 export const getChatGPTEncoding = (
   messages: MessageInterface[],
-  model: ModelChoice
+  model: ModelDefinition
 ) => {
-  const isGpt3 = model === 'gpt-3.5-turbo';
+  const isGpt3 = model.model === 'gpt-3.5-turbo';
 
   const msgSep = isGpt3 ? '\n' : '';
   const roleSep = isGpt3 ? '\n' : '<|im_sep|>';
@@ -39,7 +44,7 @@ export const getChatGPTEncoding = (
   return encoder.encode(serialized, 'all');
 };
 
-const countTokens = (messages: MessageInterface[], model: ModelChoice) => {
+const countTokens = (messages: MessageInterface[], model: ModelDefinition) => {
   if (messages.length === 0) return 0;
   return getChatGPTEncoding(messages, model).length;
 };

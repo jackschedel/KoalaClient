@@ -5,8 +5,6 @@ import { useTranslation } from 'react-i18next';
 import PopupModal from '@components/PopupModal';
 import {
   FrequencyPenaltySlider,
-  MaxContextSlider,
-  MaxTokenSlider,
   PresencePenaltySlider,
   TemperatureSlider,
   TopPSlider,
@@ -14,8 +12,8 @@ import {
 
 import { ModelSelect } from '@components/ConfigMenu/ModelSelect';
 
-import { ModelChoice } from '@type/chat';
 import { _defaultChatConfig, _defaultSystemMessage } from '@constants/chat';
+import { ModelChoice } from '@type/chat';
 
 const ChatConfigMenu = () => {
   const { t } = useTranslation('model');
@@ -49,6 +47,9 @@ const ChatConfigPopup = ({
     useStore.getState().defaultSystemMessage
   );
   const [_model, _setModel] = useState<ModelChoice>(config.model);
+  const [_modelSelection, _setModelSelection] = useState<number>(
+    config.model_selection
+  );
   const [_maxToken, _setMaxToken] = useState<number>(config.max_tokens);
   const [_maxContext, _setMaxContext] = useState<number>(
     config.max_context ?? 0
@@ -67,6 +68,7 @@ const ChatConfigPopup = ({
   const handleSave = () => {
     setDefaultChatConfig({
       model: _model,
+      model_selection: _modelSelection,
       max_tokens: _maxToken,
       max_context: _maxContext,
       temperature: _temperature,
@@ -99,20 +101,14 @@ const ChatConfigPopup = ({
         <label className='block text-sm font-medium text-custom-white pb-2'>
           {t('model')}:
         </label>
-        <ModelSelect _model={_model} _setModel={_setModel} />
+        <ModelSelect
+          _model={_modelSelection}
+          _setModel={_setModelSelection}
+          showHidden={true}
+        />
         <DefaultSystemChat
           _systemMessage={_systemMessage}
           _setSystemMessage={_setSystemMessage}
-        />
-        <MaxTokenSlider
-          _maxToken={_maxToken}
-          _setMaxToken={_setMaxToken}
-          _model={_model}
-        />
-        <MaxContextSlider
-          _maxContext={_maxContext}
-          _setMaxContext={_setMaxContext}
-          _model={_model}
         />
         <TemperatureSlider
           _temperature={_temperature}

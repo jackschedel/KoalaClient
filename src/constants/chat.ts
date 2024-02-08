@@ -107,9 +107,7 @@ export const defaultUserMaxToken = 4000;
 export const defaultUserMaxContext = 8000;
 
 export const _defaultChatConfig: ConfigInterface = {
-  model: defaultModel,
-  max_tokens: defaultUserMaxToken,
-  max_context: defaultUserMaxContext,
+  model_selection: 0,
   temperature: 1,
   presence_penalty: 0,
   top_p: 1,

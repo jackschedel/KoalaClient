@@ -119,6 +119,7 @@ const ApiMenu = ({
       >
         <div className='min-w-fit text-custom-white text-sm flex flex-col gap-2 leading-relaxed'>
           <div className='flex flex-col max-w-full'>
+            <p>Note: Deleting an endpoint will delete all asociated models.</p>
             <div className='flex items-center border-b border-neutral-base/50 mb-1 p-1'>
               <div className='w-3/4 text-center font-bold p-2'>
                 Endpoint URL
@@ -371,7 +372,9 @@ const ApiMenu = ({
             </div>
           </div>
           <p>* Prompt costs are in dollars per 1000 tokens.</p>
-          <p>Note: deleting an endpoint will delete all asociated models.</p>
+          <p>
+            Hiding a model option will only remove it from the top-bar dropdown.
+          </p>
           <p>
             <Trans
               i18nKey='apiKey.howTo'

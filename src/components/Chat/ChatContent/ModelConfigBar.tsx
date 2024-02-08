@@ -4,8 +4,7 @@ import { shallow } from 'zustand/shallow';
 import useStore from '@store/store';
 import ConfigMenu from '@components/ConfigMenu';
 import { ChatInterface, ConfigInterface } from '@type/chat';
-import { ModelChoice } from '@type/chat';
-import { _defaultChatConfig, modelMaxToken } from '@constants/chat';
+import { _defaultChatConfig } from '@constants/chat';
 import { ModelSelect } from '@components/ConfigMenu/ModelSelect';
 
 const ModelConfigBar = React.memo(() => {
@@ -47,40 +46,19 @@ const ModelConfigBar = React.memo(() => {
         <div className='sticky top-0 flex gap-x-1 gap-y-0 flex-wrap w-full items-center justify-center pt-0 pb-1'>
           <div className='flex -mb-3 mr-1 mt-1'>
             <ModelSelect
-              _model={config.model}
+              _model={config.model_selection}
               _setModel={(ac) => {
-                const newModel = ac.valueOf();
-
-                let newMaxTokens = config.max_tokens;
-                if (newMaxTokens > modelMaxToken[newModel as ModelChoice]) {
-                  newMaxTokens = modelMaxToken[newModel as ModelChoice];
-                }
+                const newModel = (ac.valueOf() as number) || 0;
 
                 const updatedConfig = {
                   ...config,
-                  max_tokens: Number(newMaxTokens.valueOf()),
-                  model: newModel as ModelChoice,
+                  model_selection: newModel as number,
                 };
 
                 setConfig(updatedConfig);
               }}
+              showHidden={false}
             />
-          </div>
-          <div
-            className='text-center p-1.5 rounded-md btn-neutral cursor-pointer'
-            onClick={() => {
-              setIsModalOpen(true);
-            }}
-          >
-            {t('token.label')}: {config.max_tokens}
-          </div>
-          <div
-            className='text-center p-1.5 rounded-md btn-neutral cursor-pointer'
-            onClick={() => {
-              setIsModalOpen(true);
-            }}
-          >
-            {t('context.label')}: {config.max_context}
           </div>
           <div
             className='text-center p-1.5 rounded-md btn-neutral cursor-pointer'
