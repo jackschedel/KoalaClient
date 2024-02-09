@@ -13,11 +13,7 @@ import {
   LocalStorageInterfaceV7ToV8,
   LocalStorageInterfaceV8ToV9,
 } from '@type/chat';
-import {
-  _defaultChatConfig,
-  defaultUserMaxContext,
-  defaultUserMaxToken,
-} from '@constants/chat';
+import { _defaultChatConfig, defaultUserMaxToken } from '@constants/chat';
 import { officialAPIEndpoint } from '@constants/auth';
 import defaultPrompts from '@constants/prompt';
 
@@ -111,7 +107,6 @@ export const migrateV8 = (persistedState: LocalStorageInterfaceV8ToV9) => {
   persistedState.chats.forEach((chat) => {
     chat.config = {
       ...chat.config,
-      max_context: defaultUserMaxContext,
     };
   });
 };

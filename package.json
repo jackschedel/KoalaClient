@@ -14,7 +14,7 @@
     "electron": "concurrently -k \"BROWSER=none yarn dev\" \"wait-on tcp:5173 && electron .\"",
     "pack": "yarn build && electron-builder --dir",
     "make": "yarn build && electron-builder",
-    "lint": "eslint ./src",
+    "lint": "tsc && eslint ./src",
     "errors": "eslint ./src --quiet",
     "format": "prettier --write ./"
   },

@@ -14,14 +14,20 @@ const TokenCount = React.memo(() => {
     shallow
   );
 
-  const model_num = useStore(
-    (state) =>
-      state.chats?.[state.currentChatIndex]?.config?.model_selection ?? 0
-  );
+  const modelDefs = useStore((state) => state.modelDefs);
+
+  const model_num = useStore((state) => {
+    const currentModelNum =
+      state.chats?.[state.currentChatIndex]?.config?.model_selection ?? 0;
+    return currentModelNum >= modelDefs.length ? 0 : currentModelNum;
+  });
 
   const model = useStore((state) => state.modelDefs[model_num]);
 
   const cost = useMemo(() => {
+    if (!model.prompt_cost_1000) {
+      return 0;
+    }
     const price = model.prompt_cost_1000 * (tokenCount / 1000);
     return price.toPrecision(3);
   }, [model, tokenCount]);
@@ -29,7 +35,7 @@ const TokenCount = React.memo(() => {
   useEffect(() => {
     if (!generating || updateOverride) {
       setUpdateOverride(!generating);
-      setTokenCount(countTokens(messages, model));
+      setTokenCount(countTokens(messages, model.name));
     }
   }, [messages, generating]);
 

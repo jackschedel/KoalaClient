@@ -118,9 +118,9 @@ export const updateTotalTokenUsed = (
   const newPromptTokens = countTokens(promptMessages, modelName);
   const newCompletionTokens = countTokens([completionMessage], modelName);
   const { promptTokens = 0, completionTokens = 0 } =
-    updatedTotalTokenUsed[modelName] ?? {};
+    updatedTotalTokenUsed[model] ?? {};
 
-  updatedTotalTokenUsed[modelName] = {
+  updatedTotalTokenUsed[model] = {
     promptTokens: promptTokens + newPromptTokens,
     completionTokens: completionTokens + newCompletionTokens,
   };

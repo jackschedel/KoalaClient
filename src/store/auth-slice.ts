@@ -8,7 +8,6 @@ export interface AuthSlice {
   apiAuth: EndpointAuth[];
   modelDefs: ModelDefinition[];
   setApiKey: (apiKey: string) => void;
-  setApiEndpoint: (apiEndpoint: string) => void;
   setFirstVisit: (firstVisit: boolean) => void;
   setApiAuth: (apiAuth: EndpointAuth[]) => void;
   setModelDefs: (modelDefs: ModelDefinition[]) => void;

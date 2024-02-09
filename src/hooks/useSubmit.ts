@@ -100,7 +100,9 @@ const useSubmit = () => {
       if (!apiKey || apiKey.length === 0) {
         // official endpoint
         if (apiEndpoint === officialAPIEndpoint) {
-          throw new Error(t('noApiKeyWarning') as string);
+          const error = new Error(t('noApiKeyWarning') as string);
+          setError(error.message);
+          throw error;
         }
 
         // other endpoints

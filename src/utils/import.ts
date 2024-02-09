@@ -59,9 +59,6 @@ const validateAndFixChatConfig = (config: ConfigInterface) => {
   }
   if (!(typeof config.frequency_penalty === 'number')) return false;
 
-  if (!config.model) config.model = defaultModel;
-  if (!modelOptions.includes(config.model)) return false;
-
   return true;
 };
 

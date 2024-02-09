@@ -1,7 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ModelChoice } from '@type/chat';
-import { modelMaxToken } from '@constants/chat';
 import useStore from '@store/store';
 
 export const MaxTokenSlider = ({
@@ -42,48 +40,6 @@ export const MaxTokenSlider = ({
       />
       <div className='min-w-fit text-custom-white text-sm mt-2'>
         {t('token.description')}
-      </div>
-    </div>
-  );
-};
-
-export const MaxContextSlider = ({
-  _maxContext,
-  _setMaxContext,
-  _model,
-}: {
-  _maxContext: number;
-  _setMaxContext: React.Dispatch<React.SetStateAction<number>>;
-  _model: ModelChoice;
-}) => {
-  const { t } = useTranslation('model');
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    inputRef &&
-      inputRef.current &&
-      _setMaxContext(Number(inputRef.current.value));
-  }, [_model]);
-
-  return (
-    <div className='mt-5 pt-5 border-t border-neutral-base'>
-      <label className='block text-sm font-medium text-custom-white'>
-        {t('context.label')}: {_maxContext}
-      </label>
-      <input
-        type='range'
-        ref={inputRef}
-        value={_maxContext}
-        onChange={(e) => {
-          _setMaxContext(Number(e.target.value));
-        }}
-        min={0}
-        max={modelMaxToken[_model]}
-        step={1}
-        className='w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer'
-      />
-      <div className='min-w-fit text-custom-white text-sm mt-2'>
-        {t('context.description')}
       </div>
     </div>
   );

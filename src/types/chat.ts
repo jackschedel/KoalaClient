@@ -62,7 +62,7 @@ export type ModelDefinition = {
 };
 
 export type TotalTokenUsed = {
-  [model in string]?: {
+  [model in number]?: {
     promptTokens: number;
     completionTokens: number;
   };

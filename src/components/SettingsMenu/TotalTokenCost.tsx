@@ -3,24 +3,26 @@ import { useTranslation } from 'react-i18next';
 
 import useStore from '@store/store';
 
-import { modelCost } from '@constants/chat';
 import Toggle from '@components/Toggle/Toggle';
 
-import { ModelChoice, TotalTokenUsed } from '@type/chat';
+import { TotalTokenUsed } from '@type/chat';
 
 import CalculatorIcon from '@icon/CalculatorIcon';
 
-type CostMapping = { model: string; cost: number }[];
+type CostMapping = { model: number; cost: number }[];
 
-const tokenCostToCost = (
-  tokenCost: TotalTokenUsed[ModelChoice],
-  model: ModelChoice
-) => {
+const tokenCostToCost = (tokenCost: TotalTokenUsed[number], model: number) => {
   if (!tokenCost) return 0;
-  const { prompt, completion } = modelCost[model as keyof typeof modelCost];
+  const modelDefs = useStore((state) => state.modelDefs);
+
+  const modelDef = modelDefs[model];
+
+  if (!modelDef) return 0;
+
   const completionCost =
-    (completion.price / completion.unit) * tokenCost.completionTokens;
-  const promptCost = (prompt.price / prompt.unit) * tokenCost.promptTokens;
+    (modelDef.completion_cost_1000 / 1000) * tokenCost.completionTokens;
+  const promptCost =
+    (modelDef.completion_cost_1000 / 1000) * tokenCost.promptTokens;
   return completionCost + promptCost;
 };
 
@@ -39,9 +41,12 @@ const TotalTokenCost = () => {
 
   useEffect(() => {
     const updatedCostMapping: CostMapping = [];
-    Object.entries(totalTokenUsed).forEach(([model, tokenCost]) => {
-      const cost = tokenCostToCost(tokenCost, model as ModelChoice);
-      updatedCostMapping.push({ model, cost });
+    Object.entries(totalTokenUsed).forEach(([key, tokenCost]) => {
+      const model = parseInt(key, 10);
+      if (!isNaN(model)) {
+        const cost = tokenCostToCost(tokenCost, model);
+        updatedCostMapping.push({ model, cost });
+      }
     });
 
     setCostMapping(updatedCostMapping);
@@ -117,8 +122,11 @@ export const TotalTokenCostDisplay = () => {
   useEffect(() => {
     let updatedTotalCost = 0;
 
-    Object.entries(totalTokenUsed).forEach(([model, tokenCost]) => {
-      updatedTotalCost += tokenCostToCost(tokenCost, model as ModelChoice);
+    Object.entries(totalTokenUsed).forEach(([key, tokenCost]) => {
+      const model = parseInt(key, 10);
+      if (!isNaN(model)) {
+        updatedTotalCost += tokenCostToCost(tokenCost, model);
+      }
     });
 
     setTotalCost(updatedTotalCost);
