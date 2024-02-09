@@ -121,14 +121,16 @@ export const TotalTokenCostDisplay = () => {
   const totalTokenUsed = useStore((state) => state.totalTokenUsed);
 
   const [totalCost, setTotalCost] = useState<number>(0);
+  const modelDefs = useStore((state) => state.modelDefs);
+  const costOfDeleted = useStore((state) => state.costOfDeleted);
 
   useEffect(() => {
-    let updatedTotalCost = 0;
+    let updatedTotalCost = costOfDeleted;
 
     Object.entries(totalTokenUsed).forEach(([key, tokenCost]) => {
       const model = parseInt(key, 10);
       if (!isNaN(model)) {
-        updatedTotalCost += tokenCostToCost(tokenCost, model);
+        updatedTotalCost += tokenCostToCost(tokenCost, model, modelDefs);
       }
     });
 
