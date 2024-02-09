@@ -15,7 +15,6 @@ import {
 } from '@type/chat';
 import {
   _defaultChatConfig,
-  defaultModel,
   defaultUserMaxContext,
   defaultUserMaxToken,
 } from '@constants/chat';

@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { ChatInterface, ConfigInterface, ModelChoice } from '@type/chat';
+import { ChatInterface, ConfigInterface } from '@type/chat';
 import useStore from '@store/store';
 
 // default system message obtained using the following method: https://twitter.com/DeminDimin/status/1619935545144279040
@@ -8,19 +8,6 @@ export const _defaultSystemMessage =
   `You are ChatGPT, a large language model trained by OpenAI.
 Carefully heed the user's instructions. 
 Respond using Markdown.`;
-
-export const modelOptions: ModelChoice[] = [
-  'gpt-3.5-turbo',
-  'gpt-3.5-turbo-16k',
-  'gpt-4-1106-preview',
-  'gpt-4',
-  'gpt-4-32k',
-  'claude-2',
-  'claude-instant-1',
-  'gpt-3.5-turbo-1106',
-];
-
-export const defaultModel = 'gpt-3.5-turbo';
 
 export const modelMaxToken = {
   'gpt-3.5-turbo': 4096,

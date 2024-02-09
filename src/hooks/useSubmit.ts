@@ -77,7 +77,7 @@ const useSubmit = () => {
     setChats(updatedChats);
     setGenerating(true);
 
-    let config = chats[currentChatIndex].config;
+    const config = chats[currentChatIndex].config;
 
     try {
       let stream;
@@ -100,10 +100,8 @@ const useSubmit = () => {
       );
       if (messages.length === 0) throw new Error('Message exceeds max token!');
 
-      try {
-        delete (config as any).max_context;
-      } catch (error) {}
-
+      // javascript is an abomination
+      delete (config as any).max_context;
       (config as any).model = modelDef.model;
 
       // no api key (free)
@@ -233,9 +231,8 @@ const useSubmit = () => {
         }
       }
     } catch (e: unknown) {
-      const err = (e as Error).message;
-      console.log(err);
-      setError(err);
+      setError((e as Error).message);
+      throw e;
     }
     setGenerating(false);
   };

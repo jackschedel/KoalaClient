@@ -1,4 +1,3 @@
-import useStore from '@store/store';
 import { ShareGPTSubmitBodyInterface } from '@type/api';
 import { ConfigInterface, MessageInterface, ModelDefinition } from '@type/chat';
 import { isAzureEndpoint, uuidv4 } from '@utils/api';
