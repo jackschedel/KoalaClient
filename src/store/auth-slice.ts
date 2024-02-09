@@ -4,8 +4,6 @@ import { ModelDefinition } from '@type/chat';
 import { StoreSlice } from './store';
 
 export interface AuthSlice {
-  apiKey?: string;
-  apiEndpoint: string;
   firstVisit: boolean;
   apiAuth: EndpointAuth[];
   modelDefs: ModelDefinition[];
@@ -17,19 +15,27 @@ export interface AuthSlice {
 }
 
 export const createAuthSlice: StoreSlice<AuthSlice> = (set) => ({
-  apiKey: import.meta.env.VITE_OPENAI_API_KEY || undefined,
-  apiEndpoint: defaultAPIEndpoint,
   firstVisit: true,
   apiAuth: [{ endpoint: defaultAPIEndpoint, apiKey: '' }],
   modelDefs: [
     {
-      name: '',
-      model: '',
+      name: 'gpt-3',
+      model: 'gpt-3.5-turbo',
       endpoint: 0,
-      model_max_context: 0,
-      model_max_tokens: 0,
-      prompt_cost_1000: 0,
-      completion_cost_1000: 0,
+      model_max_context: 4096,
+      model_max_tokens: 4096,
+      prompt_cost_1000: 0.0005,
+      completion_cost_1000: 0.0005,
+      swap_visible: true,
+    },
+    {
+      name: 'gpt-4',
+      model: 'gpt-4-turbo-preview',
+      endpoint: 0,
+      model_max_context: 4096,
+      model_max_tokens: 128000,
+      prompt_cost_1000: 0.01,
+      completion_cost_1000: 0.03,
       swap_visible: true,
     },
   ],

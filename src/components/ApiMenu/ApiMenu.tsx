@@ -118,8 +118,9 @@ const ApiMenu = ({
         }}
       >
         <div className='min-w-fit text-custom-white text-sm flex flex-col gap-2 leading-relaxed'>
+          <p>Deleting an endpoint will delete all asociated models.</p>
+          <p>Whisper record always uses the first endpoint.</p>
           <div className='flex flex-col max-w-full'>
-            <p>Note: Deleting an endpoint will delete all asociated models.</p>
             <div className='flex items-center border-b border-neutral-base/50 mb-1 p-1'>
               <div className='w-3/4 text-center font-bold p-2'>
                 Endpoint URL
@@ -164,7 +165,9 @@ const ApiMenu = ({
                   className='p-1 ml-2 hover:text-neutral-dark hover:bg-custom-white hover:rounded'
                   onClick={() => deleteApi(index)}
                 >
-                  <CrossIcon />
+                  <CrossIcon
+                    className={`${_apiAuth.length > 1 ? '' : 'invisible'}`}
+                  />
                 </div>
               </div>
             ))}
@@ -268,7 +271,9 @@ const ApiMenu = ({
                     className='p-1 ml-2 hover:text-neutral-dark hover:bg-custom-white hover:rounded'
                     onClick={() => deleteModel(index)}
                   >
-                    <CrossIcon />
+                    <CrossIcon
+                      className={`${_modelDefs.length > 1 ? '' : 'invisible'}`}
+                    />
                   </div>
                 </div>
                 <div className='flex items-center border-b border-neutral-base/50 px-1'>
@@ -372,6 +377,7 @@ const ApiMenu = ({
             </div>
           </div>
           <p>* Prompt costs are in dollars per 1000 tokens.</p>
+          <p>Title generation always uses the first model.</p>
           <p>
             Hiding a model option will only remove it from the top-bar dropdown.
           </p>
