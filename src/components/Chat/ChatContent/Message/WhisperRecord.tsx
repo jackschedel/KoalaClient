@@ -15,13 +15,14 @@ const WhisperRecord = ({
   messageIndex: number;
 }) => {
   const { t } = useTranslation('api');
-  let apiKey = useStore((state) => state.apiKey);
   const setGenerating = useStore((state) => state.setGenerating);
   const generating = useStore((state) => state.generating);
   const setError = useStore((state) => state.setError);
   const setIsRecording = useStore((state) => state.setIsRecording);
   const isRecording = useStore((state) => state.isRecording);
-  apiKey = apiKey || '0';
+  const apiAuth = useStore((state) => state.apiAuth);
+
+  const apiKey = apiAuth[0].apiKey || '0';
 
   const { transcript, startRecording, stopRecording } = useWhisper({
     apiKey,
