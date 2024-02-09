@@ -8,8 +8,7 @@ export const getChatCompletion = async (
   config: ConfigInterface,
   modelDef: ModelDefinition,
   apiKey?: string,
-  customHeaders?: Record<string, string>,
-  isTitleGen: boolean = false
+  customHeaders?: Record<string, string>
 ) => {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
@@ -20,13 +19,7 @@ export const getChatCompletion = async (
   if (isAzureEndpoint(endpoint) && apiKey) {
     headers['api-key'] = apiKey;
 
-    const modelName = isTitleGen
-      ? 'gpt-35-turbo'
-      : modelDef.name === 'gpt-3.5-turbo'
-        ? 'gpt-35-turbo'
-        : modelDef.name === 'gpt-3.5-turbo-16k'
-          ? 'gpt-35-turbo-16k'
-          : modelDef.name;
+    const modelName = modelDef.name;
 
     const apiVersion = '2023-03-15-preview';
 
@@ -38,10 +31,6 @@ export const getChatCompletion = async (
       }
       endpoint += path;
     }
-  }
-
-  if (isTitleGen) {
-    modelDef.name = 'gpt-3.5-turbo';
   }
 
   // todo: option in config
@@ -80,12 +69,7 @@ export const getChatCompletionStream = async (
   if (isAzureEndpoint(endpoint) && apiKey) {
     headers['api-key'] = apiKey;
 
-    const modelName =
-      modelDef.name === 'gpt-3.5-turbo'
-        ? 'gpt-35-turbo'
-        : modelDef.name === 'gpt-3.5-turbo-16k'
-          ? 'gpt-35-turbo-16k'
-          : modelDef.name;
+    const modelName = modelDef.name;
 
     const apiVersion = '2023-03-15-preview';
 

@@ -19,17 +19,14 @@ const useSubmit = () => {
   const apiAuth = useStore((state) => state.apiAuth);
 
   const generateTitle = async (
-    message: MessageInterface[]
+    message: MessageInterface[],
+    apiKey: string,
+    apiEndpoint: string
   ): Promise<string> => {
     let data;
 
     const config = _defaultChatConfig;
     const modelDef = modelDefs[config.model_selection];
-    const auth = apiAuth[modelDef.endpoint];
-    const apiKey = auth.apiKey;
-    const apiEndpoint = auth.endpoint;
-
-    (config as any).model = modelDef.model;
 
     try {
       if (!apiKey || apiKey.length === 0) {
@@ -39,16 +36,11 @@ const useSubmit = () => {
         }
 
         // other endpoints
-        data = await getChatCompletion(
-          useStore.getState().apiEndpoint,
-          message,
-          config,
-          modelDef
-        );
+        data = await getChatCompletion(apiEndpoint, message, config, modelDef);
       } else if (apiKey) {
         // own apikey
         data = await getChatCompletion(
-          useStore.getState().apiEndpoint,
+          apiEndpoint,
           message,
           config,
           modelDef,
@@ -113,7 +105,7 @@ const useSubmit = () => {
 
         // other endpoints
         stream = await getChatCompletionStream(
-          useStore.getState().apiEndpoint,
+          apiEndpoint,
           messages,
           config,
           modelDef
@@ -121,7 +113,7 @@ const useSubmit = () => {
       } else if (apiKey) {
         // own apikey
         stream = await getChatCompletionStream(
-          useStore.getState().apiEndpoint,
+          apiEndpoint,
           messages,
           config,
           modelDef,
@@ -210,7 +202,9 @@ const useSubmit = () => {
           content: `Generate a title in less than 6 words for the following message (language: ${i18n.language}):\n"""\nUser: ${user_message}\nAssistant: ${assistant_message}\n"""`,
         };
 
-        let title = (await generateTitle([message])).trim();
+        let title = (
+          await generateTitle([message], apiKey, apiEndpoint)
+        ).trim();
         if (title.startsWith('"') && title.endsWith('"')) {
           title = title.slice(1, -1);
         }
