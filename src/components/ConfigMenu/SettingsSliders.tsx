@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ModelChoice } from '@type/chat';
 import { modelMaxToken } from '@constants/chat';
+import useStore from '@store/store';
 
 export const MaxTokenSlider = ({
   _maxToken,
@@ -10,10 +11,11 @@ export const MaxTokenSlider = ({
 }: {
   _maxToken: number;
   _setMaxToken: React.Dispatch<React.SetStateAction<number>>;
-  _model: ModelChoice;
+  _model: number;
 }) => {
   const { t } = useTranslation('model');
   const inputRef = useRef<HTMLInputElement>(null);
+  const modelDefs = useStore((state) => state.modelDefs);
 
   useEffect(() => {
     inputRef &&
@@ -34,7 +36,7 @@ export const MaxTokenSlider = ({
           _setMaxToken(Number(e.target.value));
         }}
         min={0}
-        max={modelMaxToken[_model]}
+        max={modelDefs[_model].model_max_tokens}
         step={1}
         className='w-full h-2 bg-neutral-light rounded-lg appearance-none cursor-pointer'
       />

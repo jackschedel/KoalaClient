@@ -66,6 +66,14 @@ const ModelConfigBar = React.memo(() => {
               setIsModalOpen(true);
             }}
           >
+            {t('token.label')}: {config.max_tokens}
+          </div>
+          <div
+            className='text-center p-1.5 rounded-md btn-neutral cursor-pointer'
+            onClick={() => {
+              setIsModalOpen(true);
+            }}
+          >
             {t('temperature.label')}: {config.temperature}
           </div>
           <div

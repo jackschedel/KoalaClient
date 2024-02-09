@@ -56,7 +56,7 @@ export const migrateV4 = (persistedState: LocalStorageInterfaceV4ToV5) => {
   persistedState.chats.forEach((chat) => {
     chat.config = {
       ...chat.config,
-      model: defaultModel,
+      model_selection: 0,
     };
   });
 };

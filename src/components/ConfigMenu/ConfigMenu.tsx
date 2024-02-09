@@ -5,6 +5,7 @@ import { ConfigInterface } from '@type/chat';
 import { ModelSelect } from './ModelSelect';
 import {
   FrequencyPenaltySlider,
+  MaxTokenSlider,
   PresencePenaltySlider,
   TemperatureSlider,
   TopPSlider,
@@ -19,6 +20,7 @@ const ConfigMenu = ({
   config: ConfigInterface;
   setConfig: (config: ConfigInterface) => void;
 }) => {
+  const [_maxTokens, _setMaxTokens] = useState<number>(config.max_tokens);
   const [_modelSelection, _setModelSelection] = useState<number>(
     config.model_selection
   );
@@ -39,6 +41,7 @@ const ConfigMenu = ({
       presence_penalty: _presencePenalty,
       top_p: _topP,
       frequency_penalty: _frequencyPenalty,
+      max_tokens: _maxTokens,
     });
     setIsModalOpen(false);
   };
@@ -58,6 +61,11 @@ const ConfigMenu = ({
           _model={_modelSelection}
           _setModel={_setModelSelection}
           showHidden={true}
+        />
+        <MaxTokenSlider
+          _maxToken={_maxTokens}
+          _setMaxToken={_setMaxTokens}
+          _model={_modelSelection}
         />
         <TemperatureSlider
           _temperature={_temperature}

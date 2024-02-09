@@ -1,14 +1,8 @@
-import {
-  MessageInterface,
-  ModelChoice,
-  ModelDefinition,
-  TotalTokenUsed,
-} from '@type/chat';
+import { MessageInterface, TotalTokenUsed } from '@type/chat';
 
 import useStore from '@store/store';
 
 import { Tiktoken } from '@dqbd/tiktoken/lite';
-import { modelMaxToken } from '@constants/chat';
 const cl100k_base = await import('@dqbd/tiktoken/encoders/cl100k_base.json');
 
 const encoder = new Tiktoken(
@@ -25,9 +19,9 @@ const encoder = new Tiktoken(
 // https://github.com/dqbd/tiktoken/issues/23#issuecomment-1483317174
 export const getChatGPTEncoding = (
   messages: MessageInterface[],
-  model: ModelDefinition
+  model: string
 ) => {
-  const isGpt3 = model.model === 'gpt-3.5-turbo';
+  const isGpt3 = model === 'gpt-3.5-turbo';
 
   const msgSep = isGpt3 ? '\n' : '';
   const roleSep = isGpt3 ? '\n' : '<|im_sep|>';
@@ -44,7 +38,7 @@ export const getChatGPTEncoding = (
   return encoder.encode(serialized, 'all');
 };
 
-const countTokens = (messages: MessageInterface[], model: ModelDefinition) => {
+const countTokens = (messages: MessageInterface[], model: string) => {
   if (messages.length === 0) return 0;
   return getChatGPTEncoding(messages, model).length;
 };
@@ -52,9 +46,9 @@ const countTokens = (messages: MessageInterface[], model: ModelDefinition) => {
 export const limitMessageTokens = (
   messages: MessageInterface[],
   context_limit: number = 4096,
-  model: ModelChoice,
-  max_model_token: number = modelMaxToken[model],
-  token_limit: number
+  model: string,
+  max_model_token: number = 4096,
+  token_limit: number = 4096
 ): MessageInterface[] => {
   const limitedMessages: MessageInterface[] = [];
   let tokenCount = 0;
@@ -109,7 +103,7 @@ export const limitMessageTokens = (
 };
 
 export const updateTotalTokenUsed = (
-  model: ModelChoice,
+  model: number,
   promptMessages: MessageInterface[],
   completionMessage: MessageInterface
 ) => {
@@ -117,13 +111,16 @@ export const updateTotalTokenUsed = (
   const updatedTotalTokenUsed: TotalTokenUsed = JSON.parse(
     JSON.stringify(useStore.getState().totalTokenUsed)
   );
+  const modelDefs = useStore((state) => state.modelDefs);
 
-  const newPromptTokens = countTokens(promptMessages, model);
-  const newCompletionTokens = countTokens([completionMessage], model);
+  const modelName = modelDefs[model].name;
+
+  const newPromptTokens = countTokens(promptMessages, modelName);
+  const newCompletionTokens = countTokens([completionMessage], modelName);
   const { promptTokens = 0, completionTokens = 0 } =
-    updatedTotalTokenUsed[model] ?? {};
+    updatedTotalTokenUsed[modelName] ?? {};
 
-  updatedTotalTokenUsed[model] = {
+  updatedTotalTokenUsed[modelName] = {
     promptTokens: promptTokens + newPromptTokens,
     completionTokens: completionTokens + newCompletionTokens,
   };

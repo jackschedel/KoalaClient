@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import DownChevronArrow from '@icon/DownChevronArrow';
 import useHideOnOutsideClick from '@hooks/useHideOnOutsideClick';
 import useStore from '@store/store';

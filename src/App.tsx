@@ -112,7 +112,6 @@ function App() {
     // ctrl+p - New chat from clipboard (insta-generate)
     if (e.ctrlKey && e.key === 'p') {
       e.preventDefault();
-      console.log('test');
       addChat();
       pasteSubmit();
     }

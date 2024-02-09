@@ -25,6 +25,7 @@ export interface ConfigInterface {
   top_p: number;
   frequency_penalty: number;
   user?: string;
+  max_tokens: number;
 }
 
 export interface ChatHistoryInterface {
@@ -78,7 +79,7 @@ export type ModelChoice =
   | 'claude-instant-1';
 
 export type TotalTokenUsed = {
-  [model in ModelChoice]?: {
+  [model in string]?: {
     promptTokens: number;
     completionTokens: number;
   };

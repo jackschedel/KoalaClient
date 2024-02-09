@@ -4,19 +4,19 @@ import { ChatInterface, MessageInterface } from '@type/chat';
 import { getChatCompletion, getChatCompletionStream } from '@api/api';
 import { parseEventSource } from '@api/helper';
 import { limitMessageTokens, updateTotalTokenUsed } from '@utils/messageUtils';
-import { _defaultChatConfig, modelMaxToken } from '@constants/chat';
+import { _defaultChatConfig } from '@constants/chat';
 import { officialAPIEndpoint } from '@constants/auth';
 
 const useSubmit = () => {
   const { t, i18n } = useTranslation('api');
   const error = useStore((state) => state.error);
   const setError = useStore((state) => state.setError);
-  const apiEndpoint = useStore((state) => state.apiEndpoint);
-  const apiKey = useStore((state) => state.apiKey);
   const setGenerating = useStore((state) => state.setGenerating);
   const generating = useStore((state) => state.generating);
   const currentChatIndex = useStore((state) => state.currentChatIndex);
   const setChats = useStore((state) => state.setChats);
+  const modelDefs = useStore((state) => state.modelDefs);
+  const apiAuth = useStore((state) => state.apiAuth);
 
   const generateTitle = async (
     message: MessageInterface[]
@@ -24,8 +24,12 @@ const useSubmit = () => {
     let data;
 
     const config = _defaultChatConfig;
+    const modelDef = modelDefs[config.model_selection];
+    const auth = apiAuth[modelDef.endpoint];
+    const apiKey = auth.apiKey;
+    const apiEndpoint = auth.endpoint;
 
-    config.max_tokens = 100;
+    (config as any).model = modelDef.model;
 
     try {
       if (!apiKey || apiKey.length === 0) {
@@ -38,7 +42,8 @@ const useSubmit = () => {
         data = await getChatCompletion(
           useStore.getState().apiEndpoint,
           message,
-          config
+          config,
+          modelDef
         );
       } else if (apiKey) {
         // own apikey
@@ -46,6 +51,7 @@ const useSubmit = () => {
           useStore.getState().apiEndpoint,
           message,
           config,
+          modelDef,
           apiKey,
           undefined,
           true
@@ -71,20 +77,34 @@ const useSubmit = () => {
     setChats(updatedChats);
     setGenerating(true);
 
+    let config = chats[currentChatIndex].config;
+
     try {
       let stream;
       if (chats[currentChatIndex].messages.length === 0) {
         throw new Error('No messages submitted!');
       }
 
+      const modelDef = modelDefs[config.model_selection];
+
+      const auth = apiAuth[modelDef.endpoint];
+      const apiKey = auth.apiKey;
+      const apiEndpoint = auth.endpoint;
+
       const messages = limitMessageTokens(
         chats[currentChatIndex].messages,
-        chats[currentChatIndex].config.max_context,
-        chats[currentChatIndex].config.model,
-        modelMaxToken[chats[currentChatIndex].config.model],
-        chats[currentChatIndex].config.max_tokens
+        modelDef.model_max_context,
+        modelDef.model,
+        modelDef.model_max_tokens,
+        config.max_tokens
       );
-      if (messages.length === 0) throw new Error('Message exceed max token!');
+      if (messages.length === 0) throw new Error('Message exceeds max token!');
+
+      try {
+        delete (config as any).max_context;
+      } catch (error) {}
+
+      (config as any).model = modelDef.model;
 
       // no api key (free)
       if (!apiKey || apiKey.length === 0) {
@@ -97,14 +117,16 @@ const useSubmit = () => {
         stream = await getChatCompletionStream(
           useStore.getState().apiEndpoint,
           messages,
-          chats[currentChatIndex].config
+          config,
+          modelDef
         );
       } else if (apiKey) {
         // own apikey
         stream = await getChatCompletionStream(
           useStore.getState().apiEndpoint,
           messages,
-          chats[currentChatIndex].config,
+          config,
+          modelDef,
           apiKey
         );
       }
@@ -160,7 +182,7 @@ const useSubmit = () => {
       const countTotalTokens = useStore.getState().countTotalTokens;
 
       if (currChats && countTotalTokens) {
-        const model = currChats[currentChatIndex].config.model;
+        const model = config.model_selection;
         const messages = currChats[currentChatIndex].messages;
         updateTotalTokenUsed(
           model,
@@ -203,7 +225,7 @@ const useSubmit = () => {
 
         // update tokens used for generating title
         if (countTotalTokens) {
-          const model = _defaultChatConfig.model;
+          const model = config.model_selection;
           updateTotalTokenUsed(model, [message], {
             role: 'assistant',
             content: title,
