@@ -26,8 +26,9 @@ const useSubmit = () => {
     let data;
 
     const config = _defaultChatConfig;
-    const modelDef = modelDefs[config.model_selection];
+    const modelDef = modelDefs[0];
 
+    (config as any).model = modelDef.model;
     try {
       if (!apiKey || apiKey.length === 0) {
         // official endpoint
@@ -45,8 +46,7 @@ const useSubmit = () => {
           config,
           modelDef,
           apiKey,
-          undefined,
-          true
+          undefined
         );
       }
     } catch (error: unknown) {

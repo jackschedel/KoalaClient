@@ -13,7 +13,6 @@ import {
 import { ModelSelect } from '@components/ConfigMenu/ModelSelect';
 
 import { _defaultChatConfig, _defaultSystemMessage } from '@constants/chat';
-import { ModelChoice } from '@type/chat';
 
 const ChatConfigMenu = () => {
   const { t } = useTranslation('model');
@@ -46,14 +45,10 @@ const ChatConfigPopup = ({
   const [_systemMessage, _setSystemMessage] = useState<string>(
     useStore.getState().defaultSystemMessage
   );
-  const [_model, _setModel] = useState<ModelChoice>(config.model);
   const [_modelSelection, _setModelSelection] = useState<number>(
     config.model_selection
   );
   const [_maxToken, _setMaxToken] = useState<number>(config.max_tokens);
-  const [_maxContext, _setMaxContext] = useState<number>(
-    config.max_context ?? 0
-  );
   const [_temperature, _setTemperature] = useState<number>(config.temperature);
   const [_topP, _setTopP] = useState<number>(config.top_p);
   const [_presencePenalty, _setPresencePenalty] = useState<number>(
@@ -67,10 +62,8 @@ const ChatConfigPopup = ({
 
   const handleSave = () => {
     setDefaultChatConfig({
-      model: _model,
       model_selection: _modelSelection,
       max_tokens: _maxToken,
-      max_context: _maxContext,
       temperature: _temperature,
       top_p: _topP,
       presence_penalty: _presencePenalty,
@@ -81,9 +74,7 @@ const ChatConfigPopup = ({
   };
 
   const handleReset = () => {
-    _setModel(_defaultChatConfig.model);
     _setMaxToken(_defaultChatConfig.max_tokens);
-    _setMaxContext(_defaultChatConfig.max_context ?? 0);
     _setTemperature(_defaultChatConfig.temperature);
     _setTopP(_defaultChatConfig.top_p);
     _setPresencePenalty(_defaultChatConfig.presence_penalty);
