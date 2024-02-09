@@ -5,18 +5,20 @@ import useStore from '@store/store';
 
 import Toggle from '@components/Toggle/Toggle';
 
-import { TotalTokenUsed } from '@type/chat';
+import { ModelDefinition, TotalTokenUsed } from '@type/chat';
 
 import CalculatorIcon from '@icon/CalculatorIcon';
 
 type CostMapping = { model: number; cost: number }[];
 
-const tokenCostToCost = (tokenCost: TotalTokenUsed[number], model: number) => {
+const tokenCostToCost = (
+  tokenCost: TotalTokenUsed[number],
+  model: number,
+  modelDefs: ModelDefinition[]
+) => {
   if (!tokenCost) return 0;
-  const modelDefs = useStore((state) => state.modelDefs);
 
   const modelDef = modelDefs[model];
-
   if (!modelDef) return 0;
 
   const completionCost =
@@ -32,6 +34,7 @@ const TotalTokenCost = () => {
   const totalTokenUsed = useStore((state) => state.totalTokenUsed);
   const setTotalTokenUsed = useStore((state) => state.setTotalTokenUsed);
   const countTotalTokens = useStore((state) => state.countTotalTokens);
+  const modelDefs = useStore((state) => state.modelDefs);
 
   const [costMapping, setCostMapping] = useState<CostMapping>([]);
 
@@ -44,7 +47,7 @@ const TotalTokenCost = () => {
     Object.entries(totalTokenUsed).forEach(([key, tokenCost]) => {
       const model = parseInt(key, 10);
       if (!isNaN(model)) {
-        const cost = tokenCostToCost(tokenCost, model);
+        const cost = tokenCostToCost(tokenCost, model, modelDefs);
         updatedCostMapping.push({ model, cost });
       }
     });
@@ -68,7 +71,7 @@ const TotalTokenCost = () => {
                 key={model}
                 className='bg-neutral-light text-custom-white border-b-2 border-neutral-base'
               >
-                <td className='px-4 py-2'>{model}</td>
+                <td className='px-4 py-2'>{modelDefs[model].name}</td>
                 <td className='px-4 py-2'>{cost.toPrecision(3)}</td>
               </tr>
             ))}

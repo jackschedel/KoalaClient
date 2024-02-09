@@ -1,5 +1,6 @@
-import { MessageInterface, TotalTokenUsed } from '@type/chat';
+import { MessageInterface } from '@type/chat';
 
+import { useCallback } from 'react';
 import useStore from '@store/store';
 
 import { Tiktoken } from '@dqbd/tiktoken/lite';
@@ -102,29 +103,36 @@ export const limitMessageTokens = (
   return limitedMessages;
 };
 
-export const updateTotalTokenUsed = (
-  model: number,
-  promptMessages: MessageInterface[],
-  completionMessage: MessageInterface
-) => {
-  const setTotalTokenUsed = useStore.getState().setTotalTokenUsed;
-  const updatedTotalTokenUsed: TotalTokenUsed = JSON.parse(
-    JSON.stringify(useStore.getState().totalTokenUsed)
-  );
+export const useUpdateTotalTokenUsed = () => {
+  const setTotalTokenUsed = useStore((state) => state.setTotalTokenUsed);
+  const totalTokenUsed = useStore((state) => state.totalTokenUsed);
   const modelDefs = useStore((state) => state.modelDefs);
 
-  const modelName = modelDefs[model].name;
+  const updateTotalTokenUsed = useCallback(
+    (
+      model: number,
+      promptMessages: MessageInterface[],
+      completionMessage: MessageInterface
+    ) => {
+      const updatedTotalTokenUsed = JSON.parse(JSON.stringify(totalTokenUsed));
+      const modelName = modelDefs[model].name;
 
-  const newPromptTokens = countTokens(promptMessages, modelName);
-  const newCompletionTokens = countTokens([completionMessage], modelName);
-  const { promptTokens = 0, completionTokens = 0 } =
-    updatedTotalTokenUsed[model] ?? {};
+      const newPromptTokens = countTokens(promptMessages, modelName);
+      const newCompletionTokens = countTokens([completionMessage], modelName);
+      const { promptTokens = 0, completionTokens = 0 } =
+        updatedTotalTokenUsed[model] ?? {};
 
-  updatedTotalTokenUsed[model] = {
-    promptTokens: promptTokens + newPromptTokens,
-    completionTokens: completionTokens + newCompletionTokens,
-  };
-  setTotalTokenUsed(updatedTotalTokenUsed);
+      updatedTotalTokenUsed[model] = {
+        promptTokens: promptTokens + newPromptTokens,
+        completionTokens: completionTokens + newCompletionTokens,
+      };
+
+      setTotalTokenUsed(updatedTotalTokenUsed);
+    },
+    [setTotalTokenUsed, totalTokenUsed, modelDefs]
+  );
+
+  return updateTotalTokenUsed;
 };
 
 export default countTokens;

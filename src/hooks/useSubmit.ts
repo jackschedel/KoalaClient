@@ -3,7 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { ChatInterface, MessageInterface } from '@type/chat';
 import { getChatCompletion, getChatCompletionStream } from '@api/api';
 import { parseEventSource } from '@api/helper';
-import { limitMessageTokens, updateTotalTokenUsed } from '@utils/messageUtils';
+import {
+  limitMessageTokens,
+  useUpdateTotalTokenUsed,
+} from '@utils/messageUtils';
 import { _defaultChatConfig } from '@constants/chat';
 import { officialAPIEndpoint } from '@constants/auth';
 
@@ -17,6 +20,7 @@ const useSubmit = () => {
   const setChats = useStore((state) => state.setChats);
   const modelDefs = useStore((state) => state.modelDefs);
   const apiAuth = useStore((state) => state.apiAuth);
+  const updateTotalTokenUsed = useUpdateTotalTokenUsed();
 
   const generateTitle = async (
     message: MessageInterface[],
@@ -174,7 +178,7 @@ const useSubmit = () => {
       const countTotalTokens = useStore.getState().countTotalTokens;
 
       if (currChats && countTotalTokens) {
-        const model = config.model_selection;
+        const model = currChats[currentChatIndex].config.model_selection;
         const messages = currChats[currentChatIndex].messages;
         updateTotalTokenUsed(
           model,
