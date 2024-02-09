@@ -1,14 +1,14 @@
 import { ShareGPTSubmitBodyInterface } from '@type/api';
-import { ConfigInterface, MessageInterface } from '@type/chat';
+import { ConfigInterface, MessageInterface, ModelDefinition } from '@type/chat';
 import { isAzureEndpoint, uuidv4 } from '@utils/api';
 
 export const getChatCompletion = async (
   endpoint: string,
   messages: MessageInterface[],
   config: ConfigInterface,
+  modelDef: ModelDefinition,
   apiKey?: string,
-  customHeaders?: Record<string, string>,
-  isTitleGen: boolean = false
+  customHeaders?: Record<string, string>
 ) => {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
@@ -19,17 +19,11 @@ export const getChatCompletion = async (
   if (isAzureEndpoint(endpoint) && apiKey) {
     headers['api-key'] = apiKey;
 
-    const model = isTitleGen
-      ? 'gpt-35-turbo'
-      : config.model === 'gpt-3.5-turbo'
-        ? 'gpt-35-turbo'
-        : config.model === 'gpt-3.5-turbo-16k'
-          ? 'gpt-35-turbo-16k'
-          : config.model;
+    const modelName = modelDef.name;
 
     const apiVersion = '2023-03-15-preview';
 
-    const path = `openai/deployments/${model}/chat/completions?api-version=${apiVersion}`;
+    const path = `openai/deployments/${modelName}/chat/completions?api-version=${apiVersion}`;
 
     if (!endpoint.endsWith(path)) {
       if (!endpoint.endsWith('/')) {
@@ -39,15 +33,10 @@ export const getChatCompletion = async (
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  delete config.max_context;
-
-  if (isTitleGen) {
-    config.model = 'gpt-3.5-turbo';
-  }
-
   // todo: option in config
   config.user = uuidv4();
+
+  delete (config as any).model_selection;
 
   const response = await fetch(endpoint, {
     method: 'POST',
@@ -67,6 +56,7 @@ export const getChatCompletionStream = async (
   endpoint: string,
   messages: MessageInterface[],
   config: ConfigInterface,
+  modelDef: ModelDefinition,
   apiKey?: string,
   customHeaders?: Record<string, string>
 ) => {
@@ -74,21 +64,16 @@ export const getChatCompletionStream = async (
     'Content-Type': 'application/json',
     ...customHeaders,
   };
-  if (apiKey) headers.Authorization = `Bearer ${apiKey}`;
 
+  if (apiKey) headers.Authorization = `Bearer ${apiKey}`;
   if (isAzureEndpoint(endpoint) && apiKey) {
     headers['api-key'] = apiKey;
 
-    const model =
-      config.model === 'gpt-3.5-turbo'
-        ? 'gpt-35-turbo'
-        : config.model === 'gpt-3.5-turbo-16k'
-          ? 'gpt-35-turbo-16k'
-          : config.model;
+    const modelName = modelDef.name;
 
     const apiVersion = '2023-03-15-preview';
 
-    const path = `openai/deployments/${model}/chat/completions?api-version=${apiVersion}`;
+    const path = `openai/deployments/${modelName}/chat/completions?api-version=${apiVersion}`;
 
     if (!endpoint.endsWith(path)) {
       if (!endpoint.endsWith('/')) {
@@ -98,10 +83,10 @@ export const getChatCompletionStream = async (
     }
   }
 
-  delete config.max_context;
-
   // todo: option in config
   config.user = uuidv4();
+
+  delete (config as any).model_selection;
 
   const response = await fetch(endpoint, {
     method: 'POST',

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import PopupModal from '@components/PopupModal';
-import { ConfigInterface, ModelChoice } from '@type/chat';
+import { ConfigInterface } from '@type/chat';
 import { ModelSelect } from './ModelSelect';
 import {
   FrequencyPenaltySlider,
-  MaxContextSlider,
   MaxTokenSlider,
   PresencePenaltySlider,
   TemperatureSlider,
@@ -21,11 +20,10 @@ const ConfigMenu = ({
   config: ConfigInterface;
   setConfig: (config: ConfigInterface) => void;
 }) => {
-  const [_maxToken, _setMaxToken] = useState<number>(config.max_tokens);
-  const [_maxContext, _setMaxContext] = useState<number>(
-    config.max_context ?? 0
+  const [_maxTokens, _setMaxTokens] = useState<number>(config.max_tokens);
+  const [_modelSelection, _setModelSelection] = useState<number>(
+    config.model_selection
   );
-  const [_model, _setModel] = useState<ModelChoice>(config.model);
   const [_temperature, _setTemperature] = useState<number>(config.temperature);
   const [_presencePenalty, _setPresencePenalty] = useState<number>(
     config.presence_penalty
@@ -38,13 +36,12 @@ const ConfigMenu = ({
 
   const handleConfirm = () => {
     setConfig({
-      max_tokens: _maxToken,
-      max_context: _maxContext,
-      model: _model,
+      model_selection: _modelSelection,
       temperature: _temperature,
       presence_penalty: _presencePenalty,
       top_p: _topP,
       frequency_penalty: _frequencyPenalty,
+      max_tokens: _maxTokens,
     });
     setIsModalOpen(false);
   };
@@ -60,16 +57,15 @@ const ConfigMenu = ({
         <label className='block text-sm font-medium text-custom-white pb-2'>
           {t('model')}:
         </label>
-        <ModelSelect _model={_model} _setModel={_setModel} />
-        <MaxTokenSlider
-          _maxToken={_maxToken}
-          _setMaxToken={_setMaxToken}
-          _model={_model}
+        <ModelSelect
+          _model={_modelSelection}
+          _setModel={_setModelSelection}
+          showHidden={true}
         />
-        <MaxContextSlider
-          _maxContext={_maxContext}
-          _setMaxContext={_setMaxContext}
-          _model={_model}
+        <MaxTokenSlider
+          _maxToken={_maxTokens}
+          _setMaxToken={_setMaxTokens}
+          _model={_modelSelection}
         />
         <TemperatureSlider
           _temperature={_temperature}

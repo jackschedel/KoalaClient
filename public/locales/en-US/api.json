@@ -1,12 +1,12 @@
 {
-  "securityMessage": "This key is exclusively stored in your browser (and your personal Google Drive if using Sync) and is never touched by any servers related to KoalaClient.",
+  "securityMessage": "This key is exclusively stored in your browser (and your personal Google Drive if using Sync) and is never touched by any servers related to KoalaClient. Always verify the reliability of an API endpoint before using it to protect your privacy and security.",
   "apiEndpoint": {
-    "inputLabel": "API Endpoint",
+    "inputLabel": "API Endpoints",
     "description": "When you choose an unofficial API endpoint, it functions as a proxy. A proxy works by acting as an intermediary between your device and the destination server, in this case, the OpenAI API. By doing so, it enables you to access the OpenAI API in regions where it might otherwise be restricted.",
     "warn": "Additionally, if you provide a custom API endpoint that grants free access to the OpenAI API, you can use ChatGPT without the need to supply an API key by simply leaving the API key field blank. However, it's crucial to be cautious when using third-party API endpoints, as untrustworthy ones may log your personal information in the conversations. Always verify the reliability of an API endpoint before using it to protect your privacy and security."
   },
   "apiKey": {
-    "howTo": "Get your personal API key <0>here</0>.",
+    "howTo": "Get your personal OpenAI API key <0>here</0>.",
     "inputLabel": "API Key"
   },
   "customEndpoint": "Use custom API endpoint",

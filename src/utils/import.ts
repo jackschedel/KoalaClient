@@ -7,11 +7,7 @@ import {
   MessageInterface,
 } from '@type/chat';
 import { roles } from '@type/chat';
-import {
-  _defaultChatConfig,
-  defaultModel,
-  modelOptions,
-} from '@constants/chat';
+import { _defaultChatConfig } from '@constants/chat';
 import { ExportV1, OpenAIChat } from '@type/export';
 
 export const validateAndFixChats = (

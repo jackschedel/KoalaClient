@@ -1,17 +1,21 @@
 import React from 'react';
-import { ModelChoice } from '@type/chat';
 import DownChevronArrow from '@icon/DownChevronArrow';
-import { modelOptions } from '@constants/chat';
 import useHideOnOutsideClick from '@hooks/useHideOnOutsideClick';
+import useStore from '@store/store';
+import { StoreState } from '@store/store';
 
 export const ModelSelect = ({
   _model,
   _setModel,
+  showHidden,
 }: {
-  _model: ModelChoice;
-  _setModel: React.Dispatch<React.SetStateAction<ModelChoice>>;
+  _model: number | undefined | null;
+  _setModel: React.Dispatch<React.SetStateAction<number>>;
+  showHidden: boolean;
 }) => {
+  const model = _model || 0;
   const [dropDown, setDropDown, dropDownRef] = useHideOnOutsideClick();
+  const modelDefs = useStore((state: StoreState) => state.modelDefs);
 
   return (
     <div className='mb-4'>
@@ -21,7 +25,7 @@ export const ModelSelect = ({
         onClick={() => setDropDown((prev) => !prev)}
         aria-label='model'
       >
-        {_model}
+        {modelDefs[model]?.name}
         <DownChevronArrow />
       </button>
       <div
@@ -35,28 +39,20 @@ export const ModelSelect = ({
           className='text-sm p-0 m-0 max-h-72 overflow-auto'
           aria-labelledby='dropdownDefaultButton'
         >
-          {modelOptions.map((m) => (
-            <li
-              className='px-4 py-2 hover:bg-neutral-dark cursor-pointer text-custom-white'
-              onClick={() => {
-                switch (m) {
-                  case 'gpt-4':
-                  case 'gpt-4-32k':
-                  case 'gpt-4-1106-preview':
-                  case 'gpt-3.5-turbo':
-                  case 'gpt-3.5-turbo-16k':
-                  case 'claude-2':
-                  case 'claude-instant-1':
-                    break;
-                }
-                _setModel(m);
-                setDropDown(false);
-              }}
-              key={m}
-            >
-              {m}
-            </li>
-          ))}
+          {modelDefs.map((modelDef, index) =>
+            showHidden || modelDef.swap_visible || index == model ? (
+              <li
+                className='px-4 py-2 hover:bg-neutral-dark cursor-pointer text-custom-white'
+                onClick={() => {
+                  setDropDown(false);
+                  _setModel(index);
+                }}
+                key={index}
+              >
+                {modelDef.name || modelDef.model || `Unnamed ${index + 1}`}
+              </li>
+            ) : null
+          )}
         </ul>
       </div>
     </div>

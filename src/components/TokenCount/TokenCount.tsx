@@ -3,7 +3,6 @@ import useStore from '@store/store';
 import { shallow } from 'zustand/shallow';
 
 import countTokens from '@utils/messageUtils';
-import { modelCost } from '@constants/chat';
 
 const TokenCount = React.memo(() => {
   const [updateOverride, setUpdateOverride] = useState(true);
@@ -15,16 +14,15 @@ const TokenCount = React.memo(() => {
     shallow
   );
 
-  const model = useStore((state) =>
-    state.chats
-      ? state.chats[state.currentChatIndex].config.model
-      : 'gpt-3.5-turbo'
+  const model_num = useStore(
+    (state) =>
+      state.chats?.[state.currentChatIndex]?.config?.model_selection ?? 0
   );
 
+  const model = useStore((state) => state.modelDefs[model_num]);
+
   const cost = useMemo(() => {
-    const price =
-      modelCost[model].prompt.price *
-      (tokenCount / modelCost[model].prompt.unit);
+    const price = model.prompt_cost_1000 * (tokenCount / 1000);
     return price.toPrecision(3);
   }, [model, tokenCount]);
 
