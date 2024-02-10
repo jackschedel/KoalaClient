@@ -19,14 +19,13 @@ export interface ChatInterface {
 }
 
 export interface ConfigInterface {
-  model: ModelChoice;
-  max_tokens: number;
-  max_context?: number;
+  model_selection: number;
   temperature: number;
   presence_penalty: number;
   top_p: number;
   frequency_penalty: number;
   user?: string;
+  max_tokens: number;
 }
 
 export interface ChatHistoryInterface {
@@ -51,26 +50,19 @@ export interface Folder {
   color?: string;
 }
 
-export type ModelChoice =
-  | 'gpt-3.5-turbo'
-  | 'gpt-3.5-turbo-1106'
-  | 'gpt-3.5-turbo-0301'
-  | 'gpt-3.5-turbo-0613'
-  | 'gpt-3.5-turbo-16k'
-  | 'gpt-3.5-turbo-16k-0613'
-  | 'gpt-4'
-  | 'gpt-4-0314'
-  | 'gpt-4-0613'
-  | 'gpt-4-1106-preview'
-  | 'gpt-4-turbo-preview'
-  | 'gpt-4-32k'
-  | 'gpt-4-32k-0314'
-  | 'gpt-4-32k-0613'
-  | 'claude-2'
-  | 'claude-instant-1';
+export type ModelDefinition = {
+  name: string;
+  model: string;
+  endpoint: number;
+  model_max_tokens?: number;
+  model_max_context?: number;
+  prompt_cost_1000: number;
+  completion_cost_1000: number;
+  swap_visible: boolean;
+};
 
 export type TotalTokenUsed = {
-  [model in ModelChoice]?: {
+  [model in number]?: {
     promptTokens: number;
     completionTokens: number;
   };

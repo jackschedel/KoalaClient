@@ -13,12 +13,7 @@ import {
   LocalStorageInterfaceV7ToV8,
   LocalStorageInterfaceV8ToV9,
 } from '@type/chat';
-import {
-  _defaultChatConfig,
-  defaultModel,
-  defaultUserMaxContext,
-  defaultUserMaxToken,
-} from '@constants/chat';
+import { _defaultChatConfig, defaultUserMaxToken } from '@constants/chat';
 import { officialAPIEndpoint } from '@constants/auth';
 import defaultPrompts from '@constants/prompt';
 
@@ -56,7 +51,7 @@ export const migrateV4 = (persistedState: LocalStorageInterfaceV4ToV5) => {
   persistedState.chats.forEach((chat) => {
     chat.config = {
       ...chat.config,
-      model: defaultModel,
+      model_selection: 0,
     };
   });
 };
@@ -112,7 +107,6 @@ export const migrateV8 = (persistedState: LocalStorageInterfaceV8ToV9) => {
   persistedState.chats.forEach((chat) => {
     chat.config = {
       ...chat.config,
-      max_context: defaultUserMaxContext,
     };
   });
 };

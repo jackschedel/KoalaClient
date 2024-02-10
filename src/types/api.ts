@@ -24,3 +24,8 @@ export interface ShareGPTSubmitBodyInterface {
     value: string;
   }[];
 }
+
+export interface EndpointAuth {
+  endpoint: string;
+  apiKey: string;
+}

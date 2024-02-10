@@ -12,15 +12,11 @@ import useCopyCodeBlock from '@hooks/useCopyCodeBlock';
 import useInitialiseNewChat from '@hooks/useInitialiseNewChat';
 import useSubmit from '@hooks/useSubmit';
 import { ChatInterface } from '@type/chat';
-import { Theme } from '@type/theme';
-import ApiPopup from '@components/ApiPopup';
 import Toast from '@components/Toast';
 import isElectron, { isMac } from '@utils/electron';
 
 function App() {
   const setChats = useStore((state) => state.setChats);
-  const setTheme = useStore((state) => state.setTheme);
-  const setApiKey = useStore((state) => state.setApiKey);
   const currentChatIndex = useStore((state) => state.currentChatIndex);
   const setCurrentChatIndex = useStore((state) => state.setCurrentChatIndex);
   const setHideSideMenu = useStore((state) => state.setHideSideMenu);
@@ -116,7 +112,6 @@ function App() {
     // ctrl+p - New chat from clipboard (insta-generate)
     if (e.ctrlKey && e.key === 'p') {
       e.preventDefault();
-      console.log('test');
       addChat();
       pasteSubmit();
     }
@@ -164,20 +159,6 @@ function App() {
   useEffect(() => {
     // legacy local storage
     const oldChats = localStorage.getItem('chats');
-    const apiKey = localStorage.getItem('apiKey');
-    const theme = localStorage.getItem('theme');
-
-    if (apiKey) {
-      // legacy local storage
-      setApiKey(apiKey);
-      localStorage.removeItem('apiKey');
-    }
-
-    if (theme) {
-      // legacy local storage
-      setTheme(theme as Theme);
-      localStorage.removeItem('theme');
-    }
 
     if (oldChats) {
       // legacy local storage
@@ -233,7 +214,6 @@ function App() {
     >
       <Menu />
       <Chat />
-      <ApiPopup />
       <Toast />
     </div>
   );

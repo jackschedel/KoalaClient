@@ -3,26 +3,12 @@ import { useTranslation } from 'react-i18next';
 
 import useStore from '@store/store';
 
-import { modelCost } from '@constants/chat';
 import Toggle from '@components/Toggle/Toggle';
 
-import { ModelChoice, TotalTokenUsed } from '@type/chat';
-
 import CalculatorIcon from '@icon/CalculatorIcon';
+import { tokenCostToCost } from '@utils/messageUtils';
 
-type CostMapping = { model: string; cost: number }[];
-
-const tokenCostToCost = (
-  tokenCost: TotalTokenUsed[ModelChoice],
-  model: ModelChoice
-) => {
-  if (!tokenCost) return 0;
-  const { prompt, completion } = modelCost[model as keyof typeof modelCost];
-  const completionCost =
-    (completion.price / completion.unit) * tokenCost.completionTokens;
-  const promptCost = (prompt.price / prompt.unit) * tokenCost.promptTokens;
-  return completionCost + promptCost;
-};
+type CostMapping = { model: number; cost: number }[];
 
 const TotalTokenCost = () => {
   const { t } = useTranslation(['main', 'model']);
@@ -30,18 +16,25 @@ const TotalTokenCost = () => {
   const totalTokenUsed = useStore((state) => state.totalTokenUsed);
   const setTotalTokenUsed = useStore((state) => state.setTotalTokenUsed);
   const countTotalTokens = useStore((state) => state.countTotalTokens);
+  const modelDefs = useStore((state) => state.modelDefs);
+  const setCostOfDeleted = useStore((state) => state.setCostOfDeleted);
+  const costOfDeleted = useStore((state) => state.costOfDeleted);
 
   const [costMapping, setCostMapping] = useState<CostMapping>([]);
 
   const resetCost = () => {
     setTotalTokenUsed({});
+    setCostOfDeleted(0);
   };
 
   useEffect(() => {
     const updatedCostMapping: CostMapping = [];
-    Object.entries(totalTokenUsed).forEach(([model, tokenCost]) => {
-      const cost = tokenCostToCost(tokenCost, model as ModelChoice);
-      updatedCostMapping.push({ model, cost });
+    Object.entries(totalTokenUsed).forEach(([key, tokenCost]) => {
+      const model = parseInt(key, 10);
+      if (!isNaN(model)) {
+        const cost = tokenCostToCost(tokenCost, model, modelDefs);
+        updatedCostMapping.push({ model, cost });
+      }
     });
 
     setCostMapping(updatedCostMapping);
@@ -63,10 +56,16 @@ const TotalTokenCost = () => {
                 key={model}
                 className='bg-neutral-light text-custom-white border-b-2 border-neutral-base'
               >
-                <td className='px-4 py-2'>{model}</td>
+                <td className='px-4 py-2'>{modelDefs[model].name}</td>
                 <td className='px-4 py-2'>{cost.toPrecision(3)}</td>
               </tr>
             ))}
+            {costOfDeleted != 0 && (
+              <tr className='bg-neutral-light text-custom-white border-b-2 border-neutral-base'>
+                <td className='px-4 py-2'>(Deleted)</td>
+                <td className='px-4 py-2'>{costOfDeleted.toPrecision(3)}</td>
+              </tr>
+            )}
             <tr className='bg-neutral-light text-custom-white font-bold'>
               <td className='px-4 py-2'>{t('total', { ns: 'main' })}</td>
               <td className='px-4 py-2'>
@@ -113,12 +112,17 @@ export const TotalTokenCostDisplay = () => {
   const totalTokenUsed = useStore((state) => state.totalTokenUsed);
 
   const [totalCost, setTotalCost] = useState<number>(0);
+  const modelDefs = useStore((state) => state.modelDefs);
+  const costOfDeleted = useStore((state) => state.costOfDeleted);
 
   useEffect(() => {
-    let updatedTotalCost = 0;
+    let updatedTotalCost = costOfDeleted;
 
-    Object.entries(totalTokenUsed).forEach(([model, tokenCost]) => {
-      updatedTotalCost += tokenCostToCost(tokenCost, model as ModelChoice);
+    Object.entries(totalTokenUsed).forEach(([key, tokenCost]) => {
+      const model = parseInt(key, 10);
+      if (!isNaN(model)) {
+        updatedTotalCost += tokenCostToCost(tokenCost, model, modelDefs);
+      }
     });
 
     setTotalCost(updatedTotalCost);

@@ -7,11 +7,7 @@ import {
   MessageInterface,
 } from '@type/chat';
 import { roles } from '@type/chat';
-import {
-  _defaultChatConfig,
-  defaultModel,
-  modelOptions,
-} from '@constants/chat';
+import { _defaultChatConfig } from '@constants/chat';
 import { ExportV1, OpenAIChat } from '@type/export';
 
 export const validateAndFixChats = (
@@ -62,9 +58,6 @@ const validateAndFixChatConfig = (config: ConfigInterface) => {
     config.frequency_penalty = _defaultChatConfig.frequency_penalty;
   }
   if (!(typeof config.frequency_penalty === 'number')) return false;
-
-  if (!config.model) config.model = defaultModel;
-  if (!modelOptions.includes(config.model)) return false;
 
   return true;
 };

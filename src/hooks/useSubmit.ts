@@ -3,30 +3,36 @@ import { useTranslation } from 'react-i18next';
 import { ChatInterface, MessageInterface } from '@type/chat';
 import { getChatCompletion, getChatCompletionStream } from '@api/api';
 import { parseEventSource } from '@api/helper';
-import { limitMessageTokens, updateTotalTokenUsed } from '@utils/messageUtils';
-import { _defaultChatConfig, modelMaxToken } from '@constants/chat';
+import {
+  limitMessageTokens,
+  useUpdateTotalTokenUsed,
+} from '@utils/messageUtils';
+import { _defaultChatConfig } from '@constants/chat';
 import { officialAPIEndpoint } from '@constants/auth';
 
 const useSubmit = () => {
   const { t, i18n } = useTranslation('api');
   const error = useStore((state) => state.error);
   const setError = useStore((state) => state.setError);
-  const apiEndpoint = useStore((state) => state.apiEndpoint);
-  const apiKey = useStore((state) => state.apiKey);
   const setGenerating = useStore((state) => state.setGenerating);
   const generating = useStore((state) => state.generating);
   const currentChatIndex = useStore((state) => state.currentChatIndex);
   const setChats = useStore((state) => state.setChats);
+  const modelDefs = useStore((state) => state.modelDefs);
+  const apiAuth = useStore((state) => state.apiAuth);
+  const updateTotalTokenUsed = useUpdateTotalTokenUsed();
 
   const generateTitle = async (
-    message: MessageInterface[]
+    message: MessageInterface[],
+    apiKey: string,
+    apiEndpoint: string
   ): Promise<string> => {
     let data;
 
     const config = _defaultChatConfig;
+    const modelDef = modelDefs[0];
 
-    config.max_tokens = 100;
-
+    (config as any).model = modelDef.model;
     try {
       if (!apiKey || apiKey.length === 0) {
         // official endpoint
@@ -35,20 +41,16 @@ const useSubmit = () => {
         }
 
         // other endpoints
-        data = await getChatCompletion(
-          useStore.getState().apiEndpoint,
-          message,
-          config
-        );
+        data = await getChatCompletion(apiEndpoint, message, config, modelDef);
       } else if (apiKey) {
         // own apikey
         data = await getChatCompletion(
-          useStore.getState().apiEndpoint,
+          apiEndpoint,
           message,
           config,
+          modelDef,
           apiKey,
-          undefined,
-          true
+          undefined
         );
       }
     } catch (error: unknown) {
@@ -71,40 +73,56 @@ const useSubmit = () => {
     setChats(updatedChats);
     setGenerating(true);
 
+    const config = chats[currentChatIndex].config;
+
     try {
       let stream;
       if (chats[currentChatIndex].messages.length === 0) {
         throw new Error('No messages submitted!');
       }
 
+      const modelDef = modelDefs[config.model_selection];
+
+      const auth = apiAuth[modelDef.endpoint];
+      const apiKey = auth.apiKey;
+      const apiEndpoint = auth.endpoint;
+
       const messages = limitMessageTokens(
         chats[currentChatIndex].messages,
-        chats[currentChatIndex].config.max_context,
-        chats[currentChatIndex].config.model,
-        modelMaxToken[chats[currentChatIndex].config.model],
-        chats[currentChatIndex].config.max_tokens
+        modelDef.model_max_context,
+        modelDef.model,
+        modelDef.model_max_tokens,
+        config.max_tokens
       );
-      if (messages.length === 0) throw new Error('Message exceed max token!');
+      if (messages.length === 0) throw new Error('Message exceeds max token!');
+
+      // javascript is an abomination
+      delete (config as any).max_context;
+      (config as any).model = modelDef.model;
 
       // no api key (free)
       if (!apiKey || apiKey.length === 0) {
         // official endpoint
         if (apiEndpoint === officialAPIEndpoint) {
-          throw new Error(t('noApiKeyWarning') as string);
+          const error = new Error(t('noApiKeyWarning') as string);
+          setError(error.message);
+          throw error;
         }
 
         // other endpoints
         stream = await getChatCompletionStream(
-          useStore.getState().apiEndpoint,
+          apiEndpoint,
           messages,
-          chats[currentChatIndex].config
+          config,
+          modelDef
         );
       } else if (apiKey) {
         // own apikey
         stream = await getChatCompletionStream(
-          useStore.getState().apiEndpoint,
+          apiEndpoint,
           messages,
-          chats[currentChatIndex].config,
+          config,
+          modelDef,
           apiKey
         );
       }
@@ -160,7 +178,7 @@ const useSubmit = () => {
       const countTotalTokens = useStore.getState().countTotalTokens;
 
       if (currChats && countTotalTokens) {
-        const model = currChats[currentChatIndex].config.model;
+        const model = currChats[currentChatIndex].config.model_selection;
         const messages = currChats[currentChatIndex].messages;
         updateTotalTokenUsed(
           model,
@@ -190,7 +208,9 @@ const useSubmit = () => {
           content: `Generate a title in less than 6 words for the following message (language: ${i18n.language}):\n"""\nUser: ${user_message}\nAssistant: ${assistant_message}\n"""`,
         };
 
-        let title = (await generateTitle([message])).trim();
+        let title = (
+          await generateTitle([message], apiKey, apiEndpoint)
+        ).trim();
         if (title.startsWith('"') && title.endsWith('"')) {
           title = title.slice(1, -1);
         }
@@ -203,7 +223,7 @@ const useSubmit = () => {
 
         // update tokens used for generating title
         if (countTotalTokens) {
-          const model = _defaultChatConfig.model;
+          const model = config.model_selection;
           updateTotalTokenUsed(model, [message], {
             role: 'assistant',
             content: title,
@@ -211,9 +231,8 @@ const useSubmit = () => {
         }
       }
     } catch (e: unknown) {
-      const err = (e as Error).message;
-      console.log(err);
-      setError(err);
+      setError((e as Error).message);
+      throw e;
     }
     setGenerating(false);
   };

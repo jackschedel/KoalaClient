@@ -1,9 +1,9 @@
-import { MessageInterface, ModelChoice, TotalTokenUsed } from '@type/chat';
+import { MessageInterface, ModelDefinition, TotalTokenUsed } from '@type/chat';
 
+import { useCallback } from 'react';
 import useStore from '@store/store';
 
 import { Tiktoken } from '@dqbd/tiktoken/lite';
-import { modelMaxToken } from '@constants/chat';
 const cl100k_base = await import('@dqbd/tiktoken/encoders/cl100k_base.json');
 
 const encoder = new Tiktoken(
@@ -17,10 +17,27 @@ const encoder = new Tiktoken(
   cl100k_base.pat_str
 );
 
+export const tokenCostToCost = (
+  tokenCost: TotalTokenUsed[number],
+  model: number,
+  modelDefs: ModelDefinition[]
+) => {
+  if (!tokenCost) return 0;
+
+  const modelDef = modelDefs[model];
+  if (!modelDef) return 0;
+
+  const completionCost =
+    (modelDef.completion_cost_1000 / 1000) * tokenCost.completionTokens;
+  const promptCost =
+    (modelDef.completion_cost_1000 / 1000) * tokenCost.promptTokens;
+  return completionCost + promptCost;
+};
+
 // https://github.com/dqbd/tiktoken/issues/23#issuecomment-1483317174
 export const getChatGPTEncoding = (
   messages: MessageInterface[],
-  model: ModelChoice
+  model: string
 ) => {
   const isGpt3 = model === 'gpt-3.5-turbo';
 
@@ -39,7 +56,7 @@ export const getChatGPTEncoding = (
   return encoder.encode(serialized, 'all');
 };
 
-const countTokens = (messages: MessageInterface[], model: ModelChoice) => {
+const countTokens = (messages: MessageInterface[], model: string) => {
   if (messages.length === 0) return 0;
   return getChatGPTEncoding(messages, model).length;
 };
@@ -47,9 +64,9 @@ const countTokens = (messages: MessageInterface[], model: ModelChoice) => {
 export const limitMessageTokens = (
   messages: MessageInterface[],
   context_limit: number = 4096,
-  model: ModelChoice,
-  max_model_token: number = modelMaxToken[model],
-  token_limit: number
+  model: string,
+  max_model_token: number = 4096,
+  token_limit: number = 4096
 ): MessageInterface[] => {
   const limitedMessages: MessageInterface[] = [];
   let tokenCount = 0;
@@ -103,26 +120,36 @@ export const limitMessageTokens = (
   return limitedMessages;
 };
 
-export const updateTotalTokenUsed = (
-  model: ModelChoice,
-  promptMessages: MessageInterface[],
-  completionMessage: MessageInterface
-) => {
-  const setTotalTokenUsed = useStore.getState().setTotalTokenUsed;
-  const updatedTotalTokenUsed: TotalTokenUsed = JSON.parse(
-    JSON.stringify(useStore.getState().totalTokenUsed)
+export const useUpdateTotalTokenUsed = () => {
+  const setTotalTokenUsed = useStore((state) => state.setTotalTokenUsed);
+  const totalTokenUsed = useStore((state) => state.totalTokenUsed);
+  const modelDefs = useStore((state) => state.modelDefs);
+
+  const updateTotalTokenUsed = useCallback(
+    (
+      model: number,
+      promptMessages: MessageInterface[],
+      completionMessage: MessageInterface
+    ) => {
+      const updatedTotalTokenUsed = JSON.parse(JSON.stringify(totalTokenUsed));
+      const modelName = modelDefs[model].name;
+
+      const newPromptTokens = countTokens(promptMessages, modelName);
+      const newCompletionTokens = countTokens([completionMessage], modelName);
+      const { promptTokens = 0, completionTokens = 0 } =
+        updatedTotalTokenUsed[model] ?? {};
+
+      updatedTotalTokenUsed[model] = {
+        promptTokens: promptTokens + newPromptTokens,
+        completionTokens: completionTokens + newCompletionTokens,
+      };
+
+      setTotalTokenUsed(updatedTotalTokenUsed);
+    },
+    [setTotalTokenUsed, totalTokenUsed, modelDefs]
   );
 
-  const newPromptTokens = countTokens(promptMessages, model);
-  const newCompletionTokens = countTokens([completionMessage], model);
-  const { promptTokens = 0, completionTokens = 0 } =
-    updatedTotalTokenUsed[model] ?? {};
-
-  updatedTotalTokenUsed[model] = {
-    promptTokens: promptTokens + newPromptTokens,
-    completionTokens: completionTokens + newCompletionTokens,
-  };
-  setTotalTokenUsed(updatedTotalTokenUsed);
+  return updateTotalTokenUsed;
 };
 
 export default countTokens;
