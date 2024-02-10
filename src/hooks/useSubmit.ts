@@ -104,9 +104,7 @@ const useSubmit = () => {
       if (!apiKey || apiKey.length === 0) {
         // official endpoint
         if (apiEndpoint === officialAPIEndpoint) {
-          const error = new Error(t('noApiKeyWarning') as string);
-          setError(error.message);
-          throw error;
+          throw new Error(t('noApiKeyWarning') as string);
         }
 
         // other endpoints
@@ -232,7 +230,6 @@ const useSubmit = () => {
       }
     } catch (e: unknown) {
       setError((e as Error).message);
-      throw e;
     }
     setGenerating(false);
   };
