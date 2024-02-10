@@ -1,4 +1,4 @@
-import { MessageInterface } from '@type/chat';
+import { MessageInterface, ModelDefinition, TotalTokenUsed } from '@type/chat';
 
 import { useCallback } from 'react';
 import useStore from '@store/store';
@@ -16,6 +16,23 @@ const encoder = new Tiktoken(
   },
   cl100k_base.pat_str
 );
+
+export const tokenCostToCost = (
+  tokenCost: TotalTokenUsed[number],
+  model: number,
+  modelDefs: ModelDefinition[]
+) => {
+  if (!tokenCost) return 0;
+
+  const modelDef = modelDefs[model];
+  if (!modelDef) return 0;
+
+  const completionCost =
+    (modelDef.completion_cost_1000 / 1000) * tokenCost.completionTokens;
+  const promptCost =
+    (modelDef.completion_cost_1000 / 1000) * tokenCost.promptTokens;
+  return completionCost + promptCost;
+};
 
 // https://github.com/dqbd/tiktoken/issues/23#issuecomment-1483317174
 export const getChatGPTEncoding = (

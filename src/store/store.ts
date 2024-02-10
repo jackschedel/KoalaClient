@@ -63,6 +63,7 @@ export const createPartializedState = (state: StoreState) => ({
   markdownMode: state.markdownMode,
   totalTokenUsed: state.totalTokenUsed,
   countTotalTokens: state.countTotalTokens,
+  costOfDeleted: state.costOfDeleted,
 });
 
 const useStore = create<StoreState>()(

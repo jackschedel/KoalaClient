@@ -5,28 +5,10 @@ import useStore from '@store/store';
 
 import Toggle from '@components/Toggle/Toggle';
 
-import { ModelDefinition, TotalTokenUsed } from '@type/chat';
-
 import CalculatorIcon from '@icon/CalculatorIcon';
+import { tokenCostToCost } from '@utils/messageUtils';
 
 type CostMapping = { model: number; cost: number }[];
-
-const tokenCostToCost = (
-  tokenCost: TotalTokenUsed[number],
-  model: number,
-  modelDefs: ModelDefinition[]
-) => {
-  if (!tokenCost) return 0;
-
-  const modelDef = modelDefs[model];
-  if (!modelDef) return 0;
-
-  const completionCost =
-    (modelDef.completion_cost_1000 / 1000) * tokenCost.completionTokens;
-  const promptCost =
-    (modelDef.completion_cost_1000 / 1000) * tokenCost.promptTokens;
-  return completionCost + promptCost;
-};
 
 const TotalTokenCost = () => {
   const { t } = useTranslation(['main', 'model']);
@@ -35,11 +17,14 @@ const TotalTokenCost = () => {
   const setTotalTokenUsed = useStore((state) => state.setTotalTokenUsed);
   const countTotalTokens = useStore((state) => state.countTotalTokens);
   const modelDefs = useStore((state) => state.modelDefs);
+  const setCostOfDeleted = useStore((state) => state.setCostOfDeleted);
+  const costOfDeleted = useStore((state) => state.costOfDeleted);
 
   const [costMapping, setCostMapping] = useState<CostMapping>([]);
 
   const resetCost = () => {
     setTotalTokenUsed({});
+    setCostOfDeleted(0);
   };
 
   useEffect(() => {
@@ -75,6 +60,12 @@ const TotalTokenCost = () => {
                 <td className='px-4 py-2'>{cost.toPrecision(3)}</td>
               </tr>
             ))}
+            {costOfDeleted != 0 && (
+              <tr className='bg-neutral-light text-custom-white border-b-2 border-neutral-base'>
+                <td className='px-4 py-2'>(Deleted)</td>
+                <td className='px-4 py-2'>{costOfDeleted.toPrecision(3)}</td>
+              </tr>
+            )}
             <tr className='bg-neutral-light text-custom-white font-bold'>
               <td className='px-4 py-2'>{t('total', { ns: 'main' })}</td>
               <td className='px-4 py-2'>

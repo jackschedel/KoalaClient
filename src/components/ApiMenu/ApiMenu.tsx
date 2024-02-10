@@ -7,11 +7,12 @@ import PopupModal from '@components/PopupModal';
 import CrossIcon from '@icon/CrossIcon';
 import PlusIcon from '@icon/PlusIcon';
 import { EndpointAuth } from '@type/api';
-import { ModelDefinition } from '@type/chat';
+import { ModelDefinition, TotalTokenUsed } from '@type/chat';
 import HiddenIcon from '@icon/HiddenIcon';
 import VisibleIcon from '@icon/VisibleIcon';
 
 import DownChevronArrow from '@icon/DownChevronArrow';
+import { tokenCostToCost } from '@utils/messageUtils';
 
 const ApiMenu = ({
   setIsModalOpen,
@@ -24,15 +25,22 @@ const ApiMenu = ({
   const setApiAuth = useStore((state) => state.setApiAuth);
   const modelDefs = useStore((state) => state.modelDefs);
   const setModelDefs = useStore((state) => state.setModelDefs);
+  const totalTokenUsed = useStore((state) => state.totalTokenUsed);
+  const setTotalTokenUsed = useStore((state) => state.setTotalTokenUsed);
+  const costOfDeleted = useStore((state) => state.costOfDeleted);
+  const setCostOfDeleted = useStore((state) => state.setCostOfDeleted);
 
   const [_apiAuth, _setApiAuth] = useState<EndpointAuth[]>(apiAuth);
   const [_modelDefs, _setModelDefs] = useState<ModelDefinition[]>(modelDefs);
+  const [_totalTokenUsed, _setTotalTokenUsed] =
+    useState<TotalTokenUsed>(totalTokenUsed);
 
   const [activeDropdown, setActiveDropdown] = useState<null | number>(null);
 
   const handleSave = () => {
     setApiAuth(_apiAuth);
     setModelDefs(_modelDefs);
+    setTotalTokenUsed(_totalTokenUsed);
     setIsModalOpen(false);
   };
 
@@ -49,17 +57,13 @@ const ApiMenu = ({
       newApiAuth.splice(index, 1);
       return newApiAuth;
     });
-    const updatedModelDefs = _modelDefs.filter((modelDef) => {
-      if (modelDef.endpoint !== index) {
-        return true;
-      }
-    });
-    _modelDefs.forEach((modelDef) => {
-      if (modelDef.endpoint > index) {
+    _modelDefs.forEach((modelDef, ind) => {
+      if (modelDef.endpoint === index) {
+        deleteModel(ind);
+      } else if (modelDef.endpoint > index) {
         modelDef.endpoint--;
       }
     });
-    _setModelDefs(updatedModelDefs);
   };
 
   const addModel = () => {
@@ -96,6 +100,20 @@ const ApiMenu = ({
   };
 
   const deleteModel = (index: number) => {
+    const modelCostHistory = tokenCostToCost(
+      _totalTokenUsed[index],
+      index,
+      modelDefs
+    );
+
+    setCostOfDeleted(costOfDeleted + modelCostHistory);
+
+    _setTotalTokenUsed((prev) => {
+      const newTotalTokenUsed = { ...prev };
+      delete newTotalTokenUsed[index];
+      return newTotalTokenUsed;
+    });
+
     _setModelDefs((prev) => {
       const newModelDefs = [...prev];
       newModelDefs.splice(index, 1);
