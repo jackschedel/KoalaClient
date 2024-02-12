@@ -63,26 +63,13 @@ const countTokens = (messages: MessageInterface[], model: string) => {
 
 export const limitMessageTokens = (
   messages: MessageInterface[],
-  context_limit: number = 4096,
   model: string,
-  max_model_token: number = 4096,
-  token_limit: number = 4096
+  max_context: number = 4096,
+  max_tokens: number = 2048
 ): MessageInterface[] => {
   const limitedMessages: MessageInterface[] = [];
+  max_context -= max_tokens;
   let tokenCount = 0;
-
-  if (max_model_token < context_limit) {
-    context_limit = max_model_token;
-  }
-
-  let wholeTokenCount = 0;
-  for (let i = 0; i < messages.length; i++) {
-    wholeTokenCount += countTokens([messages[i]], model);
-  }
-
-  if (token_limit < context_limit + wholeTokenCount) {
-    context_limit = max_model_token - token_limit;
-  }
 
   const isSystemFirstMessage = messages[0]?.role === 'system';
   let retainSystemMessage = false;
@@ -90,7 +77,7 @@ export const limitMessageTokens = (
   // Check if the first message is a system message and if it fits within the token limit
   if (isSystemFirstMessage) {
     const systemTokenCount = countTokens([messages[0]], model);
-    if (systemTokenCount < context_limit) {
+    if (systemTokenCount < max_context) {
       tokenCount += systemTokenCount;
       retainSystemMessage = true;
     }
@@ -100,7 +87,7 @@ export const limitMessageTokens = (
   // until the token limit is reached (excludes first message)
   for (let i = messages.length - 1; i >= 1; i--) {
     const count = countTokens([messages[i]], model);
-    if (count + tokenCount > context_limit) break;
+    if (count + tokenCount > max_context) break;
     tokenCount += count;
     limitedMessages.unshift({ ...messages[i] });
   }
@@ -112,7 +99,7 @@ export const limitMessageTokens = (
   } else if (!isSystemFirstMessage) {
     // Check if the first message (non-system) can fit within the limit
     const firstMessageTokenCount = countTokens([messages[0]], model);
-    if (firstMessageTokenCount + tokenCount < context_limit) {
+    if (firstMessageTokenCount + tokenCount < max_context) {
       limitedMessages.unshift({ ...messages[0] });
     }
   }

@@ -95,7 +95,7 @@ export const defaultUserMaxContext = 8000;
 
 export const _defaultChatConfig: ConfigInterface = {
   model_selection: 0,
-  temperature: 1,
+  temperature: 0.7,
   presence_penalty: 0,
   top_p: 1,
   frequency_penalty: 0,

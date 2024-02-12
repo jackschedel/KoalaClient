@@ -89,7 +89,6 @@ const useSubmit = () => {
 
       const messages = limitMessageTokens(
         chats[currentChatIndex].messages,
-        modelDef.model_max_context,
         modelDef.model,
         modelDef.model_max_tokens,
         config.max_tokens
