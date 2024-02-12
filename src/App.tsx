@@ -26,6 +26,8 @@ function App() {
   const apiAuth = useStore((state) => state.apiAuth);
   const apiKey = useStore((state) => state.apiKey);
   const setApiKey = useStore((state) => state.setApiKey);
+  const modelDefs = useStore((state) => state.modelDefs);
+  const setModelDefs = useStore((state) => state.setModelDefs);
 
   const initialiseNewChat = useInitialiseNewChat();
   const addChat = useAddChat();
@@ -39,6 +41,17 @@ function App() {
     old[0].apiKey = apiKey;
     setApiAuth(old);
     setApiKey('');
+  }
+
+  // migration from broken 2.1.0 release
+  if (
+    modelDefs[1].model === 'gpt-4-turbo-preview' &&
+    modelDefs[1].model_max_tokens == 128000
+  ) {
+    modelDefs[1].model_max_tokens = 4096;
+    modelDefs[1].model_max_context = 128000;
+
+    setModelDefs(modelDefs);
   }
 
   const handleGenerate = () => {
