@@ -99,14 +99,14 @@ const ChatConfigPopup = ({
           _setModel={_setModelSelection}
           showHidden={true}
         />
+        <DefaultSystemChat
+          _systemMessage={_systemMessage}
+          _setSystemMessage={_setSystemMessage}
+        />
         <MaxTokenSlider
           _maxToken={_maxTokens}
           _setMaxToken={_setMaxTokens}
           _model={_modelSelection}
-        />
-        <DefaultSystemChat
-          _systemMessage={_systemMessage}
-          _setSystemMessage={_setSystemMessage}
         />
         <TemperatureSlider
           _temperature={_temperature}
