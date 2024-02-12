@@ -51,7 +51,6 @@ const ConfigMenu = ({
       title={t('configuration') as string}
       setIsModalOpen={setIsModalOpen}
       handleConfirm={handleConfirm}
-      handleClickBackdrop={handleConfirm}
     >
       <div className='p-6 border-b bg-neutral-base'>
         <label className='block text-sm font-medium text-custom-white pb-2'>

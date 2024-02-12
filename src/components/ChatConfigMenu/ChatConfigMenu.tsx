@@ -50,7 +50,6 @@ const ChatConfigPopup = ({
     config.model_selection
   );
   const [_maxTokens, _setMaxTokens] = useState<number>(config.max_tokens);
-  const [_maxToken, _setMaxToken] = useState<number>(config.max_tokens);
   const [_temperature, _setTemperature] = useState<number>(config.temperature);
   const [_topP, _setTopP] = useState<number>(config.top_p);
   const [_presencePenalty, _setPresencePenalty] = useState<number>(
@@ -65,7 +64,7 @@ const ChatConfigPopup = ({
   const handleSave = () => {
     setDefaultChatConfig({
       model_selection: _modelSelection,
-      max_tokens: _maxToken,
+      max_tokens: _maxTokens,
       temperature: _temperature,
       top_p: _topP,
       presence_penalty: _presencePenalty,
@@ -76,7 +75,7 @@ const ChatConfigPopup = ({
   };
 
   const handleReset = () => {
-    _setMaxToken(_defaultChatConfig.max_tokens);
+    _setMaxTokens(_defaultChatConfig.max_tokens);
     _setTemperature(_defaultChatConfig.temperature);
     _setTopP(_defaultChatConfig.top_p);
     _setPresencePenalty(_defaultChatConfig.presence_penalty);
@@ -99,14 +98,14 @@ const ChatConfigPopup = ({
           _setModel={_setModelSelection}
           showHidden={true}
         />
+        <DefaultSystemChat
+          _systemMessage={_systemMessage}
+          _setSystemMessage={_setSystemMessage}
+        />
         <MaxTokenSlider
           _maxToken={_maxTokens}
           _setMaxToken={_setMaxTokens}
           _model={_modelSelection}
-        />
-        <DefaultSystemChat
-          _systemMessage={_systemMessage}
-          _setSystemMessage={_setSystemMessage}
         />
         <TemperatureSlider
           _temperature={_temperature}
