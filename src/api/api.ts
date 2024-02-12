@@ -19,7 +19,7 @@ export const getChatCompletion = async (
   if (isAzureEndpoint(endpoint) && apiKey) {
     headers['api-key'] = apiKey;
 
-    const modelName = modelDef.name;
+    const modelName = modelDef.model;
 
     const apiVersion = '2023-03-15-preview';
 
@@ -69,7 +69,7 @@ export const getChatCompletionStream = async (
   if (isAzureEndpoint(endpoint) && apiKey) {
     headers['api-key'] = apiKey;
 
-    const modelName = modelDef.name;
+    const modelName = modelDef.model;
 
     const apiVersion = '2023-03-15-preview';
 

@@ -249,10 +249,12 @@ const ApiMenu = ({
                       }}
                     >
                       <span className='inline-block truncate max-w-full'>
-                        {_apiAuth[modelDef.endpoint].endpoint.replace(
-                          /^https?:\/\//,
-                          ''
-                        )}
+                        {_apiAuth[modelDef.endpoint]
+                          ? _apiAuth[modelDef.endpoint].endpoint.replace(
+                              /^https?:\/\//,
+                              ''
+                            )
+                          : 'Endpoint Undefined'}
                       </span>
 
                       <DownChevronArrow className='absolute right-0 mr-1 flex items-center' />

@@ -221,8 +221,7 @@ const useSubmit = () => {
 
         // update tokens used for generating title
         if (countTotalTokens) {
-          const model = config.model_selection;
-          updateTotalTokenUsed(model, [message], {
+          updateTotalTokenUsed(0, [message], {
             role: 'assistant',
             content: title,
           });
@@ -230,6 +229,8 @@ const useSubmit = () => {
       }
     } catch (e: unknown) {
       setError((e as Error).message);
+      setGenerating(false);
+      throw e;
     }
     setGenerating(false);
   };

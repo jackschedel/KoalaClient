@@ -132,7 +132,7 @@ export const useUpdateTotalTokenUsed = () => {
       completionMessage: MessageInterface
     ) => {
       const updatedTotalTokenUsed = JSON.parse(JSON.stringify(totalTokenUsed));
-      const modelName = modelDefs[model].name;
+      const modelName = modelDefs[model].model;
 
       const newPromptTokens = countTokens(promptMessages, modelName);
       const newCompletionTokens = countTokens([completionMessage], modelName);
