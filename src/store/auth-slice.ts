@@ -4,6 +4,7 @@ import { ModelDefinition } from '@type/chat';
 import { StoreSlice } from './store';
 
 export interface AuthSlice {
+  apiKey?: string;
   firstVisit: boolean;
   apiAuth: EndpointAuth[];
   modelDefs: ModelDefinition[];
@@ -42,12 +43,6 @@ export const createAuthSlice: StoreSlice<AuthSlice> = (set) => ({
     set((prev: AuthSlice) => ({
       ...prev,
       apiKey: apiKey,
-    }));
-  },
-  setApiEndpoint: (apiEndpoint: string) => {
-    set((prev: AuthSlice) => ({
-      ...prev,
-      apiEndpoint: apiEndpoint,
     }));
   },
   setFirstVisit: (firstVisit: boolean) => {

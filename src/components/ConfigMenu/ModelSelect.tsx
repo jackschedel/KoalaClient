@@ -17,6 +17,10 @@ export const ModelSelect = ({
   const [dropDown, setDropDown, dropDownRef] = useHideOnOutsideClick();
   const modelDefs = useStore((state: StoreState) => state.modelDefs);
 
+  if (typeof _model !== 'number') {
+    _setModel(0);
+  }
+
   return (
     <div className='mb-4'>
       <button
@@ -25,7 +29,7 @@ export const ModelSelect = ({
         onClick={() => setDropDown((prev) => !prev)}
         aria-label='model'
       >
-        {modelDefs[model]?.name}
+        {modelDefs[model]?.name || modelDefs[model].model}
         <DownChevronArrow />
       </button>
       <div

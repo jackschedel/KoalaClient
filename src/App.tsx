@@ -22,6 +22,10 @@ function App() {
   const setHideSideMenu = useStore((state) => state.setHideSideMenu);
   const hideSideMenu = useStore((state) => state.hideSideMenu);
   const bottomMessageRef = useStore((state) => state.bottomMessageRef);
+  const setApiAuth = useStore((state) => state.setApiAuth);
+  const apiAuth = useStore((state) => state.apiAuth);
+  const apiKey = useStore((state) => state.apiKey);
+  const setApiKey = useStore((state) => state.setApiKey);
 
   const initialiseNewChat = useInitialiseNewChat();
   const addChat = useAddChat();
@@ -29,6 +33,13 @@ function App() {
   const goForward = useGoForward();
   const copyCodeBlock = useCopyCodeBlock();
   const { handleSubmit } = useSubmit();
+
+  if (apiKey && !apiAuth[0].apiKey) {
+    const old = apiAuth;
+    old[0].apiKey = apiKey;
+    setApiAuth(old);
+    setApiKey('');
+  }
 
   const handleGenerate = () => {
     if (useStore.getState().generating) return;
