@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import PopupModal from '@components/PopupModal';
 import {
   FrequencyPenaltySlider,
+  MaxTokenSlider,
   PresencePenaltySlider,
   TemperatureSlider,
   TopPSlider,
@@ -48,6 +49,7 @@ const ChatConfigPopup = ({
   const [_modelSelection, _setModelSelection] = useState<number>(
     config.model_selection
   );
+  const [_maxTokens, _setMaxTokens] = useState<number>(config.max_tokens);
   const [_maxToken, _setMaxToken] = useState<number>(config.max_tokens);
   const [_temperature, _setTemperature] = useState<number>(config.temperature);
   const [_topP, _setTopP] = useState<number>(config.top_p);
@@ -96,6 +98,11 @@ const ChatConfigPopup = ({
           _model={_modelSelection}
           _setModel={_setModelSelection}
           showHidden={true}
+        />
+        <MaxTokenSlider
+          _maxToken={_maxTokens}
+          _setMaxToken={_setMaxTokens}
+          _model={_modelSelection}
         />
         <DefaultSystemChat
           _systemMessage={_systemMessage}
