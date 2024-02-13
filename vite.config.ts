@@ -23,4 +23,5 @@ export default defineConfig({
   optimizeDeps: {
     include: ['@chengsokdara/use-whisper > lamejs'],
   },
+  build: { sourcemap: 'inline' },
 });
