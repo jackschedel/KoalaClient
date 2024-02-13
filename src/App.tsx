@@ -45,6 +45,8 @@ function App() {
 
   // migration from broken 2.1.0 release
   if (
+    modelDefs.length >= 2 &&
+    modelDefs[1].model &&
     modelDefs[1].model === 'gpt-4-turbo-preview' &&
     modelDefs[1].model_max_tokens == 128000
   ) {

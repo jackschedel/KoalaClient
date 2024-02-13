@@ -13,9 +13,13 @@ export const ModelSelect = ({
   _setModel: React.Dispatch<React.SetStateAction<number>>;
   showHidden: boolean;
 }) => {
-  const model = _model || 0;
+  let model = _model || 0;
   const [dropDown, setDropDown, dropDownRef] = useHideOnOutsideClick();
   const modelDefs = useStore((state: StoreState) => state.modelDefs);
+
+  if (model >= modelDefs.length) {
+    model = 0;
+  }
 
   if (typeof _model !== 'number') {
     _setModel(0);
@@ -29,7 +33,7 @@ export const ModelSelect = ({
         onClick={() => setDropDown((prev) => !prev)}
         aria-label='model'
       >
-        {modelDefs[model]?.name || modelDefs[model].model}
+        {modelDefs[model]?.name || modelDefs[model]?.model}
         <DownChevronArrow />
       </button>
       <div
