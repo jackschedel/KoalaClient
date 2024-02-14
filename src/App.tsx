@@ -56,6 +56,34 @@ function App() {
     setModelDefs(modelDefs);
   }
 
+  // apparantly the migration isn't gaurenteed, so here's some terrible code :)
+  if (!modelDefs && !modelDefs[0]) {
+    const defaultModelDefs = [
+      {
+        name: 'gpt-3',
+        model: 'gpt-3.5-turbo',
+        endpoint: 0,
+        model_max_context: 16385,
+        model_max_tokens: 4096,
+        prompt_cost_1000: 0.0005,
+        completion_cost_1000: 0.0005,
+        swap_visible: true,
+      },
+      {
+        name: 'gpt-4',
+        model: 'gpt-4-turbo-preview',
+        endpoint: 0,
+        model_max_context: 128000,
+        model_max_tokens: 4096,
+        prompt_cost_1000: 0.01,
+        completion_cost_1000: 0.03,
+        swap_visible: true,
+      },
+    ];
+
+    setModelDefs(defaultModelDefs);
+  }
+
   const handleGenerate = () => {
     if (useStore.getState().generating) return;
     const updatedChats: ChatInterface[] = JSON.parse(

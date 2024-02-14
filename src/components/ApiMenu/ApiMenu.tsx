@@ -343,7 +343,7 @@ const ApiMenu = ({
                       pattern='[0-9]*'
                       className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
                       placeholder='Prompt Cost*'
-                      value={modelDef.prompt_cost_1000 || ''}
+                      value={modelDef?.prompt_cost_1000 || ''}
                       onChange={(e) => {
                         const value = Number(e.target.value);
 
