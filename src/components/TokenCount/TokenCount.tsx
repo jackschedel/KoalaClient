@@ -25,7 +25,7 @@ const TokenCount = React.memo(() => {
   const model = useStore((state) => state.modelDefs[model_num]);
 
   const cost = useMemo(() => {
-    if (!model.prompt_cost_1000) {
+    if (!model?.prompt_cost_1000) {
       return 0;
     }
     const price = model.prompt_cost_1000 * (tokenCount / 1000);
