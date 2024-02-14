@@ -14,7 +14,6 @@ import useSubmit from '@hooks/useSubmit';
 import { ChatInterface } from '@type/chat';
 import Toast from '@components/Toast';
 import isElectron, { isMac } from '@utils/electron';
-import { toString } from 'lodash';
 
 function App() {
   const setChats = useStore((state) => state.setChats);
