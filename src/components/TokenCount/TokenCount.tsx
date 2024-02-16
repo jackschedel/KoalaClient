@@ -35,7 +35,7 @@ const TokenCount = React.memo(() => {
   useEffect(() => {
     if (!generating || updateOverride) {
       setUpdateOverride(!generating);
-      setTokenCount(countTokens(messages, model.name));
+      setTokenCount(countTokens(messages, model.model));
     }
   }, [messages, generating]);
 
