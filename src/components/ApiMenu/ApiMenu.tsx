@@ -13,27 +13,24 @@ import VisibleIcon from '@icon/VisibleIcon';
 
 import DownChevronArrow from '@icon/DownChevronArrow';
 import { tokenCostToCost } from '@utils/messageUtils';
+import { ModelInput } from './ModelInput';
 
-const ApiMenu = ({
-  setIsModalOpen,
-}: {
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+
+const ApiMenu = ({ setIsModalOpen }: { setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
   const { t } = useTranslation(['main', 'api']);
 
-  const apiAuth = useStore((state) => state.apiAuth);
-  const setApiAuth = useStore((state) => state.setApiAuth);
-  const modelDefs = useStore((state) => state.modelDefs);
-  const setModelDefs = useStore((state) => state.setModelDefs);
-  const totalTokenUsed = useStore((state) => state.totalTokenUsed);
-  const setTotalTokenUsed = useStore((state) => state.setTotalTokenUsed);
-  const costOfDeleted = useStore((state) => state.costOfDeleted);
-  const setCostOfDeleted = useStore((state) => state.setCostOfDeleted);
+  const apiAuth = useStore(state => state.apiAuth);
+  const setApiAuth = useStore(state => state.setApiAuth);
+  const modelDefs = useStore(state => state.modelDefs);
+  const setModelDefs = useStore(state => state.setModelDefs);
+  const totalTokenUsed = useStore(state => state.totalTokenUsed);
+  const setTotalTokenUsed = useStore(state => state.setTotalTokenUsed);
+  const costOfDeleted = useStore(state => state.costOfDeleted);
+  const setCostOfDeleted = useStore(state => state.setCostOfDeleted);
 
   const [_apiAuth, _setApiAuth] = useState<EndpointAuth[]>(apiAuth);
   const [_modelDefs, _setModelDefs] = useState<ModelDefinition[]>(modelDefs);
-  const [_totalTokenUsed, _setTotalTokenUsed] =
-    useState<TotalTokenUsed>(totalTokenUsed);
+  const [_totalTokenUsed, _setTotalTokenUsed] = useState<TotalTokenUsed>(totalTokenUsed);
 
   const [activeDropdown, setActiveDropdown] = useState<null | number>(null);
 
@@ -45,14 +42,11 @@ const ApiMenu = ({
   };
 
   const addApi = () => {
-    _setApiAuth((prev) => {
-      const newApiAuth = [...prev];
-      newApiAuth.push({ endpoint: '', apiKey: '' });
-      return newApiAuth;
-    });
+    _setApiAuth(prev => [...prev, { endpoint: '', apiKey: '' }]);
   };
+
   const deleteApi = (index: number) => {
-    _setApiAuth((prev) => {
+    _setApiAuth(prev => {
       const newApiAuth = [...prev];
       newApiAuth.splice(index, 1);
       return newApiAuth;
@@ -67,9 +61,9 @@ const ApiMenu = ({
   };
 
   const addModel = () => {
-    _setModelDefs((prev) => {
-      const newModelDefs = [...prev];
-      newModelDefs.push({
+    _setModelDefs(prev => [
+      ...prev,
+      {
         name: '',
         model: '',
         endpoint: 0,
@@ -78,13 +72,12 @@ const ApiMenu = ({
         prompt_cost_1000: 0,
         completion_cost_1000: 0,
         swap_visible: true,
-      });
-      return newModelDefs;
-    });
+      },
+    ]);
   };
 
   const setHideModel = (index: number, value: boolean) => {
-    _setModelDefs((prev) => {
+    _setModelDefs(prev => {
       const newModelDefs = [...prev];
       newModelDefs[index].swap_visible = value;
       return newModelDefs;
@@ -92,7 +85,7 @@ const ApiMenu = ({
   };
 
   const setModelEndpoint = (index: number, value: number) => {
-    _setModelDefs((prev) => {
+    _setModelDefs(prev => {
       const newModelDefs = [...prev];
       newModelDefs[index].endpoint = value;
       return newModelDefs;
@@ -100,21 +93,17 @@ const ApiMenu = ({
   };
 
   const deleteModel = (index: number) => {
-    const modelCostHistory = tokenCostToCost(
-      _totalTokenUsed[index],
-      index,
-      modelDefs
-    );
+    const modelCostHistory = tokenCostToCost(_totalTokenUsed[index], index, modelDefs);
 
     setCostOfDeleted(costOfDeleted + modelCostHistory);
 
-    _setTotalTokenUsed((prev) => {
+    _setTotalTokenUsed(prev => {
       const newTotalTokenUsed = { ...prev };
       delete newTotalTokenUsed[index];
       return newTotalTokenUsed;
     });
 
-    _setModelDefs((prev) => {
+    _setModelDefs(prev => {
       const newModelDefs = [...prev];
       newModelDefs.splice(index, 1);
       return newModelDefs;
@@ -122,11 +111,7 @@ const ApiMenu = ({
   };
 
   return (
-    <PopupModal
-      title={t('api') as string}
-      setIsModalOpen={setIsModalOpen}
-      handleConfirm={handleSave}
-    >
+    <PopupModal title={t('api') as string} setIsModalOpen={setIsModalOpen} handleConfirm={handleSave}>
       <div className='p-6 border-b border-custom-white text-custom-white' onClick={() => { if (activeDropdown != null) { setActiveDropdown(null); } }}>
         <div className='min-w-fit text-custom-white text-sm flex flex-col gap-2 leading-relaxed'>
           <p>Deleting an endpoint will delete all associated models.</p>
@@ -144,7 +129,7 @@ const ApiMenu = ({
                     type='text'
                     className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
                     value={auth.endpoint}
-                    onChange={(e) => { _setApiAuth((prev) => { const newApiKeys = [...prev]; newApiKeys[index].endpoint = e.target.value; return newApiKeys; }); }}
+                    onChange={e => { _setApiAuth(prev => { const newApiKeys = [...prev]; newApiKeys[index].endpoint = e.target.value; return newApiKeys; }); }}
                   />
                 </div>
                 <div className='w-1/4 pl-2'>
@@ -152,7 +137,7 @@ const ApiMenu = ({
                     type='password'
                     className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
                     value={auth.apiKey}
-                    onChange={(e) => { _setApiAuth((prev) => { const newApiKeys = [...prev]; newApiKeys[index].apiKey = e.target.value; return newApiKeys; }); }}
+                    onChange={e => { _setApiAuth(prev => { const newApiKeys = [...prev]; newApiKeys[index].apiKey = e.target.value; return newApiKeys; }); }}
                   />
                 </div>
                 <div className='p-1 ml-2 hover:text-neutral-dark hover:bg-custom-white hover:rounded' onClick={() => deleteApi(index)}>
@@ -169,101 +154,16 @@ const ApiMenu = ({
           <div className='flex flex-col max-w-full'>
             <div className='text-center font-bold items-center border-b border-neutral-base/50 mb-1 p-1'>Models</div>
             {_modelDefs.map((modelDef, index) => (
-              <div key={'model' + index} className='mb-4'>
-                <div className='flex items-center border-b border-neutral-base/50 mb-1 p-1'>
-                  <div className='flex-1'>
-                    <input
-                      type='text'
-                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
-                      placeholder='Nickname'
-                      value={modelDef.name}
-                      onChange={(e) => { _setModelDefs((prev) => { const newModelDefs = [...prev]; newModelDefs[index].name = e.target.value; return newModelDefs; }); }}
-                    />
-                  </div>
-                  <div className='flex-1 px-1'>
-                    <input
-                      type='text'
-                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
-                      placeholder='Model'
-                      value={modelDef.model}
-                      onChange={(e) => { _setModelDefs((prev) => { const newModelDefs = [...prev]; newModelDefs[index].model = e.target.value; return newModelDefs; }); }}
-                    />
-                  </div>
-                  <div className='flex-1'>
-                    <button className='btn bg-custom-white text-custom-black btn-small overflow-clip relative pr-6 w-80' type='button' onClick={() => { if (activeDropdown === index) { setActiveDropdown(null); } else { setActiveDropdown(index); } }}>
-                      <span className='inline-block truncate max-w-full'>{_apiAuth[modelDef.endpoint] ? _apiAuth[modelDef.endpoint].endpoint.replace(/^https?:\/\//, '') : 'Endpoint Undefined'}</span>
-                      <DownChevronArrow className='absolute right-0 mr-1 flex items-center' />
-                    </button>
-                    <div id='dropdown' className={`${activeDropdown != null && activeDropdown == index ? '' : 'hidden'} absolute top-100 bottom-100 z-10 w-80 bg-custom-white text-custom-black shadow-xl rounded-lg border border-neutral-base group`}>
-                      <ul className='text-sm p-0 m-0 max-h-72 overflow-clip' aria-labelledby='dropdownDefaultButton'>
-                        {_apiAuth.map((auth, authIndex) => (
-                          <li className='btn btn-small w-full overflow-clip hover:bg-neutral-light hover:text-custom-white cursor-pointer' onClick={() => { setModelEndpoint(index, authIndex); setActiveDropdown(null); }} key={'dropdown' + authIndex}>{auth.endpoint.replace(/^https?:\/\//, '')}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  <div className='p-1 ml-2 hover:text-neutral-dark hover:bg-custom-white hover:rounded' onClick={() => deleteModel(index)}>
-                    <CrossIcon className={`${_modelDefs.length > 1 ? '' : 'invisible'}`} />
-                  </div>
-                </div>
-                <div className='flex items-center border-b border-neutral-base/50 px-1'>
-                  <div className='flex-1  pr-1'>
-                    <input
-                      type='text'
-                      pattern='[0-9]*'
-                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
-                      placeholder='Max Tokens'
-                      value={modelDef.model_max_tokens || ''}
-                      onChange={(e) => {
-                        const value = Number(e.target.value);
-                        if (!isNaN(value)) { _setModelDefs((prev) => { const newModelDefs = [...prev]; newModelDefs[index].model_max_tokens = value; return newModelDefs; }); }
-                      }}
-                    />
-                  </div>
-                  <div className='flex-1  pr-1'>
-                    <input
-                      type='text'
-                      pattern='[0-9]*'
-                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
-                      placeholder='Max Context'
-                      value={modelDef.model_max_context || ''}
-                      onChange={(e) => {
-                        const value = Number(e.target.value);
-                        if (!isNaN(value)) { _setModelDefs((prev) => { const newModelDefs = [...prev]; newModelDefs[index].model_max_context = value; return newModelDefs; }); }
-                      }}
-                    />
-                  </div>
-                  <div className='flex-1  pr-1'>
-                    <input
-                      type='text'
-                      pattern='[0-9]*'
-                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
-                      placeholder='Prompt Cost*'
-                      value={modelDef?.prompt_cost_1000 || ''}
-                      onChange={(e) => {
-                        const value = Number(e.target.value);
-                        if (!isNaN(value)) { _setModelDefs((prev) => { const newModelDefs = [...prev]; newModelDefs[index].prompt_cost_1000 = value; return newModelDefs; }); }
-                      }}
-                    />
-                  </div>
-                  <div className='flex-1'>
-                    <input
-                      type='text'
-                      pattern='[0-9]*'
-                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
-                      placeholder='Completion Cost*'
-                      value={modelDef.completion_cost_1000 || ''}
-                      onChange={(e) => {
-                        const value = Number(e.target.value);
-                        if (!isNaN(value)) { _setModelDefs((prev) => { const newModelDefs = [...prev]; newModelDefs[index].completion_cost_1000 = value; return newModelDefs; }); }
-                      }}
-                    />
-                  </div>
-                  <div className='p-1 ml-2 hover:text-custom-black hover:bg-custom-white hover:rounded'>
-                    {_modelDefs[index].swap_visible ? (<VisibleIcon onClick={() => setHideModel(index, false)} />) : (<HiddenIcon onClick={() => setHideModel(index, true)} />)}
-                  </div>
-                </div>
-              </div>
+              <ModelInput
+                key={index}
+                modelDef={modelDef}
+                index={index}
+                apiAuth={_apiAuth}
+                setModelDefs={_setModelDefs}
+                setHideModel={setHideModel}
+                deleteModel={deleteModel}
+                setModelEndpoint={setModelEndpoint}
+              />
             ))}
           </div>
           <div className='flex justify-center mt-0 mb-8'>
@@ -288,9 +188,6 @@ const ApiMenu = ({
       </div>
     </PopupModal>
   );
-
-
-
 };
 
 export default ApiMenu;
