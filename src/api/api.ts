@@ -96,3 +96,19 @@ export const submitShareGPT = async (body: ShareGPTSubmitBodyInterface) => {
   const url = `https://shareg.pt/${id}`;
   window.open(url, '_blank');
 };
+
+export const fetchOpenAIModels = async (apiKey: string) => {
+  try {
+    const response = await fetch('https://api.openai.com/v1/models', {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+      },
+    });
+    const data = await response.json();
+    const openaiModels = data.data.filter((model: { owned_by: string; }) => model.owned_by === 'openai');
+    return openaiModels.map((model: { name: any; }) => model.name);
+  } catch (error) {
+    console.error('Error fetching models:', error);
+    return [];
+  }
+};
