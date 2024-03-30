@@ -2,6 +2,38 @@ import { ShareGPTSubmitBodyInterface } from '@type/api';
 import { ConfigInterface, MessageInterface, ModelDefinition } from '@type/chat';
 import { isAzureEndpoint, uuidv4 } from '@utils/api';
 
+const getHeaders = (apiKey?: string, customHeaders?: Record<string, string>): HeadersInit => {
+  const headers: HeadersInit = { 'Content-Type': 'application/json', ...customHeaders };
+  if (apiKey) headers.Authorization = `Bearer ${apiKey}`;
+  return headers;
+};
+
+const buildEndpoint = (endpoint: string, modelDef: ModelDefinition, apiKey?: string): string => {
+  if (isAzureEndpoint(endpoint) && apiKey) {
+    const modelName = modelDef.model;
+    const apiVersion = '2023-03-15-preview';
+    const path = `openai/deployments/${modelName}/chat/completions?api-version=${apiVersion}`;
+    if (!endpoint.endsWith(path)) endpoint += endpoint.endsWith('/') ? path : `/${path}`;
+  }
+  return endpoint;
+};
+
+const handleErrorResponse = async (response: Response): Promise<never> => {
+  const text = await response.text();
+  if (response.status === 404 || response.status === 405) {
+    const errorMessage = text.includes('model_not_found')
+      ? `${text}\nMessage from KoalaClient:\nPlease ensure that you have access to the GPT-4 API!`
+      : 'Message from KoalaClient:\nInvalid API endpoint! We recommend you to check your free API endpoint.';
+    throw new Error(errorMessage);
+  } else if (response.status === 429 || !response.ok) {
+    let error = text;
+    if (text.includes('insufficient_quota')) error += '\nMessage from KoalaClient:\nWe recommend changing your API endpoint or API key';
+    if (response.status === 429) error += '\nRate limited!';
+    throw new Error(error);
+  }
+  throw new Error(text);
+};
+
 export const getChatCompletion = async (
   endpoint: string,
   messages: MessageInterface[],
@@ -10,46 +42,21 @@ export const getChatCompletion = async (
   apiKey?: string,
   customHeaders?: Record<string, string>
 ) => {
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-    ...customHeaders,
-  };
-  if (apiKey) headers.Authorization = `Bearer ${apiKey}`;
+  const headers = getHeaders(apiKey, customHeaders);
+  const finalEndpoint = buildEndpoint(endpoint, modelDef, apiKey);
 
-  if (isAzureEndpoint(endpoint) && apiKey) {
-    headers['api-key'] = apiKey;
-
-    const modelName = modelDef.model;
-
-    const apiVersion = '2023-03-15-preview';
-
-    const path = `openai/deployments/${modelName}/chat/completions?api-version=${apiVersion}`;
-
-    if (!endpoint.endsWith(path)) {
-      if (!endpoint.endsWith('/')) {
-        endpoint += '/';
-      }
-      endpoint += path;
-    }
-  }
-
-  // todo: option in config
   config.user = uuidv4();
-
   delete (config as any).model_selection;
 
-  const response = await fetch(endpoint, {
+  const response = await fetch(finalEndpoint, {
     method: 'POST',
     headers,
-    body: JSON.stringify({
-      messages,
-      ...config,
-    }),
+    body: JSON.stringify({ messages, ...config }),
   });
+
   if (!response.ok) throw new Error(await response.text());
 
-  const data = await response.json();
-  return data;
+  return response.json();
 };
 
 export const getChatCompletionStream = async (
@@ -60,80 +67,28 @@ export const getChatCompletionStream = async (
   apiKey?: string,
   customHeaders?: Record<string, string>
 ) => {
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-    ...customHeaders,
-  };
+  const headers = getHeaders(apiKey, customHeaders);
+  const finalEndpoint = buildEndpoint(endpoint, modelDef, apiKey);
 
-  if (apiKey) headers.Authorization = `Bearer ${apiKey}`;
-  if (isAzureEndpoint(endpoint) && apiKey) {
-    headers['api-key'] = apiKey;
-
-    const modelName = modelDef.model;
-
-    const apiVersion = '2023-03-15-preview';
-
-    const path = `openai/deployments/${modelName}/chat/completions?api-version=${apiVersion}`;
-
-    if (!endpoint.endsWith(path)) {
-      if (!endpoint.endsWith('/')) {
-        endpoint += '/';
-      }
-      endpoint += path;
-    }
-  }
-
-  // todo: option in config
   config.user = uuidv4();
-
   delete (config as any).model_selection;
 
-  const response = await fetch(endpoint, {
+  const response = await fetch(finalEndpoint, {
     method: 'POST',
     headers,
-    body: JSON.stringify({
-      messages,
-      ...config,
-      stream: true,
-    }),
+    body: JSON.stringify({ messages, ...config, stream: true }),
   });
-  if (response.status === 404 || response.status === 405) {
-    const text = await response.text();
-    if (text.includes('model_not_found')) {
-      throw new Error(
-        text +
-          '\nMessage from KoalaClient:\nPlease ensure that you have access to the GPT-4 API!'
-      );
-    } else {
-      throw new Error(
-        'Message from KoalaClient:\nInvalid API endpoint! We recommend you to check your free API endpoint.'
-      );
-    }
-  }
 
-  if (response.status === 429 || !response.ok) {
-    const text = await response.text();
-    let error = text;
-    if (text.includes('insufficient_quota')) {
-      error +=
-        '\nMessage from KoalaClient:\nWe recommend changing your API endpoint or API key';
-    } else if (response.status === 429) {
-      error += '\nRate limited!';
-    }
-    throw new Error(error);
-  }
+  if (!response.ok) await handleErrorResponse(response);
 
-  const stream = response.body;
-  return stream;
+  return response.body;
 };
 
 export const submitShareGPT = async (body: ShareGPTSubmitBodyInterface) => {
   const request = await fetch('https://sharegpt.com/api/conversations', {
-    body: JSON.stringify(body),
-    headers: {
-      'Content-Type': 'application/json',
-    },
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
   });
 
   const response = await request.json();
