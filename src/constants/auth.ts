@@ -4,4 +4,6 @@ const customAPIEndpoint =
 export const defaultAPIEndpoint =
   import.meta.env.VITE_DEFAULT_API_ENDPOINT || officialAPIEndpoint;
 
-export const availableEndpoints = [officialAPIEndpoint, customAPIEndpoint];
+export const modelsEndpoint = 'https://api.openai.com/v1/models'; // Add the model endpoint here
+
+export const availableEndpoints = [officialAPIEndpoint, customAPIEndpoint, modelsEndpoint]; // Include the model endpoint in availableEndpoints
