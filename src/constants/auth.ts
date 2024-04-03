@@ -6,4 +6,8 @@ export const defaultAPIEndpoint =
 
 export const modelsEndpoint = 'https://api.openai.com/v1/models'; // Add the model endpoint here
 
-export const availableEndpoints = [officialAPIEndpoint, customAPIEndpoint, modelsEndpoint]; // Include the model endpoint in availableEndpoints
+export const availableEndpoints = [
+  officialAPIEndpoint,
+  customAPIEndpoint,
+  modelsEndpoint,
+]; // Include the model endpoint in availableEndpoints

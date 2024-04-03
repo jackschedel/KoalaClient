@@ -2,18 +2,29 @@ import { ShareGPTSubmitBodyInterface } from '@type/api';
 import { ConfigInterface, MessageInterface, ModelDefinition } from '@type/chat';
 import { isAzureEndpoint, uuidv4 } from '@utils/api';
 
-const getHeaders = (apiKey?: string, customHeaders?: Record<string, string>): HeadersInit => {
-  const headers: HeadersInit = { 'Content-Type': 'application/json', ...customHeaders };
+const getHeaders = (
+  apiKey?: string,
+  customHeaders?: Record<string, string>
+): HeadersInit => {
+  const headers: HeadersInit = {
+    'Content-Type': 'application/json',
+    ...customHeaders,
+  };
   if (apiKey) headers.Authorization = `Bearer ${apiKey}`;
   return headers;
 };
 
-const buildEndpoint = (endpoint: string, modelDef: ModelDefinition, apiKey?: string): string => {
+const buildEndpoint = (
+  endpoint: string,
+  modelDef: ModelDefinition,
+  apiKey?: string
+): string => {
   if (isAzureEndpoint(endpoint) && apiKey) {
     const modelName = modelDef.model;
     const apiVersion = '2023-03-15-preview';
     const path = `openai/deployments/${modelName}/chat/completions?api-version=${apiVersion}`;
-    if (!endpoint.endsWith(path)) endpoint += endpoint.endsWith('/') ? path : `/${path}`;
+    if (!endpoint.endsWith(path))
+      endpoint += endpoint.endsWith('/') ? path : `/${path}`;
   }
   return endpoint;
 };
@@ -27,7 +38,9 @@ const handleErrorResponse = async (response: Response): Promise<never> => {
     throw new Error(errorMessage);
   } else if (response.status === 429 || !response.ok) {
     let error = text;
-    if (text.includes('insufficient_quota')) error += '\nMessage from KoalaClient:\nWe recommend changing your API endpoint or API key';
+    if (text.includes('insufficient_quota'))
+      error +=
+        '\nMessage from KoalaClient:\nWe recommend changing your API endpoint or API key';
     if (response.status === 429) error += '\nRate limited!';
     throw new Error(error);
   }
@@ -105,8 +118,10 @@ export const fetchOpenAIModels = async (apiKey: string) => {
       },
     });
     const data = await response.json();
-    const openaiModels = data.data.filter((model: { owned_by: string; }) => model.owned_by === 'openai');
-    return openaiModels.map((model: { name: any; }) => model.name);
+    const openaiModels = data.data.filter(
+      (model: { owned_by: string }) => model.owned_by === 'openai'
+    );
+    return openaiModels.map((model: { name: any }) => model.name);
   } catch (error) {
     console.error('Error fetching models:', error);
     return [];
