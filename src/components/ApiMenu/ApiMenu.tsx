@@ -46,9 +46,12 @@ const ApiMenu = ({
   };
 
   const addApi = () => {
-    _setApiAuth((prev) => [...prev, { endpoint: '', apiKey: '' }]);
+    _setApiAuth((prev) => {
+      const newApiAuth = [...prev];
+      newApiAuth.push({ endpoint: '', apiKey: '' });
+      return newApiAuth;
+    });
   };
-
   const deleteApi = (index: number) => {
     _setApiAuth((prev) => {
       const newApiAuth = [...prev];
@@ -65,9 +68,9 @@ const ApiMenu = ({
   };
 
   const addModel = () => {
-    _setModelDefs((prev) => [
-      ...prev,
-      {
+    _setModelDefs((prev) => {
+      const newModelDefs = [...prev];
+      newModelDefs.push({
         name: '',
         model: '',
         endpoint: 0,
@@ -76,8 +79,9 @@ const ApiMenu = ({
         prompt_cost_1000: 0,
         completion_cost_1000: 0,
         swap_visible: true,
-      },
-    ]);
+      });
+      return newModelDefs;
+    });
   };
 
   const setHideModel = (index: number, value: boolean) => {
