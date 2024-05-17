@@ -31,11 +31,11 @@
   user-defined prompt library
 - Directly tweak model settings, including Max Tokens and Max Context (change default settings or change it per chat)
 - Minimal whitespace, designed to be used maximized or in a small window
-- Keyboard shortcuts intended to allow for workflow-optimization hotkeys (using AHK or Karabinerk)
+- Keyboard shortcuts intended to allow for workflow-optimization hotkeys (using AHK or Karabiner)
 - Beautiful UI with consistent styling
 
 <p align="center">
-    <img src="https://cdn.discordapp.com/attachments/446426925209092098/1192293382920351744/Screenshot_2024-01-03_at_9.27.06_PM.png?ex=65a88cbe&is=659617be&hm=5d60622b900e4c834ef11a62423045edca40075655cc5597ee1bbda7b2eb2bb4&" alt="landing" width=800 />
+    <img src="https://schedel.io/koalaclientss.d0f3213a.png" alt="landing" width=800 />
 </p>
 
 ## 🌐 Website version
