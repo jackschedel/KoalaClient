@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import useStore from '@store/store';
 
@@ -37,6 +37,8 @@ const ApiMenu = ({
 
   const [activeDropdown, setActiveDropdown] = useState<null | number>(null);
 
+  const dropdownRef = useRef<HTMLButtonElement>(null);
+
   const handleSave = () => {
     setApiAuth(_apiAuth);
     setModelDefs(_modelDefs);
@@ -51,6 +53,7 @@ const ApiMenu = ({
       return newApiAuth;
     });
   };
+
   const deleteApi = (index: number) => {
     _setApiAuth((prev) => {
       const newApiAuth = [...prev];
@@ -61,7 +64,11 @@ const ApiMenu = ({
       if (modelDef.endpoint === index) {
         deleteModel(ind);
       } else if (modelDef.endpoint > index) {
-        modelDef.endpoint--;
+        _setModelDefs((prevDefs) => {
+          const newDefs = [...prevDefs];
+          newDefs[ind].endpoint--;
+          return newDefs;
+        });
       }
     });
   };
@@ -128,33 +135,39 @@ const ApiMenu = ({
       handleConfirm={handleSave}
     >
       <div
-        className='p-6 border-b border-custom-white text-custom-white'
+        className='p-4 border-b border-custom-white text-custom-white overflow-x-auto'
         onClick={() => {
           if (activeDropdown != null) {
             setActiveDropdown(null);
           }
         }}
       >
-        <div className='min-w-fit text-custom-white text-sm flex flex-col gap-2 leading-relaxed'>
-          <p>Deleting an endpoint will delete all asociated models.</p>
-          <p>Whisper record always uses the first endpoint.</p>
-          <div className='flex flex-col max-w-full'>
-            <div className='flex items-center border-b border-neutral-base/50 mb-1 p-1'>
-              <div className='w-3/4 text-center font-bold p-2'>
+        <div className='w-full text-custom-white text-sm flex flex-col gap-2 leading-relaxed'>
+          <p className='text-xs sm:text-sm'>
+            Deleting an endpoint will delete all associated models.
+          </p>
+          <p className='text-xs sm:text-sm'>
+            Whisper record always uses the first endpoint.
+          </p>
+          <div className='flex flex-col'>
+            <div className='flex items-center border-b border-neutral-base/50 mb-1 p-2'>
+              <div className='flex-[3] text-center font-bold p-2 min-w-0'>
                 Endpoint URL
               </div>
-              <div className='w-1/4 text-center font-bold p-2'>API Key</div>
+              <div className='flex-1 text-center font-bold p-2 min-w-0'>
+                API Key
+              </div>
               <div className='p-1 ml-2 h-4 w-4'></div>
             </div>
             {_apiAuth.map((auth, index) => (
               <div
                 key={'api' + index}
-                className='flex items-center border-b border-neutral-base/50 mb-1 p-1'
+                className='flex flex-wrap sm:flex-nowrap items-center border-b border-neutral-base/50 mb-1 p-2'
               >
-                <div className='w-3/4  pr-2'>
+                <div className='flex-[3] pr-2 min-w-0'>
                   <input
                     type='text'
-                    className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+                    className='text-custom-black p-2 text-sm border-none bg-custom-white rounded-md m-0 w-full h-8 focus:outline-none'
                     value={auth.endpoint}
                     onChange={(e) => {
                       _setApiAuth((prev) => {
@@ -163,12 +176,13 @@ const ApiMenu = ({
                         return newApiKeys;
                       });
                     }}
+                    placeholder='https://api.endpoint.com'
                   />
                 </div>
-                <div className='w-1/4 pl-2'>
+                <div className='flex-1 pl-2 min-w-0'>
                   <input
                     type='password'
-                    className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+                    className='text-custom-black p-2 text-sm border-none bg-custom-white rounded-md m-0 h-8 focus:outline-none w-full'
                     value={auth.apiKey}
                     onChange={(e) => {
                       _setApiAuth((prev) => {
@@ -177,10 +191,11 @@ const ApiMenu = ({
                         return newApiKeys;
                       });
                     }}
+                    placeholder='API Key'
                   />
                 </div>
                 <div
-                  className='p-1 ml-2 hover:text-neutral-dark hover:bg-custom-white hover:rounded'
+                  className='p-1 ml-2 hover:text-neutral-dark hover:bg-custom-white hover:rounded cursor-pointer'
                   onClick={() => deleteApi(index)}
                 >
                   <CrossIcon
@@ -190,26 +205,27 @@ const ApiMenu = ({
               </div>
             ))}
           </div>
-          <div className='flex justify-center mt-0 mb-8'>
-            <div
-              className='cursor-pointer p-2 mt-0 rounded-xl btn btn-neutral'
+          <div className='flex justify-center mt-4 mb-8'>
+            <button
+              className='cursor-pointer p-2 mt-0 rounded-xl btn btn-neutral w-full sm:w-auto'
               onClick={addApi}
             >
               <PlusIcon />
-            </div>
+              <span className='ml-2'>Add API</span>
+            </button>
           </div>
 
-          <div className='flex flex-col max-w-full'>
-            <div className='text-center font-bold items-center border-b border-neutral-base/50 mb-1 p-1'>
+          <div className='flex flex-col'>
+            <div className='text-center font-bold items-center border-b border-neutral-base/50 mb-1 p-2'>
               Models
             </div>
             {_modelDefs.map((modelDef, index) => (
               <div key={'model' + index} className='mb-4'>
-                <div className='flex items-center border-b border-neutral-base/50 mb-1 p-1'>
-                  <div className='flex-1'>
+                <div className='flex flex-wrap sm:flex-nowrap items-center border-b border-neutral-base/50 mb-1 p-1'>
+                  <div className='flex-1 min-w-0'>
                     <input
                       type='text'
-                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+                      className='text-custom-black p-2 text-sm border-none bg-custom-white rounded-md m-0 w-full h-8 focus:outline-none'
                       placeholder='Nickname'
                       value={modelDef.name}
                       onChange={(e) => {
@@ -221,10 +237,10 @@ const ApiMenu = ({
                       }}
                     />
                   </div>
-                  <div className='flex-1 px-1'>
+                  <div className='flex-1 px-1 min-w-0'>
                     <input
                       type='text'
-                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+                      className='text-custom-black p-2 text-sm border-none bg-custom-white rounded-md m-0 w-full h-8 focus:outline-none'
                       placeholder='Model'
                       value={modelDef.model}
                       onChange={(e) => {
@@ -236,9 +252,10 @@ const ApiMenu = ({
                       }}
                     />
                   </div>
-                  <div className='flex-1'>
+                  <div className='flex-[2] min-w-0'>
                     <button
-                      className='btn bg-custom-white text-custom-black btn-small overflow-clip relative pr-6 w-80'
+                      ref={dropdownRef}
+                      className='btn bg-custom-white text-custom-black btn-small overflow-clip relative pr-6 w-full'
                       type='button'
                       onClick={() => {
                         if (activeDropdown === index) {
@@ -266,15 +283,16 @@ const ApiMenu = ({
                         activeDropdown != null && activeDropdown == index
                           ? ''
                           : 'hidden'
-                      } absolute top-100 bottom-100 z-10 w-80 bg-custom-white text-custom-black shadow-xl rounded-lg border border-neutral-base group`}
+                      } absolute top-100 bottom-100 z-10 bg-custom-white text-custom-black shadow-xl rounded-lg border border-neutral-base group`}
+                      style={{ width: dropdownRef.current?.offsetWidth + 'px' }}
                     >
                       <ul
-                        className='text-sm p-0 m-0 max-h-72 overflow-clip'
+                        className='text-sm p-0 m-0 max-h-72 w-full overflow-y-scroll'
                         aria-labelledby='dropdownDefaultButton'
                       >
                         {_apiAuth.map((auth, authIndex) => (
                           <li
-                            className='btn btn-small w-full overflow-clip hover:bg-neutral-light hover:text-custom-white cursor-pointer'
+                            className='btn btn-small w-full overflow-clip hover:bg-neutral-light hover:text-custom-white cursor-pointer overflow-clip'
                             onClick={() => {
                               setModelEndpoint(index, authIndex);
                               setActiveDropdown(null);
@@ -357,11 +375,10 @@ const ApiMenu = ({
                       }}
                     />
                   </div>
-                  <div className='flex-1'>
+                  <div className='flex-1 min-w-0'>
                     <input
-                      type='text'
-                      pattern='[0-9]*'
-                      className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
+                      type='number'
+                      className='text-custom-black p-2 text-sm border-none bg-custom-white rounded-md m-0 w-full h-8 focus:outline-none'
                       placeholder='Completion Cost*'
                       value={modelDef.completion_cost_1000 || ''}
                       onChange={(e) => {
@@ -377,7 +394,7 @@ const ApiMenu = ({
                       }}
                     />
                   </div>
-                  <div className='p-1 ml-2 hover:text-custom-black hover:bg-custom-white hover:rounded'>
+                  <div className='p-1 ml-2 hover:text-custom-black hover:bg-custom-white hover:rounded cursor-pointer'>
                     {_modelDefs[index].swap_visible ? (
                       <VisibleIcon onClick={() => setHideModel(index, false)} />
                     ) : (
@@ -388,20 +405,25 @@ const ApiMenu = ({
               </div>
             ))}
           </div>
-          <div className='flex justify-center mt-0 mb-8'>
-            <div
-              className='cursor-pointer p-2 mt-0 rounded-xl btn btn-neutral'
+          <div className='flex justify-center mt-4 mb-8'>
+            <button
+              className='cursor-pointer p-2 mt-0 rounded-xl btn btn-neutral w-full sm:w-auto'
               onClick={addModel}
             >
               <PlusIcon />
-            </div>
+              <span className='ml-2'>Add Model</span>
+            </button>
           </div>
-          <p>* Prompt costs are in dollars per 1000 tokens.</p>
-          <p>Title generation always uses the first model.</p>
-          <p>
+          <p className='text-xs sm:text-sm'>
+            * Prompt costs are in dollars per 1000 tokens.
+          </p>
+          <p className='text-xs sm:text-sm'>
+            Title generation always uses the first model.
+          </p>
+          <p className='text-xs sm:text-sm'>
             Hiding a model option will only remove it from the top-bar dropdown.
           </p>
-          <p>
+          <p className='text-xs sm:text-sm'>
             <Trans
               i18nKey='apiKey.howTo'
               ns='api'
