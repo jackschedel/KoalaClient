@@ -29,10 +29,10 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: yarn
+        run: pnpm
 
       - name: Build website
-        run: yarn build
+        run: pnpm build
         env:
           VITE_GOOGLE_CLIENT_ID: ${{ secrets.GCLIENT }}
 
