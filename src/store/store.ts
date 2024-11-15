@@ -81,6 +81,7 @@ const useStore = create<StoreState>()(
       partialize: (state) => createPartializedState(state),
       version: 9,
       migrate: (persistedState, version) => {
+        const state = persistedState as StoreState;
         switch (version) {
           case 0:
             migrateV0(persistedState as LocalStorageInterfaceV0ToV1);
@@ -110,7 +111,10 @@ const useStore = create<StoreState>()(
             migrateV8(persistedState as LocalStorageInterfaceV8ToV9);
             break;
         }
-        return persistedState as StoreState;
+        return {
+          ...createPartializedState({} as StoreState),
+          ...state,
+        };
       },
     }
   )

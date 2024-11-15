@@ -27,10 +27,10 @@ jobs:
         id: packageJson
         run: echo "PACKAGE_VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
 
-      - name: Use Node.js 18
+      - name: Use Node.js 22
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 22
 
       - name: Get pnpm cache directory path
         id: pnpm-cache-dir-path
