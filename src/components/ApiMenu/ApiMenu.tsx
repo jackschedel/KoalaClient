@@ -357,12 +357,11 @@ const ApiMenu = ({
                   </div>
                   <div className='flex-1  pr-1'>
                     <input
-                      type='text'
-                      pattern='[0-9]*'
+                      type='number'
                       className='text-custom-black p-3 text-sm border-none bg-custom-white rounded-md m-0 w-full mr-0 h-8 focus:outline-none'
                       placeholder='Prompt Cost*'
-                      value={modelDef?.prompt_cost_1000 || ''}
-                      onChange={(e) => {
+                      defaultValue={modelDef?.prompt_cost_1000 || ''}
+                      onBlur={(e) => {
                         const value = Number(e.target.value);
 
                         if (!isNaN(value)) {
@@ -380,8 +379,8 @@ const ApiMenu = ({
                       type='number'
                       className='text-custom-black p-2 text-sm border-none bg-custom-white rounded-md m-0 w-full h-8 focus:outline-none'
                       placeholder='Completion Cost*'
-                      value={modelDef.completion_cost_1000 || ''}
-                      onChange={(e) => {
+                      defaultValue={modelDef.completion_cost_1000 || ''}
+                      onBlur={(e) => {
                         const value = Number(e.target.value);
 
                         if (!isNaN(value)) {
