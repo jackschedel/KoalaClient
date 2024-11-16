@@ -23,16 +23,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Use Node.js 18
+      - name: Use Node.js 22
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 22
 
       - name: Install dependencies
-        run: yarn
+        run: pnpm
 
       - name: Build website
-        run: yarn build
+        run: pnpm build
         env:
           VITE_GOOGLE_CLIENT_ID: ${{ secrets.GCLIENT }}
 

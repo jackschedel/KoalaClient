@@ -84,26 +84,6 @@ function App() {
     setModelDefs(defaultModelDefs);
   }
 
-  const handleGenerate = () => {
-    if (useStore.getState().generating) return;
-    const updatedChats: ChatInterface[] = JSON.parse(
-      JSON.stringify(useStore.getState().chats)
-    );
-    const content = bottomMessageRef?.current?.value;
-    const updatedMessages = updatedChats[currentChatIndex].messages;
-    if (!content) {
-      return;
-    }
-
-    updatedMessages.push({ role: 'user', content: content });
-    if (bottomMessageRef && bottomMessageRef?.current) {
-      bottomMessageRef.current.value = '';
-    }
-
-    setChats(updatedChats);
-    handleSubmit();
-  };
-
   const pasteSubmit = async () => {
     try {
       if (useStore.getState().generating) return;
@@ -157,17 +137,25 @@ function App() {
       bottomMessageRef?.current?.focus();
     }
 
-    // ctrl+s - Save bottom message + generate
-    if (e.ctrlKey && e.key === 's') {
-      e.preventDefault();
-      handleGenerate();
-    }
-
     // ctrl+p - New chat from clipboard (insta-generate)
     if (e.ctrlKey && e.key === 'p') {
       e.preventDefault();
       addChat();
       pasteSubmit();
+    }
+
+    if (isElectron()) {
+      // ctrl+tab - Next chat
+      if (e.ctrlKey && e.key === 'Tab') {
+        e.preventDefault();
+        goForward();
+      }
+
+      // ctrl+shift+tab + Previous chat
+      if (e.ctrlKey && e.shiftKey && e.key === 'Tab') {
+        e.preventDefault();
+        goBack();
+      }
     }
 
     if (isMac()) {
@@ -181,6 +169,13 @@ function App() {
       if (e.ctrlKey && e.key === 'ArrowRight') {
         e.preventDefault();
         goForward();
+      }
+
+      // cmd+t (desktop only) - New chat
+      if (isElectron() && e.metaKey && e.key === 't') {
+        e.preventDefault();
+        addChat();
+        bottomMessageRef?.current?.focus();
       }
     }
   };
