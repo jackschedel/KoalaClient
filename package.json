@@ -1,12 +1,12 @@
 {
   "name": "koala-client",
   "private": true,
-  "version": "2.1.0",
+  "version": "2.1.1",
   "type": "module",
   "homepage": "./",
   "main": "electron/index.cjs",
   "author": "Jack Schedel <client@koaladev.io>",
-  "description": "KoalaClient is an OpenAI API user interface designed to make integrating generative AI into your workflow seamless.",
+  "description": "KoalaClient is an OpenAI API user interface designed to make integrating generative AI into your workflow seamlessly.",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
