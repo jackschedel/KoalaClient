@@ -35,7 +35,7 @@
 - Beautiful UI with consistent styling
 
 <p align="center">
-    <img src="https://schedel.io/koalaclientss.d0f3213a.png" alt="landing" width=800 />
+    <img src="https://schedel.io/koalaclientss.d0f3213a.png" alt="landing" height=530 />
 </p>
 
 ## 📡 Multi-Endpoint focus
@@ -45,7 +45,7 @@
 - Fully customizable prompt pricing calculation for each model (uses OpenAI's tokenizer only)
 
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/59ee54e1-694b-4339-8509-9d16fbcf9e9a" alt="landing" width=800 />
+    <img src="https://github.com/user-attachments/assets/59ee54e1-694b-4339-8509-9d16fbcf9e9a" alt="landing" height=530 />
 </p>
 
 ## 🌐 Website version
