@@ -28,8 +28,13 @@ jobs:
         with:
           node-version: 22
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: latest
+
       - name: Install dependencies
-        run: pnpm
+        run: pnpm install
 
       - name: Build website
         run: pnpm build
