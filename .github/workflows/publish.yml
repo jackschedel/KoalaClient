@@ -115,8 +115,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-macOS/koala-client-${{env.PACKAGE_VERSION}}-mac-x64.dmg
-          asset_name: KoalaClient-${{env.PACKAGE_VERSION}}-mac-x64.dmg
+          asset_path: ./release-macOS/koala-client-${{env.PACKAGE_VERSION}}-mac-arm64.dmg
+          asset_name: KoalaClient-${{env.PACKAGE_VERSION}}-mac-arm64.dmg
           asset_content_type: application
 
       - name: Upload Release Asset - Windows
