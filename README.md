@@ -38,6 +38,16 @@
     <img src="https://schedel.io/koalaclientss.d0f3213a.png" alt="landing" width=800 />
 </p>
 
+## 📡 Multi-Endpoint focus
+
+- Use any OpenAI-compliant endpoint (or an adapter service like https://openrouter.ai/)
+- Setup up multiple models, using multiple endpoints for each
+- Fully customizable prompt pricing calculation for each model (uses OpenAI's tokenizer only)
+
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/59ee54e1-694b-4339-8509-9d16fbcf9e9a" alt="landing" width=800 />
+</p>
+
 ## 🌐 Website version
 
 - Access KoalaClient from the web, or via the desktop app.
@@ -45,12 +55,11 @@
 - Enable Google Sync to sync your chats across devices
 - Android/iOS mobile app via web-wrapper: https://median.co/share/exnwbx
 
-## 🖥️ Desktop-focused development
+## 🖥️ Better on desktop
 
-- Automatically generated desktop builds for every commit
-- Desktop-only tweaks
-  - Open links in browser
-  - Right click context menu
-  - Spellcheck
-  - Nerd Font icon support (only works if `Noto Sans Nerd Font` is installed,
-    currently all models see glyphs as unknown characters)
+- Open links in browser
+- Right click context menu
+- Spellcheck
+- Nerd Font icon support (only works if `Noto Sans Nerd Font` is installed,
+  currently all models see glyphs as unknown characters)
+- Various desktop-only and mac-only keybinds (browser version has some, but other conflict with native binds)
