@@ -39,6 +39,7 @@
 </p>
 
 ## 📡 Multi-Endpoint focus
+
 - Use any OpenAI-compliant endpoint (or an adapter service like https://openrouter.ai/)
 - Setup up multiple models, using multiple endpoints for each
 - Fully customizable prompt pricing calculation for each model (uses OpenAI's tokenizer only)
@@ -55,9 +56,10 @@
 - Android/iOS mobile app via web-wrapper: https://median.co/share/exnwbx
 
 ## 🖥️ Better on desktop
+
 - Open links in browser
 - Right click context menu
 - Spellcheck
 - Nerd Font icon support (only works if `Noto Sans Nerd Font` is installed,
-currently all models see glyphs as unknown characters)
+  currently all models see glyphs as unknown characters)
 - Various desktop-only and mac-only keybinds (browser version has some, but other conflict with native binds)
