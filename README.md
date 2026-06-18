@@ -1,7 +1,7 @@
 <h1 align="center"><b>KoalaClient</b></h1>
 
 <p align="center">
-    <a href="https://client.koaladev.io" target="_blank"><img src="public/apple-touch-icon.png" alt="KoalaClient Icon" width="100" /></a>
+    <img src="public/apple-touch-icon.png" alt="KoalaClient Icon" width="100" />
 </p>
 
 <h4 align="center"><b>OpenAI API user interface allowing seamless integration of generative AI into your workflow</b></h4>
@@ -48,18 +48,11 @@
     <img src="https://github.com/user-attachments/assets/59ee54e1-694b-4339-8509-9d16fbcf9e9a" alt="landing" height=530 />
 </p>
 
-## 🌐 Website version
-
-- Access KoalaClient from the web, or via the desktop app.
-- https://client.koaladev.io is updated automatically with every commit
-- Enable Google Sync to sync your chats across devices
-- Android/iOS mobile app via web-wrapper: https://median.co/share/exnwbx
-
-## 🖥️ Better on desktop
+## 🖥️ Desktop-first design
 
 - Open links in browser
 - Right click context menu
 - Spellcheck
 - Nerd Font icon support (only works if `Noto Sans Nerd Font` is installed,
   currently all models see glyphs as unknown characters)
-- Various desktop-only and mac-only keybinds (browser version has some, but other conflict with native binds)
+- Various desktop-only and mac-only keybinds
